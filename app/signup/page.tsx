@@ -6,6 +6,8 @@ import { IoEye, IoEyeOff } from "react-icons/io5";
 import LoadingSpin from "../components/LoadingSpin";
 import Logo from "../components/Logo";
 import AppContext from "../AppContext";
+import { validateRegisterForm } from "../utiils/formValidators";
+import { createUser } from "../AppServices";
 
 export default function Signup() {
   const router = useRouter();
@@ -39,12 +41,42 @@ export default function Signup() {
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
+
+    const error = validateRegisterForm(form);
+    if (error) {
+      setToast({ message: error, status: "error", show: true });
+      return;
+    }
+
+    const formattedForm = {
+      name: formatName(form.name),
+      email: form.email,
+      password: form.password,
+      confirmPassword: form.confirmPassword,
+    };
+
     setIsLoading(true);
 
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      const { error } = await createUser(formattedForm);
+      if (error) {
+        setToast({ message: error, status: "error", show: true });
+        return;
+      }
+
+      setToast({
+        message: "Account created successfully",
+        status: "success",
+        show: true,
+      });
+
       setIsLoading(false);
-    }, 2000);
+      router.push("/login");
+    } catch (err) {
+      console.error("Registration error:", err);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -58,6 +90,7 @@ export default function Signup() {
             <input
               type="text"
               name="name"
+              maxLength={50}
               value={form.name}
               onChange={handleChange}
               placeholder="John Doe"
@@ -70,6 +103,7 @@ export default function Signup() {
             <input
               type="email"
               name="email"
+              maxLength={50}
               value={form.email}
               onChange={handleChange}
               placeholder="example@mail.com"
@@ -82,6 +116,7 @@ export default function Signup() {
             <input
               type={showPassword ? "text" : "password"}
               name="password"
+              maxLength={20}
               value={form.password}
               onChange={handleChange}
               placeholder="********"
@@ -90,7 +125,7 @@ export default function Signup() {
             <button
               type="button"
               onClick={() => setShowPassword((prev) => !prev)}
-              className="absolute top-[38px] right-3 text-(--foreground) hover:text-(--foreground) focus:outline-none"
+              className="absolute top-[43px] right-3 text-(--foreground) hover:text-(--foreground) focus:outline-none"
               tabIndex={-1}
             >
               {showPassword ? <IoEyeOff size={18} /> : <IoEye size={18} />}
@@ -102,6 +137,7 @@ export default function Signup() {
             <input
               type={showConfirmPassword ? "text" : "password"}
               name="confirmPassword"
+              maxLength={20}
               placeholder="********"
               value={form.confirmPassword}
               onChange={handleChange}
@@ -110,7 +146,7 @@ export default function Signup() {
             <button
               type="button"
               onClick={() => setShowConfirmPassword((prev) => !prev)}
-              className="absolute top-[38px] right-3 text-(--foreground) hover:text-(--foreground) focus:outline-none"
+              className="absolute top-[43px] right-3 text-(--foreground) hover:text-(--foreground) focus:outline-none"
               tabIndex={-1}
             >
               {showConfirmPassword ? (
@@ -123,11 +159,11 @@ export default function Signup() {
 
           <button
             disabled={isLoading}
-            className={`h-10 bg-(--color-primary) text-(--color-light) flex items-center justify-center transition duration-200 hover:brightness-135 rounded-xl ${
+            className={`h-10 bg-(--color-primary) text-(--color-light) flex items-center justify-center shadow-lg transition duration-200 hover:brightness-135 rounded-xl ${
               isLoading ? "cursor-default" : "cursor-pointer"
             }`}
           >
-            {isLoading ? <LoadingSpin /> : "Create account"}
+            {isLoading ? <LoadingSpin /> : "Sign up"}
           </button>
         </form>
 
@@ -135,7 +171,7 @@ export default function Signup() {
           Already have an account?
           <button
             onClick={() => {
-              router.push("/");
+              router.push("/login");
             }}
             className="font-semibold text-(--color-primary) hover:underline cursor-pointer"
           >

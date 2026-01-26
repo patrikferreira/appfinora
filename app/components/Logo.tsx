@@ -4,7 +4,7 @@ type Props = {
   
   export default function Logo({ className }: Props) {
     return (
-      <div className="flex items-baseline gap-2">
+      <div className="flex items-baseline gap-3">
           <div className="flex items-baseline gap-0.5">
               <svg
                 className="h-2 w-1.5 rounded-sm bg-(--color-primary)"
