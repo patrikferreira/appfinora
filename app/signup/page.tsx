@@ -106,7 +106,7 @@ export default function Signup() {
               maxLength={50}
               value={form.email}
               onChange={handleChange}
-              placeholder="example@mail.com"
+              placeholder="johndoe@mail.com"
               className="w-full rounded-xl border border-(--color-border) outline-none px-4 h-10"
             />
           </label>
@@ -158,8 +158,9 @@ export default function Signup() {
           </label>
 
           <button
+            type="submit"
             disabled={isLoading}
-            className={`h-10 bg-(--color-primary) text-(--color-light) flex items-center justify-center shadow-lg transition duration-200 hover:brightness-135 rounded-xl ${
+            className={`h-10 bg-(--color-primary) text-(--color-light) flex items-center justify-center shadow-lg transition duration-200 hover:brightness-135 rounded-xl font-semibold ${
               isLoading ? "cursor-default" : "cursor-pointer"
             }`}
           >
@@ -167,7 +168,7 @@ export default function Signup() {
           </button>
         </form>
 
-        <p className="text-center text-(--foreground) flex items-center gap-2 justify-center">
+        <p className="text-center text-(--foreground) text-sm flex items-center gap-2 justify-center">
           Already have an account?
           <button
             onClick={() => {

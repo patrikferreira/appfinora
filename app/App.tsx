@@ -6,7 +6,7 @@ export default function App() {
   const router = useRouter();
 
   useEffect(() => {
-    router.push("/signup");
+    router.push("/login");
   }, []);
 
   return <div>App Finora</div>;
