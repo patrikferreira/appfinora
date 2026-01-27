@@ -36,7 +36,7 @@ type Props = {
                 <rect width="100%" height="100%" rx="2" fill="var(--color-primary)" />
               </svg>
           </div>
-          <span className="text-(--color-primary) font-semibold text-xl">
+          <span className="text-(--color-primary) font-semibold text-2xl">
               Finora
           </span>
       </div>

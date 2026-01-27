@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Finora | Finance Tracker",
+  title: "Finora | Financial Tracker",
   description: "Developed by Patrik Ferreira",
 };
 

@@ -79,7 +79,7 @@ export default function Login() {
             type="submit"
             disabled={isLoading}
             className={`h-10 bg-(--color-primary) text-(--color-light) flex items-center justify-center shadow-lg transition duration-200 hover:brightness-135 rounded-xl font-semibold ${
-              isLoading ? "cursor-default" : "cursor-pointer"
+              isLoading ? "cursor-default opacity-70" : "cursor-pointer"
             }`}
           >
             {isLoading ? <LoadingSpin /> : "Login"}
