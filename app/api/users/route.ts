@@ -9,7 +9,7 @@ export const supabaseAdmin = createClient(
 
 export async function POST(request: NextRequest) {
   try {
-    const { name, email, password } = await request.json();
+    const { name, email, password, clientHashed } = await request.json();
 
     if (!name || !email || !password) {
       return NextResponse.json(
@@ -36,11 +36,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const storedPassword = clientHashed ? password : await bcrypt.hash(password, 10);
 
     const { data: insertedData, error: insertError } = await supabaseAdmin
       .from("users")
-      .insert([{ name, email, password: hashedPassword }])
+      .insert([{ name, email, password: storedPassword }])
       .select("id, name, email")
       .maybeSingle();
 

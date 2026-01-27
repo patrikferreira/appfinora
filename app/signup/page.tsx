@@ -8,6 +8,7 @@ import Logo from "../components/Logo";
 import AppContext from "../AppContext";
 import { validateRegisterForm } from "../utiils/formValidators";
 import { createUser } from "../AppServices";
+import bcrypt from "bcryptjs";
 
 export default function Signup() {
   const router = useRouter();
@@ -48,17 +49,20 @@ export default function Signup() {
       return;
     }
 
-    const formattedForm = {
+    const hashed = await bcrypt.hash(form.password, 10);
+
+    const payload = {
       name: formatName(form.name),
       email: form.email,
-      password: form.password,
-      confirmPassword: form.confirmPassword,
+      password: hashed,
+      confirmPassword: hashed,
+      clientHashed: true,
     };
 
     setIsLoading(true);
 
     try {
-      const { error } = await createUser(formattedForm);
+      const { error } = await createUser(payload);
       if (error) {
         setToast({ message: error, status: "error", show: true });
         return;

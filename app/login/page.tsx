@@ -6,6 +6,10 @@ import Copyright from "../components/Copyright";
 import { useRouter } from "next/navigation";
 import { IoEye, IoEyeOff } from "react-icons/io5";
 import LoadingSpin from "../components/LoadingSpin";
+import { validateAuth } from "../utiils/formValidators";
+import { UserAuthenticated } from "../AppTypes";
+import { authUser } from "../AppServices";
+import bcrypt from "bcryptjs";
 
 export default function Login() {
   const router = useRouter();
@@ -19,7 +23,7 @@ export default function Login() {
   if (!context) {
     throw new Error("AppContext is not provided");
   }
-  const { setToast, isLoading, setIsLoading } = context;
+  const { setToast, isLoading, setIsLoading, setUser } = context;
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -27,13 +31,56 @@ export default function Login() {
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
+
+    const error = validateAuth(form);
+    if (error) {
+      setToast({ message: error, status: "error", show: true });
+      return;
+    }
+
+    const payload = {
+      email: form.email,
+      password: form.password,
+    };
+
     setIsLoading(true);
-    // Simulate API call
-    setTimeout(() => {
+
+    try {
+      const { error, user } = await authUser(payload);
+      if (error) {
+        setToast({ message: error, status: "error", show: true });
+        setIsLoading(false);
+        return;
+      }
+      if (user) {
+        if (!user.id) {
+          setToast({
+            message: "Received invalid user data.",
+            status: "error",
+            show: true,
+          });
+          setIsLoading(false);
+          return;
+        }
+        setUser(user as UserAuthenticated);
+        setToast({
+          message: "Login successful!",
+          status: "success",
+          show: true,
+        });
+        router.push("/");
+        setIsLoading(false);
+      }
+    } catch (err) {
+      setToast({
+        message: "An unexpected error occurred.",
+        status: "error",
+        show: true,
+      });
       setIsLoading(false);
-      setToast({ message: "Login successful!", status: "success", show: true });
-      router.push("/login");
-    }, 2000);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (

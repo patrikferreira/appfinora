@@ -17,6 +17,7 @@ export type ApiResponse = {
 
 /* USER */
 export type User = {
+  id?: string;
   name: string;
   email: string;
   password: string;
@@ -28,3 +29,14 @@ export type UserRegisterPayload = {
   password: string;
   confirmPassword: string;
 };
+
+export type UserAuth = {
+  email: string;
+  password: string;
+};
+
+export type UserAuthenticated = {
+  id: string;
+  name: string;
+  email: string;
+}

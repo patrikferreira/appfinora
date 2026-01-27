@@ -1,13 +1,22 @@
 "use client";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useContext } from "react";
+import AppContext from "./AppContext";
 
 export default function App() {
-  const router = useRouter();
+  const context = useContext(AppContext);
+  if (!context) {
+    throw new Error("AppContext is not provided");
+  }
 
-  useEffect(() => {
-    router.push("/login");
-  }, []);
+  const { user, isLoading, logout } = context;
 
-  return <div>App Finora</div>;
+  if (isLoading || !user) return null;
+
+  return (
+    <div>
+      <h1>Welcome, {user?.name}!</h1>
+
+      <button onClick={logout}>Logout</button>
+    </div>
+  );
 }

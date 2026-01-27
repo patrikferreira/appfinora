@@ -1,4 +1,4 @@
-import { UserRegisterPayload } from "../AppTypes";
+import { UserAuth, UserRegisterPayload } from "../AppTypes";
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -28,6 +28,24 @@ export function validateRegisterForm(data: UserRegisterPayload): string | null {
 
   if (password !== confirmPassword) {
     return "Passwords do not match";
+  }
+
+  return null;
+}
+
+export function validateAuth(data: UserAuth): string | null {
+  const { email, password } = data;
+
+  if (!email.trim()) {
+    return "Email is required";
+  }
+
+  if (!emailRegex.test(email.trim())) {
+    return "Email format is invalid";
+  }
+
+  if (!password) {
+    return "Password is required";
   }
 
   return null;
