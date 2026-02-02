@@ -9,7 +9,6 @@ import LoadingSpin from "../components/LoadingSpin";
 import { validateAuth } from "../utiils/formValidators";
 import { UserAuthenticated } from "../AppTypes";
 import { authUser } from "../AppServices";
-import bcrypt from "bcryptjs";
 
 export default function Login() {
   const router = useRouter();
@@ -98,7 +97,7 @@ export default function Login() {
               value={form.email}
               onChange={handleChange}
               placeholder="johndoe@mail.com"
-              className="w-full rounded-xl border border-(--color-border) outline-none px-4 h-10"
+              className="w-full rounded-xl border border-(--color-border) outline-none px-4 h-10 bg-(--background)"
             />
           </label>
 
@@ -125,7 +124,7 @@ export default function Login() {
           <button
             type="submit"
             disabled={isLoading}
-            className={`h-10 bg-(--color-primary) text-(--color-light) flex items-center justify-center shadow-lg transition duration-200 hover:brightness-135 rounded-xl font-semibold ${
+            className={`h-10 bg-(--color-primary) text-(--color-light) flex items-center justify-center shadow-lg transition duration-200 hover:brightness-115 rounded-xl font-semibold ${
               isLoading ? "cursor-default opacity-70" : "cursor-pointer"
             }`}
           >

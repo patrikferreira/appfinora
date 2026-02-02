@@ -8,15 +8,9 @@ export default function App() {
     throw new Error("AppContext is not provided");
   }
 
-  const { user, isLoading, logout } = context;
+  const { user } = context;
 
-  if (isLoading || !user) return null;
+  if (!user) return null;
 
-  return (
-    <div>
-      <h1>Welcome, {user?.name}!</h1>
-
-      <button onClick={logout}>Logout</button>
-    </div>
-  );
+  return <div className="ml-64 p-6"></div>;
 }

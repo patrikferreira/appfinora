@@ -1,11 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --color-primary: #1f3c25;
+  --background: #111111;
+  --foreground: #ffffff;
+  --color-primary: #3cc087;
   --color-border: #ececec;
-  --color-light: #ffffff;
+  --color-border: #2a2a2a;
+  --color-alt: #1f1f1f;
 }
 
 html {
@@ -31,19 +32,18 @@ body {
   animation: fadeIn 0.6s ease-out forwards;
 }
 
-input:-webkit-autofill,
-textarea:-webkit-autofill,
-select:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0px 1000px var(--background) inset !important;
-  box-shadow: 0 0 0px 1000px var(--background) inset !important;
-  -webkit-text-fill-color: var(--foreground) !important;
-  caret-color: var(--foreground);
+input {
+  background-color: #181818;
+  border: 1px solid #2a2a2a;
+  color: #ffffff;
 }
 
-input:-webkit-autofill:focus,
-textarea:-webkit-autofill:focus,
-select:-webkit-autofill:focus {
-  -webkit-box-shadow: 0 0 0px 1000px var(--background) inset !important;
-  box-shadow: 0 0 0px 1000px var(--background) inset !important;
-  -webkit-text-fill-color: var(--foreground) !important;
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px #181818 inset;
+  -webkit-text-fill-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: none;
+  transition: background-color 5000s ease-in-out 0s;
 }

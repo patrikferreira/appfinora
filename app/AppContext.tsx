@@ -2,7 +2,7 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { Toast, UserAuthenticated } from "./AppTypes";
 import { useRouter } from "next/navigation";
-import { getUserFromToken, logoutUser } from "./AppServices";
+import { getUserFromToken } from "./AppServices";
 
 type AppContextType = {
   toast: Toast;
@@ -11,7 +11,6 @@ type AppContextType = {
   setIsLoading: (value: boolean) => void;
   user: UserAuthenticated | undefined;
   setUser: (user: UserAuthenticated | undefined) => void;
-  logout: () => void;
 };
 
 const AppContext = createContext<AppContextType>({
@@ -21,7 +20,6 @@ const AppContext = createContext<AppContextType>({
   setIsLoading: () => {},
   user: undefined,
   setUser: () => {},
-  logout: () => {},
 });
 
 export default AppContext;
@@ -54,25 +52,11 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
       }
     };
     fetchUser();
-  }, []);
-
-  async function logout() {
-    try {
-      await logoutUser();
-      setToast({
-        message: "Logout successful!",
-        status: "success",
-        show: true,
-      })
-      router.push("/login");
-    } catch (error) {
-      console.error("Logout failed:", error);
-    }
-  }
+  }, [router]);
 
   return (
     <AppContext.Provider
-      value={{ toast, setToast, isLoading, setIsLoading, user, setUser, logout }}
+      value={{ toast, setToast, isLoading, setIsLoading, user, setUser }}
     >
       {children}
     </AppContext.Provider>
