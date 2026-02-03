@@ -54,7 +54,7 @@ export default function Login() {
       if (user) {
         if (!user.id) {
           setToast({
-            message: "Received invalid user data.",
+            message: "Received invalid user data",
             status: "error",
             show: true,
           });
@@ -62,17 +62,12 @@ export default function Login() {
           return;
         }
         setUser(user as UserAuthenticated);
-        setToast({
-          message: "Login successful!",
-          status: "success",
-          show: true,
-        });
-        router.push("/");
+        router.push("/dashboard");
         setIsLoading(false);
       }
     } catch (err) {
       setToast({
-        message: "An unexpected error occurred.",
+        message: "An unexpected error occurred",
         status: "error",
         show: true,
       });
@@ -125,7 +120,7 @@ export default function Login() {
             type="submit"
             disabled={isLoading}
             className={`h-10 bg-(--color-primary) text-(--color-light) flex items-center justify-center shadow-lg transition duration-200 hover:brightness-115 rounded-xl font-semibold ${
-              isLoading ? "cursor-default opacity-70" : "cursor-pointer"
+              isLoading ? "cursor-default opacity-60" : "cursor-pointer"
             }`}
           >
             {isLoading ? <LoadingSpin /> : "Login"}

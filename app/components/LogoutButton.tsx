@@ -16,17 +16,16 @@ export default function LogoutButton() {
 
   async function handleLogout() {
     setIsLoading(true);
-
     try {
       const { error } = await logoutUser();
       if (error) {
         console.error("Logout failed:", error);
-      } else {
         setToast({
-          message: "Logout successful!",
-          status: "success",
+          message: "Logout failed",
+          status: "error",
           show: true,
         });
+      } else {
         router.push("/login");
       }
     } catch (error) {
@@ -38,7 +37,10 @@ export default function LogoutButton() {
   return (
     <button
       onClick={handleLogout}
-      className="bg-(--color-primary) h-10 rounded-xl cursor-pointer shadow-lg transition duration-200 hover:brightness-115 flex items-center gap-3 justify-center"
+      disabled={isLoading}
+      className={`bg-(--color-primary) h-10 w-full rounded-xl cursor-pointer shadow-lg transition duration-200 hover:brightness-115 flex items-center gap-3 justify-center ${
+        isLoading ? "cursor-default opacity-60" : "cursor-pointer"
+      }`}
     >
       {isLoading ? (
         <LoadingSpin />

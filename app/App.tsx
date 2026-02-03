@@ -1,16 +1,28 @@
 "use client";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import AppContext from "./AppContext";
+import { useRouter } from "next/navigation";
+import LoadingView from "./components/LoadingView";
 
 export default function App() {
+  const router = useRouter();
   const context = useContext(AppContext);
   if (!context) {
     throw new Error("AppContext is not provided");
   }
 
-  const { user } = context;
+  const { isLoading } = context;
 
-  if (!user) return null;
+  useEffect(() => {
+    router.push("/dashboard");
+  }, [router]);
 
-  return <div className="ml-64 p-6"></div>;
+  if (isLoading)
+    return (
+      <div className="h-svh">
+        <LoadingView />
+      </div>
+    );
+
+  return;
 }
