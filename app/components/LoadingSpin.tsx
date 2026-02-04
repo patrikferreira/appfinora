@@ -4,8 +4,17 @@ type Props = {
 
 export default function LoadingSpin({ className }: Props) {
   return (
-    <div
-      className={`h-5.5 w-5.5 border-2 border-white border-t-black/20 rounded-full animate-spin ${className}`}
-    ></div>
+    <span
+      className={`
+        inline-block
+        w-[25px] h-[25px]
+        rounded-full
+        box-border
+        border-t-[3px] border-t-[var(--color-primary)]
+        border-r-[3px] border-r-transparent
+        animate-spin
+        ${className}
+      `}
+    />
   );
 }

@@ -5,8 +5,9 @@ import { BsCreditCard2Back, BsWallet2 } from "react-icons/bs";
 import AppContext from "../AppContext";
 import Logo from "./Logo";
 import { GoHome } from "react-icons/go";
-import LogoutButton from "./LogoutButton";
 import Link from "next/link";
+import Profile from "./Profile";
+import { FiSidebar } from "react-icons/fi";
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -15,7 +16,7 @@ export default function Sidebar() {
     throw new Error("AppContext is not provided");
   }
 
-  const { user, isSidebarOpen, setIsSidebarOpen } = context;
+  const { user, isSidebarOpen, setIsSidebarOpen, isLoading } = context;
 
   function closeSidebar() {
     setIsSidebarOpen?.(false);
@@ -39,6 +40,17 @@ export default function Sidebar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isSidebarOpen]);
 
+  useEffect(() => {
+    function handleResize() {
+      if (window.innerWidth < 640 && isSidebarOpen) {
+        closeSidebar();
+      }
+    }
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [isSidebarOpen]);
+
   const links = [
     { name: "Dashboard", href: "/dashboard", icon: <GoHome size={18} /> },
     { name: "Incomes", href: "/incomes", icon: <BsWallet2 size={14} /> },
@@ -51,6 +63,7 @@ export default function Sidebar() {
 
   if (
     !user ||
+    isLoading ||
     pathname === "/login" ||
     pathname === "/signup" ||
     pathname === "/"
@@ -61,15 +74,21 @@ export default function Sidebar() {
   return (
     <div
       ref={sidebarRef}
-      className={`bg-(--background) fixed left-0 h-[calc(h-max-4rem)] sm:h-svh mt-16 sm:mt-0 w-full sm:w-60 sm:border-r sm:border-(--color-border) p-6 flex-col justify-between gap-4 z-20 animate-fadeIn ${
-        isSidebarOpen ? "flex" : "hidden"
-      } sm:flex`}
+      className={`bg-(--color-alt) fixed left-0 h-svh border-r border-(--color-border) p-2 flex flex-col justify-between gap-4 z-20 shadow w-64 transition-all duration-300 ease-in-out animate-fadeIn ${
+        isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+      }`}
     >
-      <div className="flex flex-col gap-6">
-        <div className="hidden sm:flex">
+      <div className="flex flex-col gap-8">
+        <div className="flex items-center justify-between p-2">
           <Logo />
+          <button
+            onClick={() => setIsSidebarOpen?.(false)}
+            className="cursor-pointer p-2 rounded-full hover:bg-(--color-alt-2) transition duration-200 opacity-60 hover:opacity-100 "
+          >
+            <FiSidebar size={18} />
+          </button>
         </div>
-        <nav className="flex flex-col gap-3">
+        <nav className="flex flex-col gap-2">
           {links.map((link) => {
             const active = pathname === link.href;
             return (
@@ -81,20 +100,11 @@ export default function Sidebar() {
                     closeSidebar();
                   }
                 }}
-                className={`flex items-center gap-3 ${
-                  active ? "opacity-100" : "opacity-60"
-                } hover:opacity-100 transition duration-200`}
+                className={`flex items-center gap-2 rounded-full hover:bg-(--color-alt-2) transition duration-200 p-2 cursor-pointer ${
+                  active ? "bg-(--color-alt-2)" : ""
+                }`}
               >
-                <div
-                  className={`h-8 w-8 rounded-xl flex items-center justify-center`}
-                  style={{
-                    backgroundColor: active
-                      ? "var(--color-primary)"
-                      : "var(--color-alt)",
-                  }}
-                >
-                  {link.icon}
-                </div>
+                <div className="p-1">{link.icon}</div>
                 <span className="text-sm">{link.name}</span>
               </Link>
             );
@@ -102,7 +112,7 @@ export default function Sidebar() {
         </nav>
       </div>
 
-      <LogoutButton />
+      <Profile />
     </div>
   );
 }
