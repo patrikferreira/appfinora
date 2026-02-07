@@ -4,10 +4,10 @@ import { useContext, useEffect, useRef } from "react";
 import { BsCreditCard2Back, BsWallet2 } from "react-icons/bs";
 import AppContext from "../AppContext";
 import Logo from "./Logo";
-import { GoHome } from "react-icons/go";
 import Link from "next/link";
 import Profile from "./Profile";
 import { FiSidebar } from "react-icons/fi";
+import { RxDashboard } from "react-icons/rx";
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -25,39 +25,30 @@ export default function Sidebar() {
   const sidebarRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    function handleClickOutside(e: MouseEvent) {
-      if (!isSidebarOpen || typeof window === "undefined") return;
-      if (window.innerWidth >= 640) return;
+    function handleClickOutside(event: MouseEvent) {
       if (
         sidebarRef.current &&
-        !sidebarRef.current.contains(e.target as Node)
+        !sidebarRef.current.contains(event.target as Node) &&
+        isSidebarOpen &&
+        window.innerWidth < 1024
       ) {
-        closeSidebar();
+        setIsSidebarOpen?.(false);
       }
     }
 
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [isSidebarOpen]);
-
-  useEffect(() => {
-    function handleResize() {
-      if (window.innerWidth < 640 && isSidebarOpen) {
-        closeSidebar();
-      }
-    }
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, [isSidebarOpen]);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isSidebarOpen, setIsSidebarOpen]);
 
   const links = [
-    { name: "Dashboard", href: "/dashboard", icon: <GoHome size={18} /> },
-    { name: "Incomes", href: "/incomes", icon: <BsWallet2 size={14} /> },
+    { name: "Dashboard", href: "/dashboard", icon: <RxDashboard size={16} /> },
+    { name: "Incomes", href: "/incomes", icon: <BsWallet2 size={16} /> },
     {
       name: "Expenses",
       href: "/expenses",
-      icon: <BsCreditCard2Back size={14} />,
+      icon: <BsCreditCard2Back size={16} />,
     },
   ];
 
@@ -74,21 +65,21 @@ export default function Sidebar() {
   return (
     <div
       ref={sidebarRef}
-      className={`bg-(--color-alt) fixed left-0 h-svh border-r border-(--color-border) p-2 flex flex-col justify-between gap-4 z-20 shadow w-64 transition-all duration-300 ease-in-out animate-fadeIn ${
+      className={`bg-(--color-alt) h-full min-w-64 border-r border-(--color-border) p-2  flex-col justify-between gap-4 z-20 shadow  transition-all duration-300 ease-in-out animate-fadeIn ${
         isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-      }`}
+      } lg:translate-x-0 fixed lg:relative top-0 left-0 flex`}
     >
       <div className="flex flex-col gap-8">
         <div className="flex items-center justify-between p-2">
           <Logo />
           <button
             onClick={() => setIsSidebarOpen?.(false)}
-            className="cursor-pointer p-2 rounded-full hover:bg-(--color-alt-2) transition duration-200 opacity-60 hover:opacity-100 "
+            className="cursor-pointer lg:hidden p-2 rounded-xl hover:bg-(--color-alt-2) transition duration-200 opacity-60 hover:opacity-100 "
           >
             <FiSidebar size={18} />
           </button>
         </div>
-        <nav className="flex flex-col gap-2">
+        <nav className="flex flex-col gap-1">
           {links.map((link) => {
             const active = pathname === link.href;
             return (
@@ -96,12 +87,12 @@ export default function Sidebar() {
                 key={link.name}
                 href={link.href}
                 onClick={() => {
-                  if (window.innerWidth < 640) {
+                  if (window.innerWidth < 1024) {
                     closeSidebar();
                   }
                 }}
-                className={`flex items-center gap-2 rounded-full hover:bg-(--color-alt-2) transition duration-200 p-2 cursor-pointer ${
-                  active ? "bg-(--color-alt-2)" : ""
+                className={`flex items-center gap-2 rounded-xl hover:bg-(--color-alt-2) hover:opacity-100 transition duration-200 p-2 cursor-pointer ${
+                  active ? "bg-(--color-alt-2)" : "opacity-60"
                 }`}
               >
                 <div className="p-1">{link.icon}</div>

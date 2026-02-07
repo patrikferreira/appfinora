@@ -12,7 +12,7 @@ export default function Header() {
     throw new Error("AppContext is not provided");
   }
 
-  const { user, setIsSidebarOpen, isSidebarOpen, isLoading } = context;
+  const { user, setIsSidebarOpen, isLoading } = context;
 
   if (
     !user ||
@@ -26,21 +26,15 @@ export default function Header() {
 
   return (
     <div
-      className={`h-16 bg-(--background) flex justify-between items-center px-4 z-40 animate-fadeIn ${
-        isSidebarOpen ? "ml-64" : ""
-      }`}
+      className={`bg-(--background) flex lg:hidden  items-center px-4 pt-4 animate-fadeIn`}
     >
-      <div
-        className={`${
-          isSidebarOpen ? "hidden" : "flex"
-        } items-center gap-4 animate-fadeIn`}
-      >
+      <div className={`flex items-center gap-4 animate-fadeIn`}>
         <button>
           <Logo logoOnly={true} />
         </button>
         <button
           onClick={() => setIsSidebarOpen?.(true)}
-          className="cursor-pointer p-2 rounded-full hover:bg-(--color-alt-2) transition duration-200 opacity-60 hover:opacity-100 "
+          className="cursor-pointer p-2 rounded-xl hover:bg-(--color-alt-2) transition duration-200 opacity-60 hover:opacity-100 "
         >
           <FiSidebar size={18} />
         </button>

@@ -37,7 +37,7 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
   });
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [user, setUser] = useState<UserAuthenticated | undefined>(undefined);
-  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
 
   useEffect(() => {
     setIsLoading(true);

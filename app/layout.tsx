@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Finora | Financial Tracker",
+  title: "Finora - Financial Tracker",
   description: "Developed by Patrik Ferreira",
 };
 
@@ -29,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased lg:flex h-svh`}
       >
         <AppContextProvider>
           <Sidebar />
