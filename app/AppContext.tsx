@@ -1,18 +1,23 @@
 "use client";
 import { createContext, ReactNode, useEffect, useState } from "react";
-import { Toast, UserAuthenticated } from "./AppTypes";
+import { Income, Toast, UserAuthenticated } from "./AppTypes";
 import { useRouter } from "next/navigation";
 import { getUserFromToken } from "./AppServices";
+import { getIncomes } from "./AppServices";
 
 type AppContextType = {
   toast: Toast;
   setToast: (toast: Toast) => void;
   isLoading: boolean;
   setIsLoading: (value: boolean) => void;
+  initialFetching: boolean;
+  setInitialFetching: (value: boolean) => void;
   user: UserAuthenticated | undefined;
   setUser: (user: UserAuthenticated | undefined) => void;
   isSidebarOpen: boolean;
   setIsSidebarOpen?: (value: boolean) => void;
+  localIncomes: Income[];
+  setLocalIncomes: (incomes: Income[]) => void;
 };
 
 const AppContext = createContext<AppContextType>({
@@ -24,6 +29,10 @@ const AppContext = createContext<AppContextType>({
   setUser: () => {},
   isSidebarOpen: false,
   setIsSidebarOpen: () => {},
+  localIncomes: [],
+  setLocalIncomes: () => {},
+  initialFetching: false,
+  setInitialFetching: () => {},
 });
 
 export default AppContext;
@@ -36,11 +45,13 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
     show: false,
   });
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [initialFetching, setInitialFetching] = useState<boolean>(true);
   const [user, setUser] = useState<UserAuthenticated | undefined>(undefined);
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
+  const [localIncomes, setLocalIncomes] = useState<Income[]>([]);
 
   useEffect(() => {
-    setIsLoading(true);
+    setInitialFetching(true);
     const fetchUser = async () => {
       try {
         const data = await getUserFromToken();
@@ -54,23 +65,30 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
         console.error("Error fetching user:", error);
         setUser(undefined);
       } finally {
-        setIsLoading(false);
+        setInitialFetching(false);
       }
     };
     fetchUser();
   }, [router]);
 
   useEffect(() => {
-    if (user) {
-      /* get data here */
-      console.log(`user updated: ${user.email}`);
-      setIsLoading(true);
-      setTimeout(() => {
-        /* simulate call */
-        setIsLoading(false);
-      }, 5000);
-    }
-  }, [user]);
+    if (!user?.id) return;
+
+    const fetchIncomes = async () => {
+      setInitialFetching(true);
+      try {
+        const data = await getIncomes(user.id);
+        setLocalIncomes(data.incomes ?? []);
+        console.log(`allData:`, data);
+      } catch (error) {
+        console.error("Error fetching incomes:", error);
+      } finally {
+        setInitialFetching(false);
+      }
+    };
+
+    fetchIncomes();
+  }, [user?.id]);
 
   return (
     <AppContext.Provider
@@ -83,6 +101,10 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
         setUser,
         isSidebarOpen,
         setIsSidebarOpen,
+        localIncomes,
+        setLocalIncomes,
+        initialFetching,
+        setInitialFetching,
       }}
     >
       {children}

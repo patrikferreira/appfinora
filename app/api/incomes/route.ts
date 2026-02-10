@@ -47,8 +47,8 @@ export async function GET(req: NextRequest) {
       const category = categories?.find((cat) => cat.id === income.category);
       return {
         ...income,
-        cycle: cycle?.description || income.cycle,
-        category: category?.description || income.category,
+        cycle: cycle?.description || "",
+        category: category?.description || "",
       };
     });
 

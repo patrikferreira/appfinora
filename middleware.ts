@@ -1,6 +1,13 @@
 import { NextResponse } from "next/server";
 
-const ALLOWED_ROUTES = ["/login", "/signup", "/", "/dashboard", "/incomes", "/expenses"];
+const ALLOWED_ROUTES = [
+  "/login",
+  "/signup",
+  "/",
+  "/overview",
+  "/incomes",
+  "/expenses",
+];
 
 export function middleware(request: Request) {
   const { pathname } = new URL(request.url);

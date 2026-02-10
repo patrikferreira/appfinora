@@ -16,7 +16,7 @@ export default function Sidebar() {
     throw new Error("AppContext is not provided");
   }
 
-  const { user, isSidebarOpen, setIsSidebarOpen, isLoading } = context;
+  const { user, initialFetching, isSidebarOpen, setIsSidebarOpen } = context;
 
   function closeSidebar() {
     setIsSidebarOpen?.(false);
@@ -43,18 +43,18 @@ export default function Sidebar() {
   }, [isSidebarOpen, setIsSidebarOpen]);
 
   const links = [
-    { name: "Dashboard", href: "/dashboard", icon: <RxDashboard size={16} /> },
-    { name: "Incomes", href: "/incomes", icon: <BsWallet2 size={16} /> },
+    { name: "Overview", href: "/overview", icon: <RxDashboard size={18} /> },
+    { name: "Incomes", href: "/incomes", icon: <BsWallet2 size={18} /> },
     {
       name: "Expenses",
       href: "/expenses",
-      icon: <BsCreditCard2Back size={16} />,
+      icon: <BsCreditCard2Back size={18} />,
     },
   ];
 
   if (
     !user ||
-    isLoading ||
+    initialFetching ||
     pathname === "/login" ||
     pathname === "/signup" ||
     pathname === "/"
@@ -65,16 +65,16 @@ export default function Sidebar() {
   return (
     <div
       ref={sidebarRef}
-      className={`bg-(--color-alt) h-full min-w-64 border-r border-(--color-border) p-2  flex-col justify-between gap-4 z-20 shadow  transition-all duration-300 ease-in-out animate-fadeIn ${
+      className={`bg-(--alt-color) h-full min-w-64 border-r border-(--border-color) p-2 flex-col justify-between gap-4 z-20 shadow  transition-all duration-200 ease-in-out animate-fadeIn ${
         isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-      } lg:translate-x-0 fixed lg:relative top-0 left-0 flex`}
+      } md:translate-x-0 fixed md:relative top-0 left-0 flex`}
     >
       <div className="flex flex-col gap-8">
         <div className="flex items-center justify-between p-2">
           <Logo />
           <button
             onClick={() => setIsSidebarOpen?.(false)}
-            className="cursor-pointer lg:hidden p-2 rounded-xl hover:bg-(--color-alt-2) transition duration-200 opacity-60 hover:opacity-100 "
+            className="cursor-pointer md:hidden p-2 rounded-xl hover:bg-(--alt-color-2) transition duration-200"
           >
             <FiSidebar size={18} />
           </button>
@@ -91,8 +91,8 @@ export default function Sidebar() {
                     closeSidebar();
                   }
                 }}
-                className={`flex items-center gap-2 rounded-xl hover:bg-(--color-alt-2) hover:opacity-100 transition duration-200 p-2 cursor-pointer ${
-                  active ? "bg-(--color-alt-2)" : "opacity-60"
+                className={`flex items-center gap-2 rounded-full hover:bg-(--alt-color-2) transition duration-200 p-2 cursor-pointer ${
+                  active ? "bg-(--alt-color-2)" : "text-(--alt-color-3)"
                 }`}
               >
                 <div className="p-1">{link.icon}</div>

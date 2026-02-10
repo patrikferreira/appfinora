@@ -13,6 +13,8 @@ export type ApiResponse = {
   user?: User;
   token?: string;
   status?: number;
+  incomes?: Income[];
+  
 };
 
 /* USER */
@@ -40,3 +42,14 @@ export type UserAuthenticated = {
   name: string;
   email: string;
 }
+
+/* INCOMES */
+export type Income = {
+  id?: string;
+  userId?: string;
+  description: string;
+  amount: number;
+  category?: string;
+  cycle?: string;
+}
+
