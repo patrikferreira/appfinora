@@ -9,11 +9,11 @@ export default function Expenses() {
     throw new Error("AppContext is not provided");
   }
 
-  const { user, isLoading, isSidebarOpen } = context;
+  const { user, initialFetching, isSidebarOpen } = context;
 
-  if (isLoading)
+  if (initialFetching)
     return (
-      <div className="flex justify-center items-center h-svh">
+      <div className="flex justify-center items-center h-svh w-full">
         <LoadingSpin className="" />
       </div>
     );
