@@ -89,7 +89,7 @@ export default function Login() {
               value={form.email}
               onChange={handleChange}
               placeholder="johndoe@mail.com"
-              className="text-sm w-full rounded-full border border-(--border-color) outline-none px-4 h-10 bg-(--background)"
+              className="text-sm w-full rounded-2xl border border-(--border-color) outline-none px-4 h-10 bg-(--background)"
             />
           </label>
 
@@ -101,7 +101,7 @@ export default function Login() {
               value={form.password}
               onChange={handleChange}
               placeholder="********"
-              className="text-sm w-full rounded-full border border-(--border-color) outline-none px-4 h-10"
+              className="text-sm w-full rounded-2xl border border-(--border-color) outline-none px-4 h-10"
             />
             <button
               type="button"
@@ -116,7 +116,7 @@ export default function Login() {
           <button
             type="submit"
             disabled={isLoading}
-            className={`h-10 text-sm bg-(--primary-color) text-white flex items-center justify-center shadow-lg transition duration-200 hover:brightness-115 rounded-full font-semibold ${
+            className={`h-10 text-sm bg-(--primary-color) text-white flex items-center justify-center shadow-lg transition duration-200 hover:brightness-115 rounded-2xl font-semibold ${
               isLoading ? "cursor-default" : "cursor-pointer"
             }`}
           >

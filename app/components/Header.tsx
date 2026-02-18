@@ -34,7 +34,7 @@ export default function Header() {
         </button>
         <button
           onClick={() => setIsSidebarOpen?.(true)}
-          className="cursor-pointer p-2 rounded-xl hover:bg-(--alt-color) transition duration-200"
+          className="cursor-pointer p-2 rounded-2xl hover:bg-(--alt-color) transition duration-200"
         >
           <FiSidebar size={18} />
         </button>

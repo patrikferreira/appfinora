@@ -28,7 +28,7 @@ export default function Controls({
           onPageChange={onPageChange}
         />
         <RefreshData view={view} />
-        <button className="px-3 h-10 text-sm bg-(--primary-color) text-(--background) cursor-pointer flex items-center gap-2 justify-center shadow-lg transition duration-200 hover:brightness-115 rounded-full">
+        <button className="px-3 h-10 text-sm bg-(--primary-color) text-(--background) cursor-pointer flex items-center gap-2 justify-center shadow-lg transition duration-200 hover:brightness-115 rounded-2xl">
           <IoAddOutline />
           <span className="hidden md:flex">Add</span>
         </button>

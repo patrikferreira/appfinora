@@ -74,7 +74,7 @@ export default function Sidebar() {
           <Logo />
           <button
             onClick={() => setIsSidebarOpen?.(false)}
-            className="cursor-pointer md:hidden p-2 rounded-xl hover:bg-(--alt-color-2) transition duration-200"
+            className="cursor-pointer md:hidden p-2 rounded-2xl hover:bg-(--alt-color-2) transition duration-200"
           >
             <FiSidebar size={18} />
           </button>
@@ -91,8 +91,8 @@ export default function Sidebar() {
                     closeSidebar();
                   }
                 }}
-                className={`flex items-center gap-2 rounded-full hover:bg-(--alt-color-2) transition duration-200 p-2 cursor-pointer ${
-                  active ? "bg-(--alt-color-2) text-(--foreground)" : "text-(--alt-color-3)"
+                className={`flex items-center gap-2 rounded-2xl hover:bg-(--alt-color-2) transition duration-200 p-2 cursor-pointer ${
+                  active ? "bg-(--alt-color-2) text-(--foreground) font-semibold" : "text-(--alt-color-3)"
                 }`}
               >
                 <div className="p-1">{link.icon}</div>

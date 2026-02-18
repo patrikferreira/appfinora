@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f2f3f4;
+  --background: #f3f3f3;
   --foreground: #1a1a1a;
-  --primary-color: #6366f1;
+  --primary-color: #0d6efd;
   --border-color: #e5e7eb;
   --border-color-2: #d1d5db;
   --alt-color: #ffffff;
@@ -45,7 +45,7 @@ input {
   background-color: #ffffff;
   border: 1px solid #e5e7eb;
   color: #1a1a1a;
-  border-radius: 100px;
+  border-radius: 1rem;
 }
 
 input:hover {
@@ -61,7 +61,7 @@ input:-webkit-autofill::first-line {
   -webkit-box-shadow: 0 0 0px 1000px #ffffff inset;
   -webkit-text-fill-color: #1a1a1a !important;
   -webkit-background-clip: padding-box;
-  border-radius: 9999px !important;
+  border-radius: 1rem !important;
   transition: background-color 5000s ease-in-out 0s;
 }
 

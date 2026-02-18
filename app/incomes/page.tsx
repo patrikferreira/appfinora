@@ -6,6 +6,9 @@ import { IoInformationCircleOutline } from "react-icons/io5";
 import { HiMiniEllipsisVertical } from "react-icons/hi2";
 import Controls from "../components/Controls";
 import SortIcon from "../components/SortIcon";
+import Popover from "../components/Popover";
+import { FaRegEdit } from "react-icons/fa";
+import { FaRegTrashCan } from "react-icons/fa6";
 
 type SortField = "description" | "amount" | "category" | "cycle";
 type SortOrder = "asc" | "desc" | null;
@@ -13,6 +16,7 @@ type SortOrder = "asc" | "desc" | null;
 const PAGE_SIZE = 10;
 
 export default function Incomes() {
+  const [menuOpen, setMenuOpen] = useState<string | null>(null);
   const context = useContext(AppContext);
   if (!context) {
     throw new Error("AppContext is not provided");
@@ -26,6 +30,10 @@ export default function Incomes() {
     currentPage,
     setCurrentPage,
   } = context;
+
+  function handleMenu(id?: string) {
+    setMenuOpen((prev) => (prev === id ? null : id ?? null));
+  }
 
   const [sortField, setSortField] = useState<SortField | null>(null);
   const [sortOrder, setSortOrder] = useState<SortOrder>(null);
@@ -97,7 +105,7 @@ export default function Incomes() {
 
   return (
     <div
-      className={`p-4 flex flex-col overflow-auto gap-4  w-full animate-fadeIn`}
+      className={`p-4 lg:p-8 flex flex-col overflow-auto gap-4  w-full animate-fadeIn`}
     >
       {/* TITLE VIEW */}
       <div className="hidden md:flex flex-col">
@@ -115,13 +123,13 @@ export default function Incomes() {
       />
 
       {/* TABLE */}
-      <div className="w-full rounded-xl border border-(--border-color) overflow-hidden">
+      <div className="w-full rounded-2xl border border-(--border-color) overflow-hidden">
         <table className="w-full table-fixed">
           <thead>
             <tr>
               <th
                 onClick={() => handleSort("description")}
-                className={`w-1/5 text-left bg-(--alt-color) text-(--alt-color-3) tracking-wider font-medium border-(--border-color) px-4 text-xs uppercase py-3 cursor-pointer transition-all ${
+                className={`w-1/5 text-left bg-(--alt-color) text-(--alt-color-3) tracking-wider font-semibold border-(--border-color) px-4 text-xs uppercase py-3 cursor-pointer transition-all ${
                   visibleIncomes.length === 0
                     ? "border-none"
                     : "border-b border-(--border-color)"
@@ -138,7 +146,7 @@ export default function Incomes() {
               </th>
               <th
                 onClick={() => handleSort("amount")}
-                className={`w-1/5 text-left bg-(--alt-color) text-(--alt-color-3) tracking-wider font-medium border-(--border-color) px-4 text-xs uppercase py-3 cursor-pointer transition-all ${
+                className={`w-1/5 text-left bg-(--alt-color) text-(--alt-color-3) tracking-wider font-semibold border-(--border-color) px-4 text-xs uppercase py-3 cursor-pointer transition-all ${
                   visibleIncomes.length === 0
                     ? "border-none"
                     : "border-b border-(--border-color)"
@@ -154,7 +162,7 @@ export default function Incomes() {
                 </div>
               </th>
               <th
-                className={`w-1/5 text-left bg-(--alt-color) text-(--alt-color-3) tracking-wider font-medium border-(--border-color) px-4 text-xs uppercase hidden md:table-cell py-3 cursor-default transition-all ${
+                className={`w-1/5 text-left bg-(--alt-color) text-(--alt-color-3) tracking-wider font-semibold border-(--border-color) px-4 text-xs uppercase hidden md:table-cell py-3 cursor-default transition-all ${
                   visibleIncomes.length === 0
                     ? "border-none"
                     : "border-b border-(--border-color)"
@@ -163,7 +171,7 @@ export default function Incomes() {
                 <div className="flex items-center gap-2">Category</div>
               </th>
               <th
-                className={`w-1/5 text-left bg-(--alt-color) text-(--alt-color-3) tracking-wider font-medium border-(--border-color) px-4 text-xs uppercase hidden md:table-cell py-3 cursor-default transition-all ${
+                className={`w-1/5 text-left bg-(--alt-color) text-(--alt-color-3) tracking-wider font-semibold border-(--border-color) px-4 text-xs uppercase hidden md:table-cell py-3 cursor-default transition-all ${
                   visibleIncomes.length === 0
                     ? "border-none"
                     : "border-b border-(--border-color)"
@@ -185,9 +193,7 @@ export default function Incomes() {
             {visibleIncomes.map((income, index) => (
               <tr
                 key={income.id}
-                className={`border-b border-(--border-color) last:border-0 transition-all duration-300 ${
-                  index % 2 === 1 ? "bg-(--alt-color)" : ""
-                }`}
+                className={`border-b border-(--border-color) last:border-0 transition-all duration-300 bg-(--alt-color)`}
               >
                 <td className="w-1/5 px-4 py-3 text-sm truncate">
                   {income.description}
@@ -208,9 +214,28 @@ export default function Incomes() {
                     : ""}
                 </td>
                 <td className="w-1/10 px-4 text-sm">
-                  <button className="border border-(--border-color) hover:border-(--border-color-2) group transition-all duration-300 cursor-pointer rounded-full p-2">
+                  <button
+                    onClick={() => handleMenu(income.id)}
+                    className="border border-transparent hover:border-(--border-color) group transition-all duration-300 cursor-pointer rounded-2xl p-2"
+                  >
                     <HiMiniEllipsisVertical className="text-(--alt-color-3) group-hover:text-(--foreground) transition-all duration-300" />
                   </button>
+
+                  {menuOpen === income.id && (
+                    <Popover
+                      onClose={() => setMenuOpen(null)}
+                      className="right-17 lg:right-29 !w-40"
+                    >
+                      <div className="flex flex-col p-1.5 text-sm">
+                        <button className="text-(--alt-color-3) p-2 w-full hover:bg-(--alt-color) hover:text-(--foreground) transition duration-200 rounded-2xl text-left cursor-pointer flex gap-2 items-center">
+                          <FaRegEdit /> Edit
+                        </button>
+                        <button className="text-(--alt-color-3) p-2 w-full hover:bg-(--alt-color) hover:text-(--foreground) transition duration-200 rounded-2xl text-left cursor-pointer flex gap-2 items-center">
+                          <FaRegTrashCan /> Delete
+                        </button>
+                      </div>
+                    </Popover>
+                  )}
                 </td>
               </tr>
             ))}

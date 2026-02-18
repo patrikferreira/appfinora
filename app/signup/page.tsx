@@ -99,7 +99,7 @@ export default function Signup() {
               value={form.name}
               onChange={handleChange}
               placeholder="John Doe"
-              className="w-full text-sm rounded-full border border-(--border-color) outline-none px-4 h-10"
+              className="w-full text-sm rounded-2xl border border-(--border-color) outline-none px-4 h-10"
             />
           </label>
 
@@ -112,7 +112,7 @@ export default function Signup() {
               value={form.email}
               onChange={handleChange}
               placeholder="johndoe@mail.com"
-              className="w-full text-sm rounded-full border border-(--border-color) outline-none px-4 h-10"
+              className="w-full text-sm rounded-2xl border border-(--border-color) outline-none px-4 h-10"
             />
           </label>
 
@@ -125,7 +125,7 @@ export default function Signup() {
               value={form.password}
               onChange={handleChange}
               placeholder="********"
-              className="w-full text-sm rounded-full border border-(--border-color) outline-none px-4 h-10"
+              className="w-full text-sm rounded-2xl border border-(--border-color) outline-none px-4 h-10"
             />
             <button
               type="button"
@@ -148,7 +148,7 @@ export default function Signup() {
               placeholder="********"
               value={form.confirmPassword}
               onChange={handleChange}
-              className="w-full text-sm rounded-full border border-(--border-color) outline-none px-4 h-10"
+              className="w-full text-sm rounded-2xl border border-(--border-color) outline-none px-4 h-10"
             />
             <button
               type="button"
@@ -167,7 +167,7 @@ export default function Signup() {
           <button
             type="submit"
             disabled={isLoading}
-            className={`h-10 text-sm bg-(--primary-color) text-white flex items-center justify-center shadow-lg transition duration-200 hover:brightness-115 rounded-full font-semibold ${
+            className={`h-10 text-sm bg-(--primary-color) text-white flex items-center justify-center shadow-lg transition duration-200 hover:brightness-115 rounded-2xl font-semibold ${
               isLoading ? "cursor-default" : "cursor-pointer"
             }`}
           >

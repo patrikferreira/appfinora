@@ -38,7 +38,7 @@ export default function RefreshData({ view }: Props) {
     <button
       disabled={isLoading}
       onClick={refreshData}
-      className={`h-10 min-w-10 flex items-center justify-center rounded-full border border-(--border-color) hover:border-(--border-color-2) group text-sm bg-(--alt-color) transition duration-200 cursor-pointer`}
+      className={`h-10 min-w-10 flex items-center justify-center rounded-2xl border border-(--border-color) hover:border-(--border-color-2) group text-sm bg-(--alt-color) transition duration-200 cursor-pointer`}
     >
       {isLoading ? (
         <Spin className="border-t-black/70" />
