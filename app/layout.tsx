@@ -5,6 +5,7 @@ import { AppContextProvider } from "./AppContext";
 import Toast from "./components/Toast";
 import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
+import IncomeDetail from "./components/IncomeDetail";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,6 +37,7 @@ export default function RootLayout({
           <Header />
           {children}
           <Toast />
+          <IncomeDetail />
         </AppContextProvider>
       </body>
     </html>

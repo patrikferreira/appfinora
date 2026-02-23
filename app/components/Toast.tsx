@@ -33,7 +33,7 @@ export default function Toast() {
 
   return (
     <div
-      className={`fixed bottom-6 right-6 ${statusClasses} px-4 py-2 rounded-2xl shadow-md z-50`}
+      className={`fixed bottom-6 right-6 ${statusClasses} px-4 py-2 rounded-full shadow-md z-50`}
     >
       {toast.message}
     </div>

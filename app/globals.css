@@ -1,15 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f3f3f3;
-  --foreground: #1a1a1a;
-  --primary-color: #0d6efd;
-  --border-color: #e5e7eb;
-  --border-color-2: #d1d5db;
-  --alt-color: #ffffff;
-  --alt-color-2: #f2f2f2;
-  --alt-color-hover: #d1d5db;
-  --alt-color-3: #6b7280;
+  --background: #181818;
+  --foreground: #ffffff;
+  --primary-color: #3cc087;
+  --border-color: #2d2d2d;
+  --alt-color: #1e1e1e;
+  --alt-color-2: #2a2a2a;
 }
 
 html {
@@ -41,27 +38,27 @@ body {
   animation: fadeIn 0.3s ease-out forwards;
 }
 
-input {
-  background-color: #ffffff;
-  border: 1px solid #e5e7eb;
-  color: #1a1a1a;
-  border-radius: 1rem;
+@keyframes modalGrow {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
-input:hover {
-  border: 1px solid #d1d5db;
-  transition: all;
-  transition-duration: 0.3;
+.animate-modalGrow {
+  animation: modalGrow 0.2s ease-out forwards;
 }
 
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
-input:-webkit-autofill::first-line {
-  -webkit-box-shadow: 0 0 0px 1000px #ffffff inset;
-  -webkit-text-fill-color: #1a1a1a !important;
-  -webkit-background-clip: padding-box;
-  border-radius: 1rem !important;
-  transition: background-color 5000s ease-in-out 0s;
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px var(--alt-color) inset !important;
+  -webkit-text-fill-color: var(--foreground) !important;
+  transition: background-color 9999s ease-in-out 0s;
+  caret-color: var(--foreground);
 }
-

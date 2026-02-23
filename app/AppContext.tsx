@@ -1,6 +1,12 @@
 "use client";
 import { createContext, ReactNode, useEffect, useState } from "react";
-import { ConfirmAction, Income, Toast, UserAuthenticated } from "./AppTypes";
+import {
+  ConfirmAction,
+  Income,
+  IncomeDetail,
+  Toast,
+  UserAuthenticated,
+} from "./AppTypes";
 import { useRouter } from "next/navigation";
 import { getUserFromToken } from "./AppServices";
 import { getIncomes } from "./AppServices";
@@ -24,6 +30,8 @@ type AppContextType = {
   setCurrentPage: (page: number) => void;
   confirmAction: ConfirmAction;
   setConfirmAction: (action: ConfirmAction) => void;
+  incomeDetail: IncomeDetail;
+  setIncomeDetail: (IncomeDetail: IncomeDetail) => void;
 };
 
 const AppContext = createContext<AppContextType>({
@@ -50,6 +58,12 @@ const AppContext = createContext<AppContextType>({
     onConfirm: () => {},
   },
   setConfirmAction: () => {},
+  incomeDetail: {
+    show: false,
+    newIncome: true,
+    currentIncome: null,
+  },
+  setIncomeDetail: () => {},
 });
 
 export default AppContext;
@@ -73,6 +87,11 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
     title: "",
     message: "",
     onConfirm: () => {},
+  });
+  const [incomeDetail, setIncomeDetail] = useState<IncomeDetail>({
+    show: false,
+    newIncome: true,
+    currentIncome: null,
   });
 
   useEffect(() => {
@@ -135,6 +154,8 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
         setCurrentPage,
         confirmAction,
         setConfirmAction,
+        incomeDetail,
+        setIncomeDetail,
       }}
     >
       {children}

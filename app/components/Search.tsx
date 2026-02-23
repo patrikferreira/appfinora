@@ -22,11 +22,11 @@ export default function Search({ placeholder }: Props) {
 
   return (
     <div
-      className={`flex items-center gap-2 bg-(--alt-color) h-10 w-3xs py-1 px-3 rounded-2xl group border border-(--border-color) hover:border-(--border-color-2) transition-all duration-200`}
+      className={`flex items-center gap-2 bg-(--alt-color) h-10 w-3xs py-1 px-3 rounded-full group border border-(--border-color) transition-all duration-200`}
     >
       <LuSearch
         size={18}
-        className="text-(--alt-color-3) group-hover:text-(--foreground) transition-all duration-200"
+        className="opacity-50 group-hover:opacity-100 transition-all duration-200"
       />
       <input
         type="text"
@@ -50,7 +50,7 @@ export default function Search({ placeholder }: Props) {
       <button onClick={() => setSearchQuery("")}>
         <IoIosClose
           size={20}
-          className="text-(--alt-color-3) hover:text-(--foreground) transition-all duration-200"
+          className="opacity-50 hover:opacity-100 transition-all duration-200"
         />
       </button>
     </div>

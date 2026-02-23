@@ -8,7 +8,7 @@ export default function LoadingSpin({ className }: Props) {
       className={`
         inline-block
         w-[25px] h-[25px]
-        rounded-2xl
+        rounded-full
         box-border
         border-t-[3px] border-t-[var(--primary-color)]
         border-r-[3px] border-r-transparent

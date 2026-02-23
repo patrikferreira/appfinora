@@ -58,3 +58,9 @@ export type Income = {
   category?: string;
   cycle?: string;
 };
+
+export type IncomeDetail = {
+  show: boolean;
+  newIncome: boolean;
+  currentIncome: Income | null;
+}

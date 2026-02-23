@@ -105,14 +105,12 @@ export default function Incomes() {
 
   return (
     <div
-      className={`p-4 lg:p-8 flex flex-col overflow-auto gap-4  w-full animate-fadeIn`}
+      className={`p-4  flex flex-col overflow-auto gap-4  w-full animate-fadeIn`}
     >
       {/* TITLE VIEW */}
       <div className="hidden md:flex flex-col">
         <h1 className="text-2xl font-semibold">Incomes</h1>
-        <span className="text-(--alt-color-3) text-sm">
-          Track & manage your earnings
-        </span>
+        <span className="opacity-50 text-sm">Track & manage your earnings</span>
       </div>
 
       {/* CONTROLS */}
@@ -123,13 +121,13 @@ export default function Incomes() {
       />
 
       {/* TABLE */}
-      <div className="w-full rounded-2xl border border-(--border-color) overflow-hidden">
+      <div className="w-full rounded-xl border border-(--border-color) hover:border-(--border-color) overflow-hidden">
         <table className="w-full table-fixed">
           <thead>
             <tr>
               <th
                 onClick={() => handleSort("description")}
-                className={`w-1/5 text-left bg-(--alt-color) text-(--alt-color-3) tracking-wider font-semibold border-(--border-color) px-4 text-xs uppercase py-3 cursor-pointer transition-all ${
+                className={`w-1/5 text-left bg-(--alt-color) tracking-wider border-(--border-color) px-4 text-xs uppercase py-3 cursor-pointer transition-all ${
                   visibleIncomes.length === 0
                     ? "border-none"
                     : "border-b border-(--border-color)"
@@ -146,7 +144,7 @@ export default function Incomes() {
               </th>
               <th
                 onClick={() => handleSort("amount")}
-                className={`w-1/5 text-left bg-(--alt-color) text-(--alt-color-3) tracking-wider font-semibold border-(--border-color) px-4 text-xs uppercase py-3 cursor-pointer transition-all ${
+                className={`w-1/5 text-left bg-(--alt-color)  tracking-wider font-semibold border-(--border-color) px-4 text-xs uppercase py-3 cursor-pointer transition-all ${
                   visibleIncomes.length === 0
                     ? "border-none"
                     : "border-b border-(--border-color)"
@@ -162,7 +160,7 @@ export default function Incomes() {
                 </div>
               </th>
               <th
-                className={`w-1/5 text-left bg-(--alt-color) text-(--alt-color-3) tracking-wider font-semibold border-(--border-color) px-4 text-xs uppercase hidden md:table-cell py-3 cursor-default transition-all ${
+                className={`w-1/5 text-left bg-(--alt-color)  tracking-wider font-semibold border-(--border-color) px-4 text-xs uppercase hidden md:table-cell py-3 cursor-default transition-all ${
                   visibleIncomes.length === 0
                     ? "border-none"
                     : "border-b border-(--border-color)"
@@ -171,7 +169,7 @@ export default function Incomes() {
                 <div className="flex items-center gap-2">Category</div>
               </th>
               <th
-                className={`w-1/5 text-left bg-(--alt-color) text-(--alt-color-3) tracking-wider font-semibold border-(--border-color) px-4 text-xs uppercase hidden md:table-cell py-3 cursor-default transition-all ${
+                className={`w-1/5 text-left bg-(--alt-color)  tracking-wider font-semibold border-(--border-color) px-4 text-xs uppercase hidden md:table-cell py-3 cursor-default transition-all ${
                   visibleIncomes.length === 0
                     ? "border-none"
                     : "border-b border-(--border-color)"
@@ -216,9 +214,9 @@ export default function Incomes() {
                 <td className="w-1/10 px-4 text-sm">
                   <button
                     onClick={() => handleMenu(income.id)}
-                    className="border border-transparent hover:border-(--border-color) group transition-all duration-300 cursor-pointer rounded-2xl p-2"
+                    className="border border-transparent opacity-50 hover:opacity-100 hover:border-(--border-color) group transition-all duration-300 cursor-pointer rounded-xl p-2"
                   >
-                    <HiMiniEllipsisVertical className="text-(--alt-color-3) group-hover:text-(--foreground) transition-all duration-300" />
+                    <HiMiniEllipsisVertical className=" group-hover:text-(--foreground) transition-all duration-300" />
                   </button>
 
                   {menuOpen === income.id && (
@@ -227,10 +225,10 @@ export default function Incomes() {
                       className="right-17 lg:right-29 !w-40"
                     >
                       <div className="flex flex-col p-1.5 text-sm">
-                        <button className="text-(--alt-color-3) p-2 w-full hover:bg-(--alt-color) hover:text-(--foreground) transition duration-200 rounded-2xl text-left cursor-pointer flex gap-2 items-center">
+                        <button className=" p-2 w-full opacity-50 hover:opacity-100 hover:bg-(--alt-color) hover:text-(--foreground) transition duration-200 rounded-xl text-left cursor-pointer flex gap-2 items-center">
                           <FaRegEdit /> Edit
                         </button>
-                        <button className="text-(--alt-color-3) p-2 w-full hover:bg-(--alt-color) hover:text-(--foreground) transition duration-200 rounded-2xl text-left cursor-pointer flex gap-2 items-center">
+                        <button className=" p-2 w-full opacity-50 hover:opacity-100 hover:bg-(--alt-color) hover:text-(--foreground) transition duration-200 rounded-xl text-left cursor-pointer flex gap-2 items-center">
                           <FaRegTrashCan /> Delete
                         </button>
                       </div>
@@ -243,12 +241,12 @@ export default function Incomes() {
         </table>
       </div>
       {sortedIncomes.length > 0 ? (
-        <div className="px-4 text-sm w-max cursor-default text-(--alt-color-3) hover:text-(--foreground) transition duration-200 flex items-center gap-2">
+        <div className="px-4 text-sm w-max cursor-default opacity-50 hover:opacity-100 transition duration-200 flex items-center gap-2">
           <IoInformationCircleOutline />
           <span>{`Showing ${visibleIncomes.length} of ${sortedIncomes.length}`}</span>
         </div>
       ) : (
-        <div className="px-4 text-sm w-max cursor-default text-(--alt-color-3) hover:text-(--foreground) transition duration-200 flex items-center gap-2">
+        <div className="px-4 text-sm w-max cursor-default  hover:text-(--foreground) transition duration-200 flex items-center gap-2">
           <IoInformationCircleOutline />
           {searchQuery.trim()
             ? "No incomes found matching your search"

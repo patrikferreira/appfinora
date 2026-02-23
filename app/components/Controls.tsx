@@ -3,6 +3,8 @@ import RefreshData from "./RefreshData";
 import { usePathname } from "next/navigation";
 import Search from "./Search";
 import Pagination from "./Pagination";
+import { useContext } from "react";
+import AppContext from "../AppContext";
 
 interface ControlsProps {
   currentPage?: number;
@@ -15,6 +17,13 @@ export default function Controls({
   totalPages = 1,
   onPageChange = () => {},
 }: ControlsProps) {
+  const context = useContext(AppContext);
+  if (!context) {
+    throw new Error("AppContext is not provided");
+  }
+
+  const { setIncomeDetail, incomeDetail } = context;
+
   const pathname = usePathname();
   const view = pathname?.replace(/^\//, "") ?? "";
 
@@ -28,7 +37,17 @@ export default function Controls({
           onPageChange={onPageChange}
         />
         <RefreshData view={view} />
-        <button className="px-3 h-10 text-sm bg-(--primary-color) text-(--background) cursor-pointer flex items-center gap-2 justify-center shadow-lg transition duration-200 hover:brightness-115 rounded-2xl">
+        <button
+          className="px-3 h-10 text-sm bg-(--primary-color) text-(--background) cursor-pointer flex items-center gap-2 justify-center shadow-lg transition duration-200 hover:brightness-115 rounded-full"
+          onClick={() => {
+            setIncomeDetail({
+              ...incomeDetail,
+              currentIncome: null,
+              newIncome: true,
+              show: true,
+            });
+          }}
+        >
           <IoAddOutline />
           <span className="hidden md:flex">Add</span>
         </button>
