@@ -14,8 +14,6 @@ import { getIncomes } from "./AppServices";
 type AppContextType = {
   toast: Toast;
   setToast: (toast: Toast) => void;
-  isLoading: boolean;
-  setIsLoading: (value: boolean) => void;
   initialFetching: boolean;
   setInitialFetching: (value: boolean) => void;
   user: UserAuthenticated | undefined;
@@ -37,8 +35,6 @@ type AppContextType = {
 const AppContext = createContext<AppContextType>({
   toast: { message: "", status: "info", show: false },
   setToast: () => {},
-  isLoading: false,
-  setIsLoading: () => {},
   user: undefined,
   setUser: () => {},
   isSidebarOpen: false,
@@ -75,7 +71,6 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
     status: "info",
     show: false,
   });
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [initialFetching, setInitialFetching] = useState<boolean>(true);
   const [user, setUser] = useState<UserAuthenticated | undefined>(undefined);
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
@@ -138,8 +133,6 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
       value={{
         toast,
         setToast,
-        isLoading,
-        setIsLoading,
         user,
         setUser,
         isSidebarOpen,

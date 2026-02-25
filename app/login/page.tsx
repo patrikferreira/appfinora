@@ -11,6 +11,7 @@ import Spin from "../components/Spin";
 import BuiltInfo from "../components/BuiltInfo";
 
 export default function Login() {
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   const router = useRouter();
   const [form, setForm] = useState({
     email: "",
@@ -22,7 +23,7 @@ export default function Login() {
   if (!context) {
     throw new Error("AppContext is not provided");
   }
-  const { setToast, isLoading, setIsLoading, setUser } = context;
+  const { setToast, setUser } = context;
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -77,7 +78,7 @@ export default function Login() {
   }
 
   return (
-    <div className="bg-(--background) h-svh w-full p-4 flex flex-col justify-between items-center animate-fadeIn">
+    <div className="bg-(--bg-primary) h-svh w-full p-4 flex flex-col justify-between items-center animate-fadeIn">
       <Logo />
       <div className="flex flex-col gap-4 w-full max-w-xs">
         <form className="flex flex-col gap-4" onSubmit={submit}>
@@ -89,7 +90,7 @@ export default function Login() {
               value={form.email}
               onChange={handleChange}
               placeholder="johndoe@mail.com"
-              className="text-sm w-full rounded-full border border-(--border-color) outline-none px-4 h-10 bg-(--alt-color) text-(--foreground)"
+              className="text-sm w-full rounded-full border border-(--border-primary) outline-none px-4 h-10 bg-(--bg-secondary) text-(--foreground)"
             />
           </label>
 
@@ -101,7 +102,7 @@ export default function Login() {
               value={form.password}
               onChange={handleChange}
               placeholder="********"
-              className="text-sm w-full rounded-full border border-(--border-color) bg-(--alt-color) outline-none px-4 h-10"
+              className="text-sm w-full rounded-full border border-(--border-primary) bg-(--bg-secondary) outline-none px-4 h-10"
             />
             <button
               type="button"
@@ -116,7 +117,7 @@ export default function Login() {
           <button
             type="submit"
             disabled={isLoading}
-            className={`h-10 text-sm bg-(--primary-color) text-white flex items-center justify-center shadow-lg transition duration-200 hover:brightness-115 rounded-full font-semibold ${
+            className={`h-10 text-sm bg-(--primary) text-white flex items-center justify-center shadow-lg transition duration-200 hover:brightness-115 rounded-full font-semibold ${
               isLoading ? "cursor-default" : "cursor-pointer"
             }`}
           >
@@ -128,7 +129,7 @@ export default function Login() {
           Don’t have an account?
           <button
             onClick={() => router.push("/signup")}
-            className="font-semibold text-(--primary-color) hover:underline cursor-pointer"
+            className="font-semibold text-(--primary) hover:underline cursor-pointer"
           >
             Click here
           </button>

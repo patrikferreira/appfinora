@@ -5,6 +5,7 @@ import Search from "./Search";
 import Pagination from "./Pagination";
 import { useContext } from "react";
 import AppContext from "../AppContext";
+import Export from "./Export";
 
 interface ControlsProps {
   currentPage?: number;
@@ -31,6 +32,7 @@ export default function Controls({
     <div className="flex items-center justify-between w-full gap-2 ">
       <Search />
       <div className="flex items-center gap-2">
+        <Export view={view} />
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
@@ -38,7 +40,7 @@ export default function Controls({
         />
         <RefreshData view={view} />
         <button
-          className="px-3 h-10 text-sm bg-(--primary-color) text-(--background) cursor-pointer flex items-center gap-2 justify-center shadow-lg transition duration-200 hover:brightness-115 rounded-full"
+          className="px-3 h-10 text-sm bg-(--primary) text-(--background) cursor-pointer flex items-center gap-2 justify-center shadow-lg transition duration-200 hover:brightness-115 rounded-full"
           onClick={() => {
             setIncomeDetail({
               ...incomeDetail,

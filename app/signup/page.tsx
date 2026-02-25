@@ -11,6 +11,7 @@ import Spin from "../components/Spin";
 import BuiltInfo from "../components/BuiltInfo";
 
 export default function Signup() {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
   const [form, setForm] = useState({
     name: "",
@@ -26,7 +27,7 @@ export default function Signup() {
     throw new Error("AppContext is not provided");
   }
 
-  const { setToast, isLoading, setIsLoading } = context;
+  const { setToast } = context;
 
   function formatName(raw: string) {
     return raw
@@ -86,7 +87,7 @@ export default function Signup() {
   }
 
   return (
-    <div className="bg-(--background) h-svh w-full p-4 flex flex-col justify-between items-center animate-fadeIn">
+    <div className="bg-(--bg-primary) h-svh w-full p-4 flex flex-col justify-between items-center animate-fadeIn">
       <Logo />
       <div className="flex flex-col gap-4 w-full max-w-xs">
         <form className="flex flex-col gap-4" onSubmit={submit}>
@@ -99,7 +100,7 @@ export default function Signup() {
               value={form.name}
               onChange={handleChange}
               placeholder="John Doe"
-              className="w-full text-sm rounded-full border border-(--border-color) bg-(--alt-color) outline-none px-4 h-10"
+              className="w-full text-sm rounded-full border border-(--border-primary) bg-(--bg-secondary) outline-none px-4 h-10"
             />
           </label>
 
@@ -112,7 +113,7 @@ export default function Signup() {
               value={form.email}
               onChange={handleChange}
               placeholder="johndoe@mail.com"
-              className="w-full text-sm rounded-full border border-(--border-color) bg-(--alt-color) outline-none px-4 h-10"
+              className="w-full text-sm rounded-full border border-(--border-primary) bg-(--bg-secondary) outline-none px-4 h-10"
             />
           </label>
 
@@ -125,7 +126,7 @@ export default function Signup() {
               value={form.password}
               onChange={handleChange}
               placeholder="********"
-              className="w-full text-sm rounded-full border border-(--border-color) bg-(--alt-color) outline-none px-4 h-10"
+              className="w-full text-sm rounded-full border border-(--border-primary) bg-(--bg-secondary) outline-none px-4 h-10"
             />
             <button
               type="button"
@@ -148,7 +149,7 @@ export default function Signup() {
               placeholder="********"
               value={form.confirmPassword}
               onChange={handleChange}
-              className="w-full text-sm rounded-full border border-(--border-color) bg-(--alt-color) outline-none px-4 h-10"
+              className="w-full text-sm rounded-full border border-(--border-primary) bg-(--bg-secondary) outline-none px-4 h-10"
             />
             <button
               type="button"
@@ -167,7 +168,7 @@ export default function Signup() {
           <button
             type="submit"
             disabled={isLoading}
-            className={`h-10 text-sm bg-(--primary-color) text-white flex items-center justify-center shadow-lg transition duration-200 hover:brightness-115 rounded-full font-semibold ${
+            className={`h-10 text-sm bg-(--primary) text-white flex items-center justify-center shadow-lg transition duration-200 hover:brightness-115 rounded-full font-semibold ${
               isLoading ? "cursor-default" : "cursor-pointer"
             }`}
           >
@@ -181,7 +182,7 @@ export default function Signup() {
             onClick={() => {
               router.push("/login");
             }}
-            className="font-semibold text text-(--primary-color) hover:underline cursor-pointer"
+            className="font-semibold text text-(--primary) hover:underline cursor-pointer"
           >
             Login here
           </button>
