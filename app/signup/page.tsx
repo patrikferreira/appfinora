@@ -4,7 +4,7 @@ import { useContext, useState } from "react";
 import { IoEye, IoEyeOff } from "react-icons/io5";
 import Logo from "../components/Logo";
 import AppContext from "../AppContext";
-import { validateRegisterForm } from "../utiils/formValidators";
+import { validateRegisterForm } from "../utils/formValidators";
 import { createUser } from "../AppServices";
 import bcrypt from "bcryptjs";
 import Spin from "../components/Spin";

@@ -278,7 +278,7 @@ export default function Incomes() {
                           onClick={() => {
                             handleDeleteClick(income.id);
                           }}
-                          className=" p-2 w-full hover:bg-(--bg-secondary) hover:text-(--foreground) transition duration-200 rounded-xl text-left cursor-pointer flex gap-2 items-center"
+                          className="p-2 w-full hover:bg-(--bg-secondary) hover:text-(--foreground) transition duration-200 rounded-xl text-left cursor-pointer flex gap-2 items-center"
                         >
                           <FaRegTrashCan /> Delete
                         </button>

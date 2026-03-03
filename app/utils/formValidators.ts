@@ -1,4 +1,4 @@
-import { UserAuth, UserRegisterPayload } from "../AppTypes";
+import { Income, UserAuth, UserRegisterPayload } from "../AppTypes";
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -46,6 +46,24 @@ export function validateAuth(data: UserAuth): string | null {
 
   if (!password) {
     return "Password is required";
+  }
+
+  return null;
+}
+
+export function validateIncomeForm(data: Income): string | null {
+  const { description, amount } = data;
+
+  if (!description.trim()) {
+    return "Description is required";
+  }
+
+  if (amount === null || amount === undefined) {
+    return "Amount is required";
+  }
+
+  if (isNaN(amount)) {
+    return "Amount must be a positive number";
   }
 
   return null;

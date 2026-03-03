@@ -47,8 +47,8 @@ export async function GET(req: NextRequest) {
       const category = categories?.find((cat) => cat.id === income.category);
       return {
         ...income,
-        cycle: cycle?.description || "",
-        category: category?.description || "",
+        cycle: cycle?.name || "",
+        category: category?.name || "",
       };
     });
 
@@ -58,6 +58,78 @@ export async function GET(req: NextRequest) {
         status: 200,
       }
     );
+  } catch (error) {
+    console.error("API Error:", error);
+    const message =
+      error instanceof Error ? error.message : "Internal Server Error";
+    return new Response(JSON.stringify({ error: message }), { status: 500 });
+  }
+}
+
+export async function POST(req: NextRequest) {
+  try {
+    const { description, amount, category, cycle, userId } = await req.json();
+
+    if (!description || !amount || !category || !cycle || !userId) {
+      return new Response(
+        JSON.stringify({ error: "All fields are required" }),
+        { status: 400 }
+      );
+    }
+
+    const { data: categoryData, error: categoryError } = await supabaseAdmin
+      .from("categories")
+      .select("id")
+      .eq("name", category)
+      .single();
+
+    if (categoryError || !categoryData) {
+      console.error("Category lookup error:", categoryError);
+      return new Response(
+        JSON.stringify({ error: `Invalid category: ${category}` }),
+        { status: 400 }
+      );
+    }
+
+    const { data: cycleData, error: cycleError } = await supabaseAdmin
+      .from("cycles")
+      .select("id")
+      .eq("name", cycle)
+      .single();
+
+    if (cycleError || !cycleData) {
+      console.error("Cycle lookup error:", cycleError);
+      return new Response(
+        JSON.stringify({ error: `Invalid cycle: ${cycle}` }),
+        { status: 400 }
+      );
+    }
+
+    const { data, error } = await supabaseAdmin
+      .from("incomes")
+      .insert([
+        {
+          description,
+          amount,
+          category: categoryData.id,
+          cycle: cycleData.id,
+          userId,
+        },
+      ])
+      .select("*")
+      .single();
+
+    if (error) {
+      console.error("Supabase insert error:", error);
+      return new Response(
+        JSON.stringify({ error: "Database error", details: error }),
+        {
+          status: 500,
+        }
+      );
+    }
+
+    return new Response(JSON.stringify({ income: data }), { status: 201 });
   } catch (error) {
     console.error("API Error:", error);
     const message =

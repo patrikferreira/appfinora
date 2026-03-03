@@ -4,7 +4,7 @@ import AppContext from "../AppContext";
 import Logo from "../components/Logo";
 import { useRouter } from "next/navigation";
 import { IoEye, IoEyeOff } from "react-icons/io5";
-import { validateAuth } from "../utiils/formValidators";
+import { validateAuth } from "../utils/formValidators";
 import { UserAuthenticated } from "../AppTypes";
 import { authUser } from "../AppServices";
 import Spin from "../components/Spin";

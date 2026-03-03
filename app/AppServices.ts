@@ -1,4 +1,4 @@
-import { ApiResponse, User, UserAuth } from "./AppTypes";
+import { ApiResponse, Income, User, UserAuth } from "./AppTypes";
 
 /* USERS */
 export async function createUser(payload: User): Promise<ApiResponse> {
@@ -106,6 +106,28 @@ export async function getIncomes(userId: string): Promise<ApiResponse> {
     const data = await res.json();
     if (!res.ok) {
       throw new Error(data.error || "Failed to fetch incomes");
+    }
+    return data as ApiResponse;
+  } catch (error) {
+    return {
+      error: error instanceof Error ? error.message : "Internal Server Error",
+    };
+  }
+}
+
+export async function createIncome(payload: Income): Promise<ApiResponse> {
+  try {
+    const res = await fetch("/api/incomes", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data.error || "Failed to create income");
     }
     return data as ApiResponse;
   } catch (error) {

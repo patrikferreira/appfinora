@@ -5,6 +5,8 @@ import { IoCloseOutline } from "react-icons/io5";
 import { BillingCycle, Income, IncomeCategory } from "../AppTypes";
 import Spin from "./Spin";
 import Select from "./Select";
+import { createIncome, deleteIncome } from "../AppServices";
+import { validateIncomeForm } from "../utils/formValidators";
 
 export default function IncomeDetail() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -21,7 +23,8 @@ export default function IncomeDetail() {
     throw new Error("AppContext is not provided");
   }
 
-  const { incomeDetail, setIncomeDetail } = context;
+  const { incomeDetail, setIncomeDetail, setConfirmAction, setToast, user } =
+    context;
 
   function resetData() {
     setFormData({
@@ -45,12 +48,93 @@ export default function IncomeDetail() {
     }));
   }
 
-  function submit() {
+  async function submit() {
+    const formError = validateIncomeForm(formData);
+
+    if (formError) {
+      setToast({
+        message: formError,
+        status: "error",
+        show: true,
+      });
+      return;
+    }
+
     setIsLoading(true);
-    console.log(`formData`, formData);
-    setTimeout(() => {
+    try {
+      const payload: Income = {
+        description: formData.description,
+        amount: formData.amount,
+        category: formData.category,
+        cycle: formData.cycle,
+        userId: user?.id || "",
+      };
+
+      const res = await createIncome(payload);
+
+      if (res.error) {
+        setToast({
+          message: res.error || "Failed to save income",
+          status: "error",
+          show: true,
+        });
+        return;
+      }
+
+      setToast({
+        message: `Income ${
+          incomeDetail.newIncome ? "created" : "updated"
+        } successfully`,
+        status: "success",
+        show: true,
+      });
+
+      onClose();
+    } catch (error) {
+      setToast({
+        message:
+          error instanceof Error ? error.message : "Failed to save income",
+        status: "error",
+        show: true,
+      });
+    } finally {
       setIsLoading(false);
-    }, 2000);
+    }
+  }
+
+  async function handleDelete(id: string) {
+    const res = await deleteIncome(id);
+
+    if (res.error) {
+      setToast({
+        message: res.error || "Failed to delete income",
+        status: "error",
+        show: true,
+      });
+      return;
+    }
+
+    onClose();
+
+    setToast({
+      message: "Income deleted successfully",
+      status: "success",
+      show: true,
+    });
+  }
+
+  async function handleDeleteClick() {
+    setConfirmAction({
+      show: true,
+      title: "Delete Income",
+      message:
+        "Are you sure you want to delete this income? this action cannot be undone.",
+      onConfirm: () => {
+        if (incomeDetail.currentIncome?.id) {
+          handleDelete(incomeDetail.currentIncome.id);
+        }
+      },
+    });
   }
 
   useEffect(() => {
@@ -164,22 +248,36 @@ export default function IncomeDetail() {
           </div>
         </div>
 
-        <div className="flex items-center justify-end gap-2 border-t border-(--border-primary) px-4 py-3">
-          <button
-            onClick={submit}
-            disabled={isLoading}
-            className={`h-9 px-3 w-15 text-sm rounded-xl flex items-center justify-center bg-(--primary) transition duration-200 hover:brightness-115 ${
-              isLoading ? "cursor-default" : "cursor-pointer"
-            }`}
-          >
-            {isLoading ? <Spin /> : "Save"}
-          </button>
-          <button
-            onClick={onClose}
-            className="text-sm h-9 px-3 2-15 rounded-xl bg-(--bg-tertiary) cursor-pointer transition duration-200 hover:brightness-115"
-          >
-            Cancel
-          </button>
+        <div
+          className={`flex items-center ${
+            incomeDetail.newIncome ? "justify-end" : "justify-between"
+          } gap-2 border-t border-(--border-primary) px-4 py-3`}
+        >
+          {!incomeDetail.newIncome && (
+            <button
+              onClick={handleDeleteClick}
+              className="h-9 px-3 text-sm rounded-xl bg-(--bg-tertiary) cursor-pointer transition duration-200 hover:brightness-115"
+            >
+              Delete
+            </button>
+          )}
+          <div className="flex items-center gap-2">
+            <button
+              onClick={submit}
+              disabled={isLoading}
+              className={`h-9 px-3 w-15 text-sm rounded-xl flex items-center justify-center bg-(--primary) transition duration-200 hover:brightness-115 ${
+                isLoading ? "cursor-default" : "cursor-pointer"
+              }`}
+            >
+              {isLoading ? <Spin /> : "Save"}
+            </button>
+            <button
+              onClick={onClose}
+              className="text-sm h-9 px-3 2-15 rounded-xl bg-(--bg-tertiary) cursor-pointer transition duration-200 hover:brightness-115"
+            >
+              Cancel
+            </button>
+          </div>
         </div>
       </div>
     </div>
