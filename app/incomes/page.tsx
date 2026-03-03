@@ -229,21 +229,22 @@ export default function Incomes() {
             {visibleIncomes.map((income, index) => (
               <tr
                 key={income.id}
-                className={`border-b border-(--border-primary) last:border-0 transition-all duration-300 bg-(--bg-secondary)`}
+                className={`border-b border-(--border-primary) last:border-0  bg-(--bg-secondary) group hover:bg-(--bg-tertiary)`}
               >
-                <td className="w-1/5 px-4 py-3 text-sm truncate">
-                  {income.description}
+                <td className="w-1/5 px-4 py-3 text-sm truncate opacity-50 group-hover:opacity-100">
+                  {income.description.charAt(0).toUpperCase() +
+                    income.description.slice(1)}
                 </td>
-                <td className="w-1/5 px-4 py-3 text-sm">
+                <td className="w-1/5 px-4 py-3 text-sm opacity-50 group-hover:opacity-100">
                   €{(income.amount ?? "").toLocaleString()}
                 </td>
-                <td className="w-1/5 px-4 py-3 text-sm hidden md:table-cell">
+                <td className="w-1/5 px-4 py-3 text-sm hidden md:table-cell opacity-50 group-hover:opacity-100">
                   {income?.category
                     ? income.category.charAt(0).toUpperCase() +
                       income.category.slice(1)
                     : ""}
                 </td>
-                <td className="w-1/5 px-4 py-3 text-sm hidden md:table-cell">
+                <td className="w-1/5 px-4 py-3 text-sm hidden md:table-cell opacity-50 group-hover:opacity-100">
                   {income?.cycle
                     ? income.cycle.charAt(0).toUpperCase() +
                       income.cycle.slice(1)
@@ -252,9 +253,9 @@ export default function Incomes() {
                 <td className="w-1/10 px-4 text-sm">
                   <button
                     onClick={() => handleMenu(income.id)}
-                    className="border border-transparent opacity-50 hover:opacity-100 hover:border-(--border-primary) group transition-all duration-300 cursor-pointer rounded-xl p-2"
+                    className="opacity-50 group-hover:opacity-100 cursor-pointer p-2"
                   >
-                    <HiMiniEllipsisVertical className=" group-hover:text-(--foreground) transition-all duration-300" />
+                    <HiMiniEllipsisVertical />
                   </button>
 
                   {menuOpen === income.id && (
@@ -279,7 +280,7 @@ export default function Incomes() {
                         </button>
                         <button
                           onClick={() => {
-                            handleDeleteClick(income.id);
+                            handleDeleteClick(income.id!);
                           }}
                           className="p-2 w-full hover:bg-(--bg-secondary) hover:text-(--foreground) transition duration-200 rounded-xl text-left cursor-pointer flex gap-2 items-center"
                         >
@@ -300,7 +301,7 @@ export default function Incomes() {
           <span>{`Showing ${visibleIncomes.length} of ${sortedIncomes.length}`}</span>
         </div>
       ) : (
-        <div className="px-4 text-sm w-max cursor-default  hover:text-(--foreground) transition duration-200 flex items-center gap-2">
+        <div className="px-4 text-sm w-max cursor-default opacity-50 hover:opacity-100 transition duration-200 flex items-center gap-2">
           <IoInformationCircleOutline />
           {searchQuery.trim()
             ? "No incomes found matching your search"

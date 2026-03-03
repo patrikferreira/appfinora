@@ -168,3 +168,28 @@ export async function deleteIncome(id: string): Promise<ApiResponse> {
     };
   }
 }
+
+export async function updateIncome(
+  id: string,
+  payload: Partial<Income>
+): Promise<ApiResponse> {
+  try {
+    const res = await fetch(`/api/incomes/${encodeURIComponent(id)}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data.error || "Failed to update income");
+    }
+    return data as ApiResponse;
+  } catch (error) {
+    return {
+      error: error instanceof Error ? error.message : "Internal Server Error",
+    };
+  }
+}

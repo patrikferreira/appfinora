@@ -76,6 +76,29 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       );
     }
+    
+    const { data: existingIncome, error: checkError } = await supabaseAdmin
+      .from("incomes")
+      .select("id, userId")
+      .eq("userId", userId)
+      .ilike("description", description)
+      .maybeSingle();
+
+    if (checkError) {
+      console.error("Income check error:", checkError);
+      return new Response(
+        JSON.stringify({ error: "Database error", details: checkError }),
+        { status: 500 }
+      );
+    }
+
+    if (existingIncome) {
+      console.log("Duplicate found:", existingIncome, "for userId:", userId);
+      return new Response(
+        JSON.stringify({ error: "Income with this description already exists" }),
+        { status: 409 }
+      );
+    }
 
     const { data: categoryData, error: categoryError } = await supabaseAdmin
       .from("categories")

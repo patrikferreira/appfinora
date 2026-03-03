@@ -5,7 +5,7 @@ import { IoCloseOutline } from "react-icons/io5";
 import { BillingCycle, Income, IncomeCategory } from "../AppTypes";
 import Spin from "./Spin";
 import Select from "./Select";
-import { createIncome, deleteIncome } from "../AppServices";
+import { createIncome, deleteIncome, updateIncome } from "../AppServices";
 import { validateIncomeForm } from "../utils/formValidators";
 
 export default function IncomeDetail() {
@@ -76,9 +76,16 @@ export default function IncomeDetail() {
         userId: user?.id || "",
       };
 
-      const res = await createIncome(payload);
+      let res;
+      if (incomeDetail.newIncome) {
+        res = await createIncome(payload);
+      } else if (incomeDetail.currentIncome && incomeDetail.currentIncome.id) {
+        res = await updateIncome(incomeDetail.currentIncome.id, payload);
+      } else {
+        throw new Error("Income id is missing for update");
+      }
 
-      if (res.error) {
+      if (res?.error) {
         setToast({
           message: res.error || "Failed to save income",
           status: "error",
@@ -235,6 +242,7 @@ export default function IncomeDetail() {
               placeholder="Income"
               value={formData.description}
               onChange={handleChange}
+              maxLength={50}
               autoFocus
               className="w-full bg-(--bg-secondary) border border-(--border-primary) rounded-xl px-4 py-2.5 outline-none"
             />
