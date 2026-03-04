@@ -1,4 +1,4 @@
-import { ApiResponse, Income, User, UserAuth } from "./AppTypes";
+import { ApiResponse, Expense, Income, User, UserAuth } from "./AppTypes";
 
 /* USERS */
 export async function createUser(payload: User): Promise<ApiResponse> {
@@ -190,6 +190,96 @@ export async function updateIncome(
   } catch (error) {
     return {
       error: error instanceof Error ? error.message : "Internal Server Error",
+    };
+  }
+}
+
+/* EXPENSES */
+export async function getExpenses(userId: string): Promise<ApiResponse> {
+  try {
+    const res = await fetch(`/api/expenses?userId=${userId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching expenses:", error);
+    return { error: "Failed to fetch expenses" };
+  }
+}
+
+export async function createExpense(payload: Expense): Promise<ApiResponse> {
+  try {
+    const res = await fetch("/api/expenses", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data.error || "Failed to create expense");
+    }
+    return data as ApiResponse;
+  } catch (error) {
+    return {
+      error: error instanceof Error ? error.message : "Internal Server Error",
+    };
+  }
+}
+
+export async function updateExpense(
+  id: string,
+  payload: Partial<Expense>
+): Promise<ApiResponse> {
+  try {
+    const res = await fetch(`/api/expenses/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data.error || "Failed to update expense");
+    }
+    return data as ApiResponse;
+  } catch (error) {
+    return {
+      error: error instanceof Error ? error.message : "Internal Server Error",
+    };
+  }
+}
+
+export async function deleteExpense(id: string) {
+  try {
+    const res = await fetch(`/api/expenses/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (res.status === 204) {
+      return { status: 204 };
+    }
+
+    const json = await res.json().catch(() => ({}));
+
+    if (!res.ok) {
+      return {
+        error:
+          json?.error ?? json?.message ?? res.statusText ?? "Request failed",
+        status: res.status,
+      };
+    }
+
+    return json as ApiResponse;
+  } catch (error) {
+    return {
+      error:
+        error instanceof Error ? error.message : "An unknown error occurred.",
     };
   }
 }

@@ -2,6 +2,8 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
 import {
   ConfirmAction,
+  Expense,
+  ExpenseDetail,
   Income,
   IncomeDetail,
   Toast,
@@ -9,7 +11,7 @@ import {
 } from "./AppTypes";
 import { useRouter } from "next/navigation";
 import { getUserFromToken } from "./AppServices";
-import { getIncomes } from "./AppServices";
+import { getIncomes, getExpenses } from "./AppServices";
 
 type AppContextType = {
   toast: Toast;
@@ -22,6 +24,8 @@ type AppContextType = {
   setIsSidebarOpen?: (value: boolean) => void;
   localIncomes: Income[];
   setLocalIncomes: (incomes: Income[]) => void;
+  localExpenses: Expense[];
+  setLocalExpenses: (expenses: Expense[]) => void;
   searchQuery: string;
   setSearchQuery: (query: string) => void;
   currentPage: number;
@@ -30,6 +34,8 @@ type AppContextType = {
   setConfirmAction: (action: ConfirmAction) => void;
   incomeDetail: IncomeDetail;
   setIncomeDetail: (IncomeDetail: IncomeDetail) => void;
+  expenseDetail: ExpenseDetail;
+  setExpenseDetail: (expenseDetail: ExpenseDetail) => void;
   refreshData: boolean;
   setRefreshData: (value: boolean) => void;
 };
@@ -43,6 +49,8 @@ const AppContext = createContext<AppContextType>({
   setIsSidebarOpen: () => {},
   localIncomes: [],
   setLocalIncomes: () => {},
+  localExpenses: [],
+  setLocalExpenses: () => {},
   initialFetching: false,
   setInitialFetching: () => {},
   searchQuery: "",
@@ -62,6 +70,12 @@ const AppContext = createContext<AppContextType>({
     currentIncome: null,
   },
   setIncomeDetail: () => {},
+  expenseDetail: {
+    show: false,
+    newExpense: true,
+    currentExpense: null,
+  },
+  setExpenseDetail: () => {},
   refreshData: false,
   setRefreshData: () => {},
 });
@@ -79,6 +93,7 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<UserAuthenticated | undefined>(undefined);
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
   const [localIncomes, setLocalIncomes] = useState<Income[]>([]);
+  const [localExpenses, setLocalExpenses] = useState<Expense[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [confirmAction, setConfirmAction] = useState<ConfirmAction>({
@@ -91,6 +106,11 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
     show: false,
     newIncome: true,
     currentIncome: null,
+  });
+  const [expenseDetail, setExpenseDetail] = useState<ExpenseDetail>({
+    show: false,
+    newExpense: true,
+    currentExpense: null,
   });
   const [refreshData, setRefreshData] = useState<boolean>(false);
 
@@ -118,20 +138,45 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!user?.id) return;
 
-    const fetchIncomes = async () => {
+    const fetchData = async () => {
       setInitialFetching(true);
       try {
-        const data = await getIncomes(user.id);
-        setLocalIncomes(data.incomes ?? []);
+        const [incomesData, expensesData] = await Promise.all([
+          getIncomes(user.id),
+          getExpenses(user.id),
+        ]);
+        setLocalIncomes(incomesData.incomes ?? []);
+        setLocalExpenses(expensesData.expenses ?? []);
       } catch (error) {
-        console.error("Error fetching incomes:", error);
+        console.error("Error fetching data:", error);
       } finally {
         setInitialFetching(false);
       }
     };
 
-    fetchIncomes();
+    fetchData();
   }, [user?.id]);
+
+  useEffect(() => {
+    if (!refreshData || !user?.id) return;
+
+    const fetchData = async () => {
+      try {
+        const [incomesData, expensesData] = await Promise.all([
+          getIncomes(user.id),
+          getExpenses(user.id),
+        ]);
+        setLocalIncomes(incomesData.incomes ?? []);
+        setLocalExpenses(expensesData.expenses ?? []);
+      } catch (error) {
+        console.error("Error refreshing data:", error);
+      } finally {
+        setRefreshData(false);
+      }
+    };
+
+    fetchData();
+  }, [refreshData, user?.id]);
 
   return (
     <AppContext.Provider
@@ -144,6 +189,8 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
         setIsSidebarOpen,
         localIncomes,
         setLocalIncomes,
+        localExpenses,
+        setLocalExpenses,
         initialFetching,
         setInitialFetching,
         searchQuery,
@@ -154,6 +201,8 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
         setConfirmAction,
         incomeDetail,
         setIncomeDetail,
+        expenseDetail,
+        setExpenseDetail,
         refreshData,
         setRefreshData,
       }}

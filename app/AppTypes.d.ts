@@ -14,6 +14,7 @@ export type ApiResponse = {
   token?: string;
   status?: number;
   incomes?: Income[];
+  expenses?: Expense[];
 };
 
 export type ConfirmAction = {
@@ -55,8 +56,8 @@ export type Income = {
   userId?: string;
   description: string;
   amount: number | null;
-  category?: string;
-  cycle?: string;
+  category?: IncomeCategory;
+  cycle?: Cycle;
 };
 
 export type IncomeDetail = {
@@ -73,4 +74,33 @@ export type IncomeCategory =
   | "business"
   | "other";
 
-export type BillingCycle = "monthly" | "yearly";
+/* EXPENSES */
+export type Expense = {
+  id?: string;
+  userId?: string;
+  description: string;
+  amount: number | null;
+  category?: ExpenseCategory;
+  cycle?: Cycle;
+};
+
+export type ExpenseDetail = {
+  show: boolean;
+  newExpense: boolean;
+  currentExpense: Expense | null;
+};
+
+export type ExpenseCategory =
+  | "house"
+  | "transport"
+  | "food"
+  | "entertainment"
+  | "health"
+  | "education"
+  | "investment"
+  | "subscription"
+  | "saving"
+  | "other";
+
+/* HELPERS */
+export type Cycle = "monthly" | "yearly";
