@@ -2,19 +2,19 @@
 import { useContext, useEffect, useState } from "react";
 import AppContext from "../AppContext";
 import { IoCloseOutline } from "react-icons/io5";
-import { Cycle, Income, IncomeCategory } from "../AppTypes";
+import { Cycle, Expense, ExpenseCategory } from "../AppTypes";
 import Spin from "./Spin";
 import Select from "./Select";
-import { createIncome, deleteIncome, updateIncome } from "../AppServices";
-import { validateIncomeForm } from "../utils/formValidators";
+import { createExpense, deleteExpense, updateExpense } from "../AppServices";
+import { validateExpenseForm } from "../utils/formValidators";
 
-export default function IncomeDetail() {
+export default function ExpenseDetail() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const [formData, setFormData] = useState<Income>({
+  const [formData, setFormData] = useState<Expense>({
     description: "",
     amount: null,
-    category: "salary",
+    category: "house",
     cycle: "monthly",
   });
 
@@ -24,8 +24,8 @@ export default function IncomeDetail() {
   }
 
   const {
-    incomeDetail,
-    setIncomeDetail,
+    expenseDetail,
+    setExpenseDetail,
     setConfirmAction,
     setToast,
     user,
@@ -36,14 +36,14 @@ export default function IncomeDetail() {
     setFormData({
       description: "",
       amount: null,
-      category: "salary",
+      category: "house",
       cycle: "monthly",
     });
   }
 
   function onClose() {
     resetData();
-    setIncomeDetail({ ...incomeDetail, show: false });
+    setExpenseDetail({ ...expenseDetail, show: false });
   }
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -55,7 +55,7 @@ export default function IncomeDetail() {
   }
 
   async function submit() {
-    const formError = validateIncomeForm(formData);
+    const formError = validateExpenseForm(formData);
 
     if (formError) {
       setToast({
@@ -68,7 +68,7 @@ export default function IncomeDetail() {
 
     setIsLoading(true);
     try {
-      const payload: Income = {
+      const payload: Expense = {
         description: formData.description,
         amount: formData.amount,
         category: formData.category,
@@ -77,17 +77,17 @@ export default function IncomeDetail() {
       };
 
       let res;
-      if (incomeDetail.newIncome) {
-        res = await createIncome(payload);
-      } else if (incomeDetail.currentIncome && incomeDetail.currentIncome.id) {
-        res = await updateIncome(incomeDetail.currentIncome.id, payload);
+      if (expenseDetail.newExpense) {
+        res = await createExpense(payload);
+      } else if (expenseDetail.currentExpense && expenseDetail.currentExpense.id) {
+        res = await updateExpense(expenseDetail.currentExpense.id, payload);
       } else {
-        throw new Error("Income id is missing for update");
+        throw new Error("Expense id is missing for update");
       }
 
       if (res?.error) {
         setToast({
-          message: res.error || "Failed to save income",
+          message: res.error || "Failed to save expense",
           status: "error",
           show: true,
         });
@@ -95,8 +95,8 @@ export default function IncomeDetail() {
       }
 
       setToast({
-        message: `Income ${
-          incomeDetail.newIncome ? "created" : "updated"
+        message: `Expense ${
+          expenseDetail.newExpense ? "created" : "updated"
         } successfully`,
         status: "success",
         show: true,
@@ -107,7 +107,7 @@ export default function IncomeDetail() {
     } catch (error) {
       setToast({
         message:
-          error instanceof Error ? error.message : "Failed to save income",
+          error instanceof Error ? error.message : "Failed to save expense",
         status: "error",
         show: true,
       });
@@ -117,11 +117,11 @@ export default function IncomeDetail() {
   }
 
   async function handleDelete(id: string) {
-    const res = await deleteIncome(id);
+    const res = await deleteExpense(id);
 
     if (res.error) {
       setToast({
-        message: res.error || "Failed to delete income",
+        message: res.error || "Failed to delete expense",
         status: "error",
         show: true,
       });
@@ -129,7 +129,7 @@ export default function IncomeDetail() {
     }
 
     setToast({
-      message: "Income deleted successfully",
+      message: "Expense deleted successfully",
       status: "success",
       show: true,
     });
@@ -140,35 +140,35 @@ export default function IncomeDetail() {
   async function handleDeleteClick() {
     setConfirmAction({
       show: true,
-      title: "Delete Income",
+      title: "Delete Expense",
       message:
-        "Are you sure you want to delete this income? this action cannot be undone.",
+        "Are you sure you want to delete this expense? This action cannot be undone.",
       onConfirm: () => {
-        if (incomeDetail.currentIncome?.id) {
-          handleDelete(incomeDetail.currentIncome.id);
+        if (expenseDetail.currentExpense?.id) {
+          handleDelete(expenseDetail.currentExpense.id);
         }
       },
     });
   }
 
   useEffect(() => {
-    if (!incomeDetail.show) return;
+    if (!expenseDetail.show) return;
 
-    if (incomeDetail.currentIncome) {
+    if (expenseDetail.currentExpense) {
       setFormData({
-        description: incomeDetail.currentIncome.description,
-        amount: incomeDetail.currentIncome.amount ?? null,
-        category: incomeDetail.currentIncome.category,
-        cycle: incomeDetail.currentIncome.cycle,
+        description: expenseDetail.currentExpense.description,
+        amount: expenseDetail.currentExpense.amount ?? null,
+        category: expenseDetail.currentExpense.category,
+        cycle: expenseDetail.currentExpense.cycle,
       });
     }
 
     return () => {
       resetData();
     };
-  }, [incomeDetail]);
+  }, [expenseDetail]);
 
-  if (!incomeDetail.show) return null;
+  if (!expenseDetail.show) return null;
 
   return (
     <div
@@ -181,7 +181,7 @@ export default function IncomeDetail() {
       >
         <div className="flex items-center justify-between px-4 py-3 border-b border-(--border-primary)">
           <h3 className="text-base">
-            {incomeDetail.newIncome ? "New income" : "Edit income"}
+            {expenseDetail.newExpense ? "New expense" : "Edit expense"}
           </h3>
           <button
             onClick={onClose}
@@ -198,24 +198,28 @@ export default function IncomeDetail() {
                 Category *
               </label>
 
-              <Select<IncomeCategory>
-                value={formData.category as IncomeCategory}
+              <Select<ExpenseCategory>
+                value={formData.category as ExpenseCategory}
                 onChange={(val) =>
                   setFormData((prev) => ({ ...prev, category: val }))
                 }
                 options={[
-                  { value: "salary", label: "Salary" },
-                  { value: "benefit", label: "Benefit" },
+                  { value: "house", label: "House" },
+                  { value: "transport", label: "Transport" },
+                  { value: "food", label: "Food" },
+                  { value: "entertainment", label: "Entertainment" },
+                  { value: "health", label: "Health" },
+                  { value: "education", label: "Education" },
                   { value: "investment", label: "Investment" },
-                  { value: "freelancer", label: "Freelancer" },
-                  { value: "business", label: "Business" },
+                  { value: "subscription", label: "Subscription" },
+                  { value: "saving", label: "Saving" },
                   { value: "other", label: "Other" },
                 ]}
               />
             </div>
 
             <div className="flex-1">
-              <label className="block text-sm mb-2" htmlFor="category">
+              <label className="block text-sm mb-2" htmlFor="cycle">
                 Cycle *
               </label>
 
@@ -239,7 +243,7 @@ export default function IncomeDetail() {
               type="text"
               id="description"
               name="description"
-              placeholder="Income"
+              placeholder="Expense"
               value={formData.description}
               onChange={handleChange}
               maxLength={50}
@@ -265,10 +269,10 @@ export default function IncomeDetail() {
 
         <div
           className={`flex items-center ${
-            incomeDetail.newIncome ? "justify-end" : "justify-between"
+            expenseDetail.newExpense ? "justify-end" : "justify-between"
           } gap-2 border-t border-(--border-primary) px-4 py-3`}
         >
-          {!incomeDetail.newIncome && (
+          {!expenseDetail.newExpense && (
             <button
               onClick={handleDeleteClick}
               className="h-9 px-3 text-sm rounded-xl bg-(--bg-tertiary) cursor-pointer transition duration-200 hover:brightness-115"

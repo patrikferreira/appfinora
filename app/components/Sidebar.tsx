@@ -1,14 +1,14 @@
 "use client";
 import { usePathname } from "next/navigation";
 import { useContext, useEffect, useRef } from "react";
-import { BsCreditCard2Back, BsCurrencyDollar, BsWallet2 } from "react-icons/bs";
 import AppContext from "../AppContext";
 import Logo from "./Logo";
 import Link from "next/link";
 import Profile from "./Profile";
 import { FiSidebar } from "react-icons/fi";
 import { RxDashboard } from "react-icons/rx";
-import { HiOutlineDownload, HiOutlineUpload } from "react-icons/hi";
+import { HiOutlineDownload } from "react-icons/hi";
+import { TbMoneybag } from "react-icons/tb";
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -45,7 +45,7 @@ export default function Sidebar() {
 
   const links = [
     { name: "Overview", href: "/overview", icon: <RxDashboard size={18} /> },
-    { name: "Incomes", href: "/incomes", icon: <BsCurrencyDollar size={18} /> },
+    { name: "Incomes", href: "/incomes", icon: <TbMoneybag size={18} /> },
     {
       name: "Expenses",
       href: "/expenses",

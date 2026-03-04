@@ -15,11 +15,15 @@ export default function Export({ view }: Props) {
     throw new Error("AppContext is not provided");
   }
 
-  const { localIncomes } = context;
+  const { localIncomes, localExpenses } = context;
 
   function exportData() {
     setIsLoading(true);
     try {
+      const isExpenseView = view === "expenses";
+      const data = isExpenseView ? localExpenses : localIncomes;
+      const viewName = isExpenseView ? "expenses" : "incomes";
+
       const columns = [
         { key: "description", label: "Description" },
         { key: "amount", label: "Amount" },
@@ -27,10 +31,10 @@ export default function Export({ view }: Props) {
         { key: "cycle", label: "Cycle" },
       ];
 
-      exportToExcel({
-        data: localIncomes,
+      exportToExcel<Record<string, unknown>>({
+        data: data,
         columns,
-        filename: `incomes-${new Date().toISOString().split("T")[0]}.xlsx`,
+        filename: `${viewName}-${new Date().toISOString().split("T")[0]}.xlsx`,
       });
     } catch (error) {
       console.error("Error exporting data:", error);
@@ -39,14 +43,16 @@ export default function Export({ view }: Props) {
     }
   }
 
+  const currentData = view === "expenses" ? localExpenses : localIncomes;
+
   return (
     <button
       className={`h-10 min-w-10 flex items-center justify-center rounded-full border border-(--border-primary) group text-sm bg-(--bg-secondary) group transition duration-200 ${
         isLoading ? "cursor-default" : "cursor-pointer"
       }`}
       onClick={exportData}
-      aria-label="Export local incomes to Excel"
-      disabled={!localIncomes || isLoading}
+      aria-label={`Export local ${view} to Excel`}
+      disabled={!currentData || isLoading}
     >
       {isLoading ? (
         <Spin className="border-t-black/70" />

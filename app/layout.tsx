@@ -7,6 +7,7 @@ import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
 import IncomeDetail from "./components/IncomeDetail";
 import ConfirmModal from "./components/ConfirmModal";
+import ExpenseDetail from "./components/ExpenseDetail";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,6 +40,7 @@ export default function RootLayout({
           {children}
           <Toast />
           <IncomeDetail />
+          <ExpenseDetail />
           <ConfirmModal />
         </AppContextProvider>
       </body>

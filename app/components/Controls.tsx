@@ -23,10 +23,29 @@ export default function Controls({
     throw new Error("AppContext is not provided");
   }
 
-  const { setIncomeDetail, incomeDetail } = context;
+  const { setIncomeDetail, incomeDetail, setExpenseDetail, expenseDetail } =
+    context;
 
   const pathname = usePathname();
   const view = pathname?.replace(/^\//, "") ?? "";
+
+  const handleAdd = () => {
+    if (view === "expenses") {
+      setExpenseDetail({
+        ...expenseDetail,
+        currentExpense: null,
+        newExpense: true,
+        show: true,
+      });
+    } else {
+      setIncomeDetail({
+        ...incomeDetail,
+        currentIncome: null,
+        newIncome: true,
+        show: true,
+      });
+    }
+  };
 
   return (
     <div className="flex items-center justify-between w-full gap-2 ">
@@ -41,14 +60,7 @@ export default function Controls({
         <RefreshData view={view} />
         <button
           className="px-3 h-10 text-sm bg-(--primary) text-(--background) cursor-pointer flex items-center gap-2 justify-center shadow-lg transition duration-200 hover:brightness-115 rounded-full"
-          onClick={() => {
-            setIncomeDetail({
-              ...incomeDetail,
-              currentIncome: null,
-              newIncome: true,
-              show: true,
-            });
-          }}
+          onClick={handleAdd}
         >
           <IoAddOutline />
           <span className="hidden md:flex">Add</span>

@@ -1,4 +1,4 @@
-import { Income, UserAuth, UserRegisterPayload } from "../AppTypes";
+import { Income, UserAuth, UserRegisterPayload, Expense } from "../AppTypes";
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -66,5 +66,21 @@ export function validateIncomeForm(data: Income): string | null {
     return "Amount must be a positive number";
   }
 
+  return null;
+}
+
+export function validateExpenseForm(data: Expense): string | null {
+  if (!data.description || data.description.trim() === "") {
+    return "Description is required";
+  }
+  if (data.amount === null || data.amount === undefined || data.amount <= 0) {
+    return "Amount must be greater than 0";
+  }
+  if (!data.category) {
+    return "Category is required";
+  }
+  if (!data.cycle) {
+    return "Cycle is required";
+  }
   return null;
 }

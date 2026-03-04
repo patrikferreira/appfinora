@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { LuRefreshCcw } from "react-icons/lu";
 import AppContext from "../AppContext";
 import Spin from "./Spin";
-import { getIncomes } from "../AppServices";
+import { getIncomes, getExpenses } from "../AppServices";
 
 type Props = {
   view: string;
@@ -15,19 +15,26 @@ export default function RefreshData({ view }: Props) {
     throw new Error("AppContext is not provided");
   }
 
-  const { user, setLocalIncomes, refreshData, setRefreshData } = context;
+  const { user, setLocalIncomes, setLocalExpenses, refreshData, setRefreshData } = context;
 
   async function refresh() {
     if (!user?.id) return;
     try {
       setIsLoading(true);
+
       if (view === "incomes") {
         const data = await getIncomes(user.id);
         setLocalIncomes(data.incomes ?? []);
       } else if (view === "expenses") {
-        console.log("expenses");
+        const data = await getExpenses(user.id);
+        setLocalExpenses(data.expenses ?? []);
       } else if (view === "overview") {
-        console.log("overview");
+        const [incomesData, expensesData] = await Promise.all([
+          getIncomes(user.id),
+          getExpenses(user.id),
+        ]);
+        setLocalIncomes(incomesData.incomes ?? []);
+        setLocalExpenses(expensesData.expenses ?? []);
       }
     } catch (error) {
       console.error("Error refreshing data:", error);
@@ -50,6 +57,7 @@ export default function RefreshData({ view }: Props) {
       className={`h-10 min-w-10 flex items-center justify-center rounded-full border border-(--border-primary) group text-sm bg-(--bg-secondary) group transition duration-200 ${
         isLoading ? "cursor-default" : "cursor-pointer"
       }`}
+      aria-label={`Refresh ${view} data`}
     >
       {isLoading ? (
         <Spin className="border-t-black/70" />
