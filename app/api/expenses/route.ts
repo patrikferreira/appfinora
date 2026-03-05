@@ -99,12 +99,13 @@ export async function POST(req: NextRequest) {
       .from("categories")
       .select("id")
       .eq("name", category)
+      .eq("type", "expense")
       .single();
 
     if (categoryError || !categoryData) {
       console.error("Category lookup error:", categoryError);
       return new Response(
-        JSON.stringify({ error: `Invalid category: ${category}` }),
+        JSON.stringify({ error: `Invalid expense category: ${category}` }),
         { status: 400 }
       );
     }

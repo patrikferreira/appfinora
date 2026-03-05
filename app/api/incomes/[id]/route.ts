@@ -79,6 +79,7 @@ export async function PUT(
         .from("categories")
         .select("id")
         .eq("name", category)
+        .eq("type", "income")
         .single();
       categoryId = categoryData?.id || null;
     }
