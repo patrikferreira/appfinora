@@ -1,6 +1,7 @@
 "use client";
 import { createContext, ReactNode, useEffect, useState } from "react";
 import {
+  billingCycle,
   ConfirmAction,
   Expense,
   ExpenseDetail,
@@ -38,6 +39,8 @@ type AppContextType = {
   setExpenseDetail: (expenseDetail: ExpenseDetail) => void;
   refreshData: boolean;
   setRefreshData: (value: boolean) => void;
+  billingCycle?: billingCycle;
+  setBillingCycle?: (cycle: billingCycle) => void;
 };
 
 const AppContext = createContext<AppContextType>({
@@ -78,6 +81,8 @@ const AppContext = createContext<AppContextType>({
   setExpenseDetail: () => {},
   refreshData: false,
   setRefreshData: () => {},
+  billingCycle: "monthly",
+  setBillingCycle: () => {},
 });
 
 export default AppContext;
@@ -113,6 +118,7 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
     currentExpense: null,
   });
   const [refreshData, setRefreshData] = useState<boolean>(false);
+  const [billingCycle, setBillingCycle] = useState<billingCycle>("monthly");
 
   useEffect(() => {
     setInitialFetching(true);
@@ -205,6 +211,8 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
         setExpenseDetail,
         refreshData,
         setRefreshData,
+        billingCycle,
+        setBillingCycle,
       }}
     >
       {children}

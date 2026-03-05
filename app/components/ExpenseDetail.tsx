@@ -259,7 +259,7 @@ export default function ExpenseDetail() {
               type="number"
               id="amount"
               name="amount"
-              placeholder="$"
+              placeholder="$ 0.00"
               value={formData.amount ?? ""}
               onChange={handleChange}
               className="w-full bg-(--bg-secondary) border border-(--border-primary) rounded-xl px-4 py-2.5 outline-none appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"

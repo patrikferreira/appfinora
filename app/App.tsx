@@ -6,7 +6,7 @@ export default function App() {
   const router = useRouter();
 
   useEffect(() => {
-    router.push("/incomes");
+    router.push("/overview");
   }, [router]);
 
   return null;

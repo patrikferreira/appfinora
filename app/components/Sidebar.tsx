@@ -92,7 +92,7 @@ export default function Sidebar() {
                     closeSidebar();
                   }
                 }}
-                className={`flex items-center gap-2 rounded-xl hover:bg-(--bg-tertiary) transition duration-200 p-2 cursor-pointer ${
+                className={`flex items-center gap-2 rounded-full hover:bg-(--bg-tertiary) transition duration-200 p-2 cursor-pointer ${
                   active
                     ? "bg-(--bg-tertiary) text-(--foreground) font-semibold"
                     : ""

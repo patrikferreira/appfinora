@@ -227,7 +227,7 @@ export default function Incomes() {
           </thead>
 
           <tbody>
-            {visibleIncomes.map((income, index) => (
+            {visibleIncomes.map((income) => (
               <tr
                 key={income.id}
                 className={`border-b border-(--border-primary) last:border-0  bg-(--bg-secondary) group hover:bg-(--bg-tertiary)`}

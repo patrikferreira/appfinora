@@ -104,3 +104,4 @@ export type ExpenseCategory =
 
 /* HELPERS */
 export type Cycle = "monthly" | "yearly";
+export type billingCycle = "monthly" | "yearly" | "totaly";
