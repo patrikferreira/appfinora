@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { Expense } from "../AppTypes";
-import { useState, useMemo, useEffect, useRef } from "react";
+import { useState, useMemo, useEffect, useRef, useContext } from "react";
 import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 import SortIcon from "./SortIcon";
+import AppContext from "../AppContext";
 
 type Props = {
   className?: string;
@@ -13,6 +14,13 @@ type SortField = "description" | "amount";
 type SortOrder = "asc" | "desc" | null;
 
 export default function ExpenseViewTable({ expenses = [], className }: Props) {
+  const context = useContext(AppContext);
+  if (!context) {
+    throw new Error("AppContext is not provided");
+  }
+
+  const { billingCycle } = context;
+
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5);
   const [sortField, setSortField] = useState<SortField | null>("description");
@@ -20,16 +28,18 @@ export default function ExpenseViewTable({ expenses = [], className }: Props) {
   const contentRef = useRef<HTMLDivElement>(null);
   const tableRef = useRef<HTMLTableElement>(null);
 
-  const monthlyExpenses = useMemo(() => {
-    return expenses.filter((expense) => expense.cycle === "monthly");
-  }, [expenses]);
+  const filteredExpenses = useMemo(() => {
+    return billingCycle === "totaly"
+      ? expenses
+      : expenses.filter((expense) => expense.cycle === billingCycle);
+  }, [expenses, billingCycle]);
 
   const totalAmount = useMemo(() => {
-    return monthlyExpenses.reduce(
+    return filteredExpenses.reduce(
       (sum, expense) => sum + (expense.amount ?? 0),
       0
     );
-  }, [monthlyExpenses]);
+  }, [filteredExpenses]);
 
   const handleSort = (field: SortField) => {
     if (sortField === field) {
@@ -45,9 +55,9 @@ export default function ExpenseViewTable({ expenses = [], className }: Props) {
   };
 
   const sortedExpenses = useMemo(() => {
-    if (!sortField || !sortOrder) return monthlyExpenses;
+    if (!sortField || !sortOrder) return filteredExpenses;
 
-    return [...monthlyExpenses].sort((a, b) => {
+    return [...filteredExpenses].sort((a, b) => {
       let aValue = a[sortField];
       let bValue = b[sortField];
 
@@ -61,7 +71,7 @@ export default function ExpenseViewTable({ expenses = [], className }: Props) {
       if (aValue > bValue) return sortOrder === "asc" ? 1 : -1;
       return 0;
     });
-  }, [monthlyExpenses, sortField, sortOrder]);
+  }, [filteredExpenses, sortField, sortOrder]);
 
   useEffect(() => {
     const calculateItemsPerPage = () => {
@@ -122,7 +132,7 @@ export default function ExpenseViewTable({ expenses = [], className }: Props) {
 
   return (
     <div
-      className={`flex flex-col justify-between border border-(--border-primary) bg-(--bg-secondary) rounded-xl shadow-xl ${className}`}
+      className={`flex flex-col justify-between border border-(--border-primary) bg-(--bg-secondary) rounded-2xl shadow-xl ${className}`}
     >
       <div className="flex flex-col gap-4 p-4 flex-1 min-h-0">
         {/* HEADER */}
@@ -139,7 +149,7 @@ export default function ExpenseViewTable({ expenses = [], className }: Props) {
               <button
                 onClick={handlePrevPage}
                 disabled={currentPage === 1}
-                className="p-2 rounded-xl border border-(--border-primary) hover:border-(--border-secondary) disabled:opacity-30 disabled:cursor-not-allowed transition duration-200"
+                className="p-2 rounded-2xl border border-(--border-primary) hover:border-(--border-secondary) disabled:opacity-30 disabled:cursor-not-allowed transition duration-200"
               >
                 <IoChevronBack />
               </button>
@@ -149,7 +159,7 @@ export default function ExpenseViewTable({ expenses = [], className }: Props) {
               <button
                 onClick={handleNextPage}
                 disabled={currentPage === totalPages}
-                className="p-2 rounded-xl border border-(--border-primary) hover:border-(--border-secondary) disabled:opacity-30 disabled:cursor-not-allowed transition duration-200"
+                className="p-2 rounded-2xl border border-(--border-primary) hover:border-(--border-secondary) disabled:opacity-30 disabled:cursor-not-allowed transition duration-200"
               >
                 <IoChevronForward />
               </button>
@@ -159,12 +169,12 @@ export default function ExpenseViewTable({ expenses = [], className }: Props) {
 
         {/* TABLE */}
         <div ref={contentRef} className="flex-1 flex flex-col min-h-0">
-          {monthlyExpenses.length === 0 ? (
+          {filteredExpenses.length === 0 ? (
             <div className="flex items-center justify-center flex-1 text-sm opacity-50">
               No expenses yet
             </div>
           ) : (
-            <div className="max-h-full flex flex-col overflow-hidden rounded-xl border border-(--border-primary)">
+            <div className="max-h-full flex flex-col overflow-hidden rounded-2xl border border-(--border-primary)">
               <table ref={tableRef} className="w-full table-fixed">
                 <thead>
                   <tr>
@@ -243,7 +253,7 @@ export default function ExpenseViewTable({ expenses = [], className }: Props) {
         </div>
       </div>
 
-      {monthlyExpenses.length > 0 && (
+      {filteredExpenses.length > 0 && (
         <div className="w-full flex items-center justify-center p-4 border-t border-(--border-primary)">
           <Link
             href="/expenses"

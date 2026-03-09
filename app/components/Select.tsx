@@ -32,7 +32,7 @@ export default function Select<T extends string | number>({
       <button
         type="button"
         onClick={() => setOpen((prev) => !prev)}
-        className={`w-full border border-(--border-primary) rounded-xl px-4 py-2.5 bg-(--bg-secondary) text-(--foreground) text-left flex justify-between items-center focus:border-(--border-secondary) outline-none h-11 ${
+        className={`w-full border border-(--border-primary) rounded-2xl px-4 py-2.5 bg-(--bg-secondary) text-(--foreground) text-left flex justify-between items-center focus:border-(--border-secondary) outline-none h-11 ${
           btnClassName ?? ""
         }`}
       >
@@ -45,7 +45,7 @@ export default function Select<T extends string | number>({
       {open && (
         <Popover
           onClose={() => setOpen(false)}
-          className="mt-1 rounded-xl p-1 !max-h-42 w-full"
+          className="mt-1 rounded-2xl p-1 !max-h-42 w-full"
         >
           {options.map((option) => (
             <button
@@ -55,7 +55,7 @@ export default function Select<T extends string | number>({
                 onChange(option.value);
                 setOpen(false);
               }}
-              className={`w-full text-left px-3 py-2 min-h-10 rounded-xl transition-all duration-200 hover:bg-(--bg-secondary) flex justify-between items-center text-(--foreground)`}
+              className={`w-full text-left px-3 py-2 min-h-10 rounded-2xl transition-all duration-200 hover:bg-(--bg-secondary) flex justify-between items-center text-(--foreground)`}
             >
               <span className="text-sm">{option.label}</span>
               {value === option.value && (

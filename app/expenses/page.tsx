@@ -160,7 +160,7 @@ export default function Expenses() {
       />
 
       {/* TABLE */}
-      <div className="w-full rounded-xl border border-(--border-primary) hover:border-(--border-primary) overflow-hidden">
+      <div className="w-full rounded-2xl border border-(--border-primary) hover:border-(--border-primary) overflow-hidden">
         <table className="w-full table-fixed">
           <thead>
             <tr>
@@ -254,7 +254,7 @@ export default function Expenses() {
                 <td className="w-1/10 px-4 text-sm">
                   <button
                     onClick={() => handleMenu(expense.id)}
-                    className="opacity-50 group-hover:opacity-100 cursor-pointer p-2 rounded-xl border border-(--border-primary) hover:border-(--border-secondary) transition duration-200 flex items-center justify-center"
+                    className="opacity-50 group-hover:opacity-100 cursor-pointer p-2 rounded-2xl border border-(--border-primary) hover:border-(--border-secondary) transition duration-200 flex items-center justify-center"
                   >
                     <HiMiniEllipsisVertical />
                   </button>
@@ -275,7 +275,7 @@ export default function Expenses() {
 
                             setMenuOpen(null);
                           }}
-                          className="p-2 w-full hover:bg-(--bg-secondary) hover:text-(--foreground) transition duration-200 rounded-xl text-left cursor-pointer flex gap-2 items-center"
+                          className="p-2 w-full hover:bg-(--bg-secondary) hover:text-(--foreground) transition duration-200 rounded-2xl text-left cursor-pointer flex gap-2 items-center"
                         >
                           <FaRegEdit /> Edit
                         </button>
@@ -283,7 +283,7 @@ export default function Expenses() {
                           onClick={() => {
                             handleDeleteClick(expense.id!);
                           }}
-                          className="p-2 w-full hover:bg-(--bg-secondary) hover:text-(--foreground) transition duration-200 rounded-xl text-left cursor-pointer flex gap-2 items-center"
+                          className="p-2 w-full hover:bg-(--bg-secondary) hover:text-(--foreground) transition duration-200 rounded-2xl text-left cursor-pointer flex gap-2 items-center"
                         >
                           <FaRegTrashCan /> Delete
                         </button>

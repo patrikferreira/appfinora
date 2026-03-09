@@ -9,7 +9,7 @@ import { logoutUser } from "../AppServices";
 import { useRouter } from "next/navigation";
 
 export default function Profile() {
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const context = useContext(AppContext);
@@ -17,7 +17,7 @@ export default function Profile() {
     throw new Error("AppContext is not provided");
   }
 
-  const { user, setToast, setIsSidebarOpen } = context;
+  const { user, setToast, setIsSidebarOpen, setUser } = context;
 
   function handleMenu() {
     setMenuOpen((prev) => !prev);
@@ -37,6 +37,7 @@ export default function Profile() {
       } else {
         router.push("/login");
         setIsSidebarOpen?.(false);
+        setUser?.(undefined);
       }
     } catch (error) {
       console.error("Logout failed:", error);
@@ -48,7 +49,7 @@ export default function Profile() {
   return (
     <div
       onClick={handleMenu}
-      className="flex items-center gap-3 cursor-pointer relative w-full hover:bg-(--bg-tertiary) transition duration-200 p-2 rounded-xl"
+      className="flex items-center gap-3 cursor-pointer relative w-full hover:bg-(--bg-tertiary) transition duration-200 p-2 rounded-2xl"
     >
       <div className="h-9 w-9 bg-(--primary) rounded-full flex items-center justify-center">
         <LuUserRound className="text-(--background)" size={20} />
@@ -72,10 +73,10 @@ export default function Profile() {
 
             <hr className="border-(--border-secondary)" />
             <div className="flex flex-col p-1.5">
-              <button className=" p-2 w-full hover:bg-(--bg-secondary) hover:text-(--foreground) transition duration-200 rounded-xl text-left cursor-pointer flex gap-2 items-center">
+              <button className=" p-2 w-full hover:bg-(--bg-secondary) hover:text-(--foreground) transition duration-200 rounded-2xl text-left cursor-pointer flex gap-2 items-center">
                 <AiOutlineUser size={14} /> View profile
               </button>
-              <button className=" p-2 w-full hover:bg-(--bg-secondary) hover:text-(--foreground) transition duration-200 rounded-xl text-left cursor-pointer flex gap-2 items-center">
+              <button className=" p-2 w-full hover:bg-(--bg-secondary) hover:text-(--foreground) transition duration-200 rounded-2xl text-left cursor-pointer flex gap-2 items-center">
                 <IoSettingsOutline size={14} /> Account preferences
               </button>
             </div>
@@ -83,7 +84,7 @@ export default function Profile() {
             <hr className="border-(--border-secondary)" />
             <div className="p-1.5">
               <button
-                className="flex items-center gap-2 p-2 w-full  hover:bg-(--bg-secondary) hover:text-(--foreground) cursor-pointer  rounded-xl transition duration-200"
+                className="flex items-center gap-2 p-2 w-full  hover:bg-(--bg-secondary) hover:text-(--foreground) cursor-pointer  rounded-2xl transition duration-200"
                 onClick={handleLogout}
                 disabled={isLoading}
               >

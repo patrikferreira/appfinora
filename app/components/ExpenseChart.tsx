@@ -169,7 +169,7 @@ export default function ExpenseChart({ data, className }: Props) {
 
   return (
     <div
-      className={`flex flex-col gap-4 p-4 border border-(--border-primary) bg-(--bg-secondary) rounded-xl shaodw-xl ${className}`}
+      className={`flex flex-col gap-4 p-4 z-0 border border-(--border-primary) bg-(--bg-secondary) rounded-2xl shaodw-xl ${className}`}
     >
       {/* HEADER */}
       <div className="flex items-center justify-between gap-2">
@@ -199,7 +199,7 @@ export default function ExpenseChart({ data, className }: Props) {
       {/* CHART */}
       {!data || data.length === 0 ? (
         <div className="flex items-center justify-center flex-1 text-sm opacity-50">
-          No data yet
+          No expenses yet
         </div>
       ) : (
         <div className="flex-1 flex min-h-[200px] max-h-[300px]">

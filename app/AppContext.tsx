@@ -39,8 +39,10 @@ type AppContextType = {
   setExpenseDetail: (expenseDetail: ExpenseDetail) => void;
   refreshData: boolean;
   setRefreshData: (value: boolean) => void;
-  billingCycle?: billingCycle;
-  setBillingCycle?: (cycle: billingCycle) => void;
+  billingCycle: billingCycle;
+  setBillingCycle: (cycle: billingCycle) => void;
+  trialPeriodAlert?: boolean;
+  setTrialPeriodAlert?: (value: boolean) => void;
 };
 
 const AppContext = createContext<AppContextType>({
@@ -119,6 +121,7 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
   });
   const [refreshData, setRefreshData] = useState<boolean>(false);
   const [billingCycle, setBillingCycle] = useState<billingCycle>("monthly");
+  const [trialPeriodAlert, setTrialPeriodAlert] = useState<boolean>(false);
 
   useEffect(() => {
     setInitialFetching(true);
@@ -153,6 +156,9 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
         ]);
         setLocalIncomes(incomesData.incomes ?? []);
         setLocalExpenses(expensesData.expenses ?? []);
+        if (user.email !== "patrik@mail.com") {
+          setTrialPeriodAlert(true);
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -213,6 +219,8 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
         setRefreshData,
         billingCycle,
         setBillingCycle,
+        trialPeriodAlert,
+        setTrialPeriodAlert,
       }}
     >
       {children}

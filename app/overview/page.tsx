@@ -5,6 +5,8 @@ import LoadingSpin from "../components/LoadingSpin";
 import ExpenseChart from "../components/ExpenseChart";
 import TotalBalance from "../components/TotalBalance";
 import ExpenseViewTable from "../components/ExpenseViewTable";
+import Select from "../components/Select";
+import { billingCycle } from "../AppTypes";
 
 export default function Overview() {
   const context = useContext(AppContext);
@@ -12,7 +14,14 @@ export default function Overview() {
     throw new Error("AppContext is not provided");
   }
 
-  const { user, initialFetching, localExpenses, localIncomes } = context;
+  const {
+    user,
+    initialFetching,
+    localExpenses,
+    localIncomes,
+    billingCycle,
+    setBillingCycle,
+  } = context;
 
   if (initialFetching)
     return (
@@ -28,14 +37,29 @@ export default function Overview() {
       className={`min-h-svh lg:h-screen p-4 flex flex-col gap-4 overflow-auto w-full animate-fadeIn`}
     >
       {/* TITLE VIEW */}
-      <div className="hidden md:flex flex-col">
-        <h1 className="text-2xl font-semibold">Overview</h1>
-        <span className="opacity-50 text-sm">Summary overview</span>
+      <div className="flex items-center justify-between">
+        <div className="hidden md:flex flex-col">
+          <h1 className="text-2xl font-semibold">Overview</h1>
+          <span className="opacity-50 text-sm">Summary overview</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <p className="hidden lg:flex opacity-50 text-sm">Select the cyle</p>
+          <Select
+            value={billingCycle}
+            onChange={(value) => setBillingCycle(value as billingCycle)}
+            options={[
+              { value: "monthly", label: "Monthly" },
+              { value: "yearly", label: "Yearly" },
+              { value: "totaly", label: "Totaly" },
+            ]}
+            btnClassName="!h-10"
+          />
+        </div>
       </div>
 
       {/* DASHBOARD */}
       <div className="flex flex-col lg:flex-row gap-4 w-full h-full">
-        <div className="lg:w-1/2 h-full  flex flex-col gap-4">
+        <div className="lg:w-1/2 h-full flex flex-col gap-4">
           <ExpenseChart data={localExpenses} className="flex-1" />
           <TotalBalance
             incomes={localIncomes}

@@ -26,7 +26,7 @@ export default function ConfirmModal() {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-(--bg-secondary) rounded-xl shadow-lg w-full max-w-sm p-6"
+        className="bg-(--bg-secondary) rounded-2xl shadow-lg w-full max-w-sm p-6"
       >
         <h2 className="text-lg font-semibold mb-2 text-[var(--foreground)]">
           {confirmAction.title}
@@ -35,13 +35,13 @@ export default function ConfirmModal() {
         <div className="flex justify-end space-x-2">
           <button
             onClick={handleCancel}
-            className="px-4 py-2 rounded-xl bg-(--bg-tertiary) hover:brightness-115  cursor-pointer transition-all duration-200 text-sm"
+            className="px-4 py-2 rounded-2xl bg-(--bg-tertiary) hover:brightness-115  cursor-pointer transition-all duration-200 text-sm"
           >
             Cancel
           </button>
           <button
             onClick={handleConfirm}
-            className="px-4 py-2 rounded-xl bg-red-500 text-white hover:brightness-90 cursor-pointer transition-all duration-200 text-sm"
+            className="px-4 py-2 rounded-2xl bg-red-500 text-white hover:brightness-90 cursor-pointer transition-all duration-200 text-sm"
           >
             Confirm
           </button>

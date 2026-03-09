@@ -177,7 +177,7 @@ export default function IncomeDetail() {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="flex flex-col justify-between w-full h-full sm:h-auto sm:w-md border border-(--border-primary) sm:rounded-xl bg-(--bg-primary) animate-modalGrow"
+        className="flex flex-col justify-between w-full h-full sm:h-auto sm:w-md border border-(--border-primary) sm:rounded-2xl bg-(--bg-primary) animate-modalGrow"
       >
         <div className="flex items-center justify-between px-4 py-3 border-b border-(--border-primary)">
           <h3 className="text-base">
@@ -244,7 +244,7 @@ export default function IncomeDetail() {
               onChange={handleChange}
               maxLength={50}
               autoFocus
-              className="w-full bg-(--bg-secondary) border border-(--border-primary) rounded-xl px-4 py-2.5 outline-none"
+              className="w-full bg-(--bg-secondary) border border-(--border-primary) rounded-2xl px-4 py-2.5 outline-none"
             />
           </div>
           <div>
@@ -258,7 +258,7 @@ export default function IncomeDetail() {
               placeholder="$ 0.00"
               value={formData.amount ?? ""}
               onChange={handleChange}
-              className="w-full bg-(--bg-secondary) border border-(--border-primary) rounded-xl px-4 py-2.5 outline-none appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+              className="w-full bg-(--bg-secondary) border border-(--border-primary) rounded-2xl px-4 py-2.5 outline-none appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
             />
           </div>
         </div>
@@ -271,7 +271,7 @@ export default function IncomeDetail() {
           {!incomeDetail.newIncome && (
             <button
               onClick={handleDeleteClick}
-              className="h-9 px-3 text-sm rounded-xl bg-(--bg-tertiary) cursor-pointer transition duration-200 hover:brightness-115"
+              className="h-9 px-3 text-sm rounded-2xl bg-(--bg-tertiary) cursor-pointer transition duration-200 hover:brightness-115"
             >
               Delete
             </button>
@@ -280,7 +280,7 @@ export default function IncomeDetail() {
             <button
               onClick={submit}
               disabled={isLoading}
-              className={`h-9 px-3 w-15 text-sm rounded-xl flex items-center justify-center bg-(--primary) transition duration-200 hover:brightness-115 ${
+              className={`h-9 px-3 w-15 text-sm rounded-2xl flex items-center justify-center bg-(--primary) transition duration-200 hover:brightness-115 ${
                 isLoading ? "cursor-default" : "cursor-pointer"
               }`}
             >
@@ -288,7 +288,7 @@ export default function IncomeDetail() {
             </button>
             <button
               onClick={onClose}
-              className="text-sm h-9 px-3 2-15 rounded-xl bg-(--bg-tertiary) cursor-pointer transition duration-200 hover:brightness-115"
+              className="text-sm h-9 px-3 2-15 rounded-2xl bg-(--bg-tertiary) cursor-pointer transition duration-200 hover:brightness-115"
             >
               Cancel
             </button>

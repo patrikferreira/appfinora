@@ -75,7 +75,7 @@ export default function Sidebar() {
           <Logo />
           <button
             onClick={() => setIsSidebarOpen?.(false)}
-            className="cursor-pointer md:hidden p-2 rounded-xl hover:bg-(--bg-tertiary) transition duration-200"
+            className="cursor-pointer md:hidden p-2 rounded-2xl hover:bg-(--bg-tertiary) transition duration-200"
           >
             <FiSidebar size={18} />
           </button>
