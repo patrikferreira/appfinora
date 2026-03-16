@@ -55,11 +55,12 @@ export default function TotalBalance({ incomes, expenses, className }: Props) {
   const circumference = 2 * Math.PI * radius;
   const progressOffset =
     circumference - (balancePercentage / 100) * circumference;
-  const strokeColor = balance >= 0 ? "#3cc087" : "var(--negative)";
+  const strokeColor = balance >= 0 ? "var(--primary)" : "var(--negative)";
+  const bgCircleColor = getComputedStyle(document.documentElement).getPropertyValue('--bg-primary').trim();
 
   return (
     <div
-      className={`flex flex-col gap-4 p-4 border border-(--border-primary) bg-(--bg-secondary) rounded-2xl shadow-xl ${className}`}
+      className={`flex flex-col gap-4 p-4 border border-(--border) bg-(--bg-secondary) min-h-60 rounded-2xl ${className}`}
     >
       {/* HEADER */}
       <div className="flex items-center justify-between">
@@ -92,7 +93,7 @@ export default function TotalBalance({ incomes, expenses, className }: Props) {
                 cx="90"
                 cy="90"
                 r={radius}
-                stroke="#ffffff08"
+                stroke={bgCircleColor}
                 strokeWidth="10"
                 fill="none"
               />
@@ -115,27 +116,18 @@ export default function TotalBalance({ incomes, expenses, className }: Props) {
               </p>
               <h3
                 className="text-2xl font-bold tabular-nums transition-colors duration-300"
-                style={{ color: balance >= 0 ? "#3cc087" : "var(--negative)" }}
+                style={{ color: balance >= 0 ? "var(--primary)" : "var(--negative)" }}
               >
-                ${Math.abs(balance).toFixed(2)}
+                {balance < 0 ? "- " : ""}${Math.abs(balance).toFixed(2)}
               </h3>
-              <span
-                className="text-[10px] font-medium px-2 py-0.5 rounded-full"
-                style={{
-                  backgroundColor: balance >= 0 ? "#3cc08718" : "var(--negative)18",
-                  color: balance >= 0 ? "#3cc087" : "var(--negative)",
-                }}
-              >
-                {balancePercentage.toFixed(0)}%
-              </span>
             </div>
           </div>
 
           <div className="flex flex-col gap-3 flex-1 w-full">
-            <div className="group flex items-center gap-4 p-4 rounded-2xl border border-white/5 bg-white/[0.03] hover:bg-[#3cc087]/5 hover:border-[#3cc087]/20 transition-all duration-300">
-              <div className="w-9 h-9 flex items-center justify-center rounded-lg bg-[#3cc087]/10 shrink-0">
+            <div className="group flex items-center gap-4 p-4 rounded-2xl border border-(--border) bg-(--bg-primary) hover:bg-(--primary)/5 hover:border-(--primary)/20 transition-all duration-300">
+              <div className="w-9 h-9 flex items-center justify-center rounded-lg bg-(--primary)/10 shrink-0">
                 <svg
-                  className="w-4 h-4 text-[#3cc087]"
+                  className="w-4 h-4 text-(--primary)"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -152,13 +144,13 @@ export default function TotalBalance({ incomes, expenses, className }: Props) {
                 <p className="text-[11px] uppercase tracking-widest opacity-30">
                   Income
                 </p>
-                <h4 className="text-lg font-semibold tabular-nums text-[#3cc087]">
+                <h4 className="text-lg font-semibold tabular-nums text-(--primary)">
                   ${totalIncome.toFixed(2)}
                 </h4>
               </div>
             </div>
 
-            <div className="group flex items-center gap-4 p-4 rounded-2xl border border-white/5 bg-white/[0.03] hover:bg-[var(--negative)]/5 hover:border-[var(--negative)]/20 transition-all duration-300">
+            <div className="group flex items-center gap-4 p-4 rounded-2xl border border-(--border) bg-(--bg-primary) hover:bg-[var(--negative)]/5 hover:border-[var(--negative)]/20 transition-all duration-300">
               <div className="w-9 h-9 flex items-center justify-center rounded-lg bg-[var(--negative)]/10 shrink-0">
                 <svg
                   className="w-4 h-4 text-[var(--negative)]"

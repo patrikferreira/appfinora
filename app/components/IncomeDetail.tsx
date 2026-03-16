@@ -177,9 +177,9 @@ export default function IncomeDetail() {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="flex flex-col justify-between w-full h-full sm:h-auto sm:w-md border border-(--border-primary) sm:rounded-2xl bg-(--bg-primary) animate-modalGrow"
+        className="flex flex-col justify-between w-full h-full sm:h-auto sm:w-md border border-(--border) sm:rounded-2xl bg-(--bg-primary) animate-modalGrow"
       >
-        <div className="flex items-center justify-between px-4 py-3 border-b border-(--border-primary)">
+        <div className="flex items-center justify-between px-4 py-3 border-b border-(--border)">
           <h3 className="text-base">
             {incomeDetail.newIncome ? "New income" : "Edit income"}
           </h3>
@@ -244,7 +244,7 @@ export default function IncomeDetail() {
               onChange={handleChange}
               maxLength={50}
               autoFocus
-              className="w-full bg-(--bg-secondary) border border-(--border-primary) rounded-2xl px-4 py-2.5 outline-none"
+              className="w-full bg-(--bg-secondary) border border-(--border) rounded-2xl px-4 py-2.5 outline-none"
             />
           </div>
           <div>
@@ -258,7 +258,7 @@ export default function IncomeDetail() {
               placeholder="$ 0.00"
               value={formData.amount ?? ""}
               onChange={handleChange}
-              className="w-full bg-(--bg-secondary) border border-(--border-primary) rounded-2xl px-4 py-2.5 outline-none appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+              className="w-full bg-(--bg-secondary) border border-(--border) rounded-2xl px-4 py-2.5 outline-none appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
             />
           </div>
         </div>
@@ -266,7 +266,7 @@ export default function IncomeDetail() {
         <div
           className={`flex items-center ${
             incomeDetail.newIncome ? "justify-end" : "justify-between"
-          } gap-2 border-t border-(--border-primary) px-4 py-3`}
+          } gap-2 border-t border-(--border) px-4 py-3`}
         >
           {!incomeDetail.newIncome && (
             <button
@@ -280,7 +280,7 @@ export default function IncomeDetail() {
             <button
               onClick={submit}
               disabled={isLoading}
-              className={`h-9 px-3 w-15 text-sm rounded-2xl flex items-center justify-center bg-(--primary) transition duration-200 hover:brightness-115 ${
+              className={`h-9 px-3 w-15 text-sm rounded-2xl flex items-center justify-center bg-(--primary) text-white transition duration-200 hover:brightness-115 ${
                 isLoading ? "cursor-default" : "cursor-pointer"
               }`}
             >

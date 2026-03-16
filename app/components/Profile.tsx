@@ -51,7 +51,7 @@ export default function Profile() {
       onClick={handleMenu}
       className="flex items-center gap-3 cursor-pointer relative w-full hover:bg-(--bg-tertiary) transition duration-200 p-2 rounded-2xl"
     >
-      <div className="h-9 w-9 bg-(--primary) rounded-full flex items-center justify-center">
+      <div className="h-9 w-9 bg-(--primary) text-white rounded-full flex items-center justify-center">
         <LuUserRound className="text-(--background)" size={20} />
       </div>
 
@@ -71,20 +71,20 @@ export default function Profile() {
               <span className="text-sm opacity-50">{user?.email}</span>
             </div>
 
-            <hr className="border-(--border-secondary)" />
+            <hr className="border-(--border)" />
             <div className="flex flex-col p-1.5">
-              <button className=" p-2 w-full hover:bg-(--bg-secondary) hover:text-(--foreground) transition duration-200 rounded-2xl text-left cursor-pointer flex gap-2 items-center">
+              <button className=" p-2 w-full hover:bg-(--bg-tertiary) hover:text-(--foreground) transition duration-200 rounded-2xl text-left cursor-pointer flex gap-2 items-center">
                 <AiOutlineUser size={14} /> View profile
               </button>
-              <button className=" p-2 w-full hover:bg-(--bg-secondary) hover:text-(--foreground) transition duration-200 rounded-2xl text-left cursor-pointer flex gap-2 items-center">
+              <button className=" p-2 w-full hover:bg-(--bg-tertiary) hover:text-(--foreground) transition duration-200 rounded-2xl text-left cursor-pointer flex gap-2 items-center">
                 <IoSettingsOutline size={14} /> Account preferences
               </button>
             </div>
 
-            <hr className="border-(--border-secondary)" />
+            <hr className="border-(--border)" />
             <div className="p-1.5">
               <button
-                className="flex items-center gap-2 p-2 w-full  hover:bg-(--bg-secondary) hover:text-(--foreground) cursor-pointer  rounded-2xl transition duration-200"
+                className="flex items-center gap-2 p-2 w-full  hover:bg-(--bg-tertiary) hover:text-(--foreground) cursor-pointer  rounded-2xl transition duration-200"
                 onClick={handleLogout}
                 disabled={isLoading}
               >

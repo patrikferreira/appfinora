@@ -100,7 +100,7 @@ export default function Signup() {
               value={form.name}
               onChange={handleChange}
               placeholder="John Doe"
-              className="w-full text-sm rounded-full border border-(--border-primary) bg-(--bg-secondary) outline-none px-4 h-10"
+              className="w-full text-sm rounded-full border border-(--border) bg-(--bg-secondary) outline-none px-4 h-10"
             />
           </label>
 
@@ -113,7 +113,7 @@ export default function Signup() {
               value={form.email}
               onChange={handleChange}
               placeholder="johndoe@mail.com"
-              className="w-full text-sm rounded-full border border-(--border-primary) bg-(--bg-secondary) outline-none px-4 h-10"
+              className="w-full text-sm rounded-full border border-(--border) bg-(--bg-secondary) outline-none px-4 h-10"
             />
           </label>
 
@@ -126,7 +126,7 @@ export default function Signup() {
               value={form.password}
               onChange={handleChange}
               placeholder="********"
-              className="w-full text-sm rounded-full border border-(--border-primary) bg-(--bg-secondary) outline-none px-4 h-10"
+              className="w-full text-sm rounded-full border border-(--border) bg-(--bg-secondary) outline-none px-4 h-10"
             />
             <button
               type="button"
@@ -149,7 +149,7 @@ export default function Signup() {
               placeholder="********"
               value={form.confirmPassword}
               onChange={handleChange}
-              className="w-full text-sm rounded-full border border-(--border-primary) bg-(--bg-secondary) outline-none px-4 h-10"
+              className="w-full text-sm rounded-full border border-(--border) bg-(--bg-secondary) outline-none px-4 h-10"
             />
             <button
               type="button"

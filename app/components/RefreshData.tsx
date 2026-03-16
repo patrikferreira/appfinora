@@ -54,7 +54,7 @@ export default function RefreshData({ view }: Props) {
     <button
       disabled={isLoading}
       onClick={refresh}
-      className={`h-10 min-w-10 flex items-center justify-center rounded-full border border-(--border-primary) group text-sm bg-(--bg-secondary) group transition duration-200 ${
+      className={`h-10 min-w-10 flex items-center justify-center rounded-full border border-(--border) group text-sm bg-(--bg-secondary) group transition duration-200 ${
         isLoading ? "cursor-default" : "cursor-pointer"
       }`}
       aria-label={`Refresh ${view} data`}

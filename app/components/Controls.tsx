@@ -59,7 +59,7 @@ export default function Controls({
         />
         <RefreshData view={view} />
         <button
-          className="px-3 h-10 text-sm bg-(--primary) text-(--background) cursor-pointer flex items-center gap-2 justify-center shadow-lg transition duration-200 hover:brightness-115 rounded-full"
+          className="px-3 h-10 text-sm text-white bg-(--primary) cursor-pointer flex items-center gap-2 justify-center shadow-lg transition duration-200 hover:brightness-115 rounded-full"
           onClick={handleAdd}
         >
           <IoAddOutline />

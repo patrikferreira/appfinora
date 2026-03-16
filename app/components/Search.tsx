@@ -24,7 +24,7 @@ export default function Search({ placeholder }: Props) {
 
   return (
     <div
-      className={`flex items-center gap-2 bg-(--bg-secondary) h-10 w-3xs py-1 px-3 rounded-full group border ${hasQuery ? "border-(--primary)" : "border-(--border-primary)"} transition-all duration-200`}
+      className={`flex items-center gap-2 bg-(--bg-secondary) h-10 w-3xs py-1 px-3 rounded-full group border ${hasQuery ? "border-2 border-(--primary)" : "border-(--border)"} transition-all duration-200`}
     >
       <LuSearch
         size={18}

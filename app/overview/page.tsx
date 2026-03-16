@@ -52,14 +52,14 @@ export default function Overview() {
               { value: "yearly", label: "Yearly" },
               { value: "totaly", label: "Totaly" },
             ]}
-            btnClassName="!h-10"
+            btnClassName="!h-10 !w-30"
           />
         </div>
       </div>
 
       {/* DASHBOARD */}
       <div className="flex flex-col lg:flex-row gap-4 w-full h-full">
-        <div className="lg:w-1/2 h-full flex flex-col gap-4">
+        <div className="lg:w-1/2 w-full flex flex-col gap-4">
           <ExpenseChart data={localExpenses} className="flex-1" />
           <TotalBalance
             incomes={localIncomes}
@@ -68,7 +68,7 @@ export default function Overview() {
           />
         </div>
 
-        <ExpenseViewTable expenses={localExpenses} className="flex-1" />
+        <ExpenseViewTable expenses={localExpenses} className="flex-1 w-full" />
       </div>
     </div>
   );

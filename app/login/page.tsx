@@ -90,7 +90,7 @@ export default function Login() {
               value={form.email}
               onChange={handleChange}
               placeholder="johndoe@mail.com"
-              className="text-sm w-full rounded-full border border-(--border-primary) outline-none px-4 h-10 bg-(--bg-secondary) text-(--foreground)"
+              className="text-sm w-full rounded-full border border-(--border) outline-none px-4 h-10 bg-(--bg-secondary) text-(--foreground)"
             />
           </label>
 
@@ -102,7 +102,7 @@ export default function Login() {
               value={form.password}
               onChange={handleChange}
               placeholder="********"
-              className="text-sm w-full rounded-full border border-(--border-primary) bg-(--bg-secondary) outline-none px-4 h-10"
+              className="text-sm w-full rounded-full border border-(--border) bg-(--bg-secondary) outline-none px-4 h-10"
             />
             <button
               type="button"

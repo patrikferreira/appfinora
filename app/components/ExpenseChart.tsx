@@ -84,7 +84,7 @@ export default function ExpenseChart({ data, className }: Props) {
     (cat) => cat.charAt(0).toUpperCase() + cat.slice(1)
   );
 
-  const primaryHex = "#3cc087";
+  const primaryHex = "#0d6efd";
   const hexToRgba = (hex: string, alpha = 1) => {
     const cleaned = hex.replace("#", "");
     const bigint = parseInt(
@@ -106,6 +106,9 @@ export default function ExpenseChart({ data, className }: Props) {
   const backgroundColors = sortedAmounts.map((amt) =>
     amt > 0 && amt === maxAmount ? primaryHex : primary40
   );
+
+  const foregroundColor = getComputedStyle(document.documentElement).getPropertyValue('--foreground').trim();
+  const foregroundWithOpacity = hexToRgba(foregroundColor, 0.5);
 
   const chartData = {
     labels,
@@ -149,10 +152,10 @@ export default function ExpenseChart({ data, className }: Props) {
       y: {
         beginAtZero: true,
         grid: {
-          color: "#303030",
+          color: getComputedStyle(document.documentElement).getPropertyValue('--border').trim(),
         },
         ticks: {
-          color: "rgba(255,255,255,0.5)",
+          color: foregroundWithOpacity,
           callback: (value: number | string) => `$${value}`,
         },
       },
@@ -161,7 +164,7 @@ export default function ExpenseChart({ data, className }: Props) {
           display: false,
         },
         ticks: {
-          color: "rgba(255,255,255,0.5)",
+          color: foregroundWithOpacity,
         },
       },
     },
@@ -169,7 +172,7 @@ export default function ExpenseChart({ data, className }: Props) {
 
   return (
     <div
-      className={`flex flex-col gap-4 p-4 z-0 border border-(--border-primary) bg-(--bg-secondary) rounded-2xl shaodw-xl ${className}`}
+      className={`flex flex-col gap-4 p-4 z-0 border border-(--border) bg-(--bg-secondary) min-h-60 rounded-2xl ${className}`}
     >
       {/* HEADER */}
       <div className="flex items-center justify-between gap-2">

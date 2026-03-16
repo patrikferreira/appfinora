@@ -24,7 +24,7 @@ export default function Pagination({
   if (totalPages <= 1) return null;
 
   return (
-    <div className="h-10 rounded-full border border-(--border-primary) group transition-all duration-200 px-1.5 flex items-center gap-1 text-sm bg-(--bg-secondary)">
+    <div className="h-10 rounded-full border border-(--border) group transition-all duration-200 px-1.5 flex items-center gap-1 text-sm bg-(--bg-secondary)">
       <button
         onClick={handlePrevious}
         disabled={currentPage === 1}

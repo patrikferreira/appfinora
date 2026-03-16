@@ -132,7 +132,7 @@ export default function ExpenseViewTable({ expenses = [], className }: Props) {
 
   return (
     <div
-      className={`flex flex-col justify-between border border-(--border-primary) bg-(--bg-secondary) rounded-2xl shadow-xl ${className}`}
+      className={`flex flex-col justify-between border border-(--border) bg-(--bg-secondary) rounded-2xl ${className}`}
     >
       <div className="flex flex-col gap-4 p-4 flex-1 min-h-0">
         {/* HEADER */}
@@ -149,7 +149,7 @@ export default function ExpenseViewTable({ expenses = [], className }: Props) {
               <button
                 onClick={handlePrevPage}
                 disabled={currentPage === 1}
-                className="p-2 rounded-2xl border border-(--border-primary) hover:border-(--border-secondary) disabled:opacity-30 disabled:cursor-not-allowed transition duration-200"
+                className="p-2 rounded-2xl border border-(--border) hover:border-(--border) disabled:opacity-30 disabled:cursor-not-allowed transition duration-200"
               >
                 <IoChevronBack />
               </button>
@@ -159,7 +159,7 @@ export default function ExpenseViewTable({ expenses = [], className }: Props) {
               <button
                 onClick={handleNextPage}
                 disabled={currentPage === totalPages}
-                className="p-2 rounded-2xl border border-(--border-primary) hover:border-(--border-secondary) disabled:opacity-30 disabled:cursor-not-allowed transition duration-200"
+                className="p-2 rounded-2xl border border-(--border) hover:border-(--border) disabled:opacity-30 disabled:cursor-not-allowed transition duration-200"
               >
                 <IoChevronForward />
               </button>
@@ -168,19 +168,19 @@ export default function ExpenseViewTable({ expenses = [], className }: Props) {
         </div>
 
         {/* TABLE */}
-        <div ref={contentRef} className="flex-1 flex flex-col min-h-0">
+        <div ref={contentRef} className="flex-1 flex flex-col min-h-80">
           {filteredExpenses.length === 0 ? (
             <div className="flex items-center justify-center flex-1 text-sm opacity-50">
               No expenses yet
             </div>
           ) : (
-            <div className="max-h-full flex flex-col overflow-hidden rounded-2xl border border-(--border-primary)">
+            <div className="max-h-full flex flex-col overflow-hidden rounded-2xl border border-(--border)">
               <table ref={tableRef} className="w-full table-fixed">
                 <thead>
                   <tr>
                     <th
                       onClick={() => handleSort("description")}
-                      className="w-2/5 text-left bg-(--bg-secondary) tracking-wider border-b border-(--border-primary) px-4 text-xs uppercase py-3 cursor-pointer"
+                      className="w-2/5 text-left bg-(--bg-secondary) tracking-wider border-b border-(--border) px-4 text-xs uppercase py-3 cursor-pointer"
                     >
                       <div className="flex items-center gap-2">
                         Description
@@ -193,7 +193,7 @@ export default function ExpenseViewTable({ expenses = [], className }: Props) {
                     </th>
                     <th
                       onClick={() => handleSort("amount")}
-                      className="w-1/5 text-left bg-(--bg-secondary) tracking-wider border-b border-(--border-primary) px-4 text-xs uppercase py-3 cursor-pointer"
+                      className="w-1/5 text-left bg-(--bg-secondary) tracking-wider border-b border-(--border) px-4 text-xs uppercase py-3 cursor-pointer"
                     >
                       <div className="flex items-center gap-2">
                         Amount
@@ -204,10 +204,10 @@ export default function ExpenseViewTable({ expenses = [], className }: Props) {
                         />
                       </div>
                     </th>
-                    <th className="w-1/5 text-left bg-(--bg-secondary) tracking-wider border-b border-(--border-primary) px-4 text-xs uppercase py-3 hidden md:table-cell">
+                    <th className="w-1/5 text-left bg-(--bg-secondary) tracking-wider border-b border-(--border) px-4 text-xs uppercase py-3 hidden md:table-cell">
                       Category
                     </th>
-                    <th className="w-1/5 text-left bg-(--bg-secondary) tracking-wider border-b border-(--border-primary) px-4 text-xs uppercase py-3 table-cell">
+                    <th className="w-1/5 text-left bg-(--bg-secondary) tracking-wider border-b border-(--border) px-4 text-xs uppercase py-3 table-cell">
                       %
                     </th>
                   </tr>
@@ -225,7 +225,7 @@ export default function ExpenseViewTable({ expenses = [], className }: Props) {
                     return (
                       <tr
                         key={expense.id}
-                        className="border-b border-(--border-primary) last:border-0 bg-(--bg-secondary) hover:bg-(--bg-tertiary)"
+                        className="border-b border-(--border) last:border-0 bg-(--bg-secondary) hover:bg-(--bg-tertiary)"
                       >
                         <td className="w-2/5 px-4 py-3 text-sm truncate opacity-50">
                           {expense.description.charAt(0).toUpperCase() +
@@ -254,7 +254,7 @@ export default function ExpenseViewTable({ expenses = [], className }: Props) {
       </div>
 
       {filteredExpenses.length > 0 && (
-        <div className="w-full flex items-center justify-center p-4 border-t border-(--border-primary)">
+        <div className="w-full flex items-center justify-center p-4 border-t border-(--border)">
           <Link
             href="/expenses"
             className="text-sm opacity-50 hover:opacity-100 transition duration-200"

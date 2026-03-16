@@ -88,6 +88,14 @@ export default function Expenses() {
     setMenuOpen(null);
   }
 
+  function handleRowDoubleClick(expense: (typeof localExpenses)[0]) {
+    setExpenseDetail({
+      show: true,
+      newExpense: false,
+      currentExpense: expense,
+    });
+  }
+
   const sortedExpenses = useMemo(() => {
     let filtered = localExpenses;
 
@@ -160,16 +168,16 @@ export default function Expenses() {
       />
 
       {/* TABLE */}
-      <div className="w-full rounded-2xl border border-(--border-primary) hover:border-(--border-primary) overflow-hidden">
+      <div className="w-full rounded-2xl border border-(--border) hover:border-(--border) overflow-hidden">
         <table className="w-full table-fixed">
           <thead>
             <tr>
               <th
                 onClick={() => handleSort("description")}
-                className={`w-1/5 text-left bg-(--bg-secondary) tracking-wider border-(--border-primary) px-4 text-xs uppercase py-3 cursor-pointer transition-all ${
+                className={`w-1/5 text-left bg-(--bg-secondary) tracking-wider border-(--border) px-4 text-xs uppercase py-3 cursor-pointer transition-all ${
                   visibleExpenses.length === 0
                     ? "border-none"
-                    : "border-b border-(--border-primary)"
+                    : "border-b border-(--border)"
                 }`}
               >
                 <div className="flex items-center gap-2">
@@ -183,10 +191,10 @@ export default function Expenses() {
               </th>
               <th
                 onClick={() => handleSort("amount")}
-                className={`w-1/5 text-left bg-(--bg-secondary) tracking-wider font-semibold border-(--border-primary) px-4 text-xs uppercase py-3 cursor-pointer transition-all ${
+                className={`w-1/5 text-left bg-(--bg-secondary) tracking-wider font-semibold border-(--border) px-4 text-xs uppercase py-3 cursor-pointer transition-all ${
                   visibleExpenses.length === 0
                     ? "border-none"
-                    : "border-b border-(--border-primary)"
+                    : "border-b border-(--border)"
                 }`}
               >
                 <div className="flex items-center gap-2">
@@ -199,28 +207,28 @@ export default function Expenses() {
                 </div>
               </th>
               <th
-                className={`w-1/5 text-left bg-(--bg-secondary) tracking-wider font-semibold border-(--border-primary) px-4 text-xs uppercase hidden md:table-cell py-3 cursor-default transition-all ${
+                className={`w-1/5 text-left bg-(--bg-secondary) tracking-wider font-semibold border-(--border) px-4 text-xs uppercase hidden md:table-cell py-3 cursor-default transition-all ${
                   visibleExpenses.length === 0
                     ? "border-none"
-                    : "border-b border-(--border-primary)"
+                    : "border-b border-(--border)"
                 }`}
               >
                 <div className="flex items-center gap-2">Category</div>
               </th>
               <th
-                className={`w-1/5 text-left bg-(--bg-secondary) tracking-wider font-semibold border-(--border-primary) px-4 text-xs uppercase hidden md:table-cell py-3 cursor-default transition-all ${
+                className={`w-1/5 text-left bg-(--bg-secondary) tracking-wider font-semibold border-(--border) px-4 text-xs uppercase hidden md:table-cell py-3 cursor-default transition-all ${
                   visibleExpenses.length === 0
                     ? "border-none"
-                    : "border-b border-(--border-primary)"
+                    : "border-b border-(--border)"
                 }`}
               >
                 <div className="flex items-center gap-2">Cycle</div>
               </th>
               <th
-                className={`w-1/10 text-left bg-(--bg-secondary) px-4 text-xs border-(--border-primary) uppercase py-3 ${
+                className={`w-1/10 text-left bg-(--bg-secondary) px-4 text-xs border-(--border) uppercase py-3 ${
                   visibleExpenses.length === 0
                     ? "border-none"
-                    : "border-b border-(--border-primary)"
+                    : "border-b border-(--border)"
                 }`}
               ></th>
             </tr>
@@ -230,7 +238,8 @@ export default function Expenses() {
             {visibleExpenses.map((expense) => (
               <tr
                 key={expense.id}
-                className={`border-b border-(--border-primary) last:border-0 bg-(--bg-secondary) group hover:bg-(--bg-tertiary)`}
+                onDoubleClick={() => handleRowDoubleClick(expense)}
+                className={`border-b border-(--border) last:border-0 bg-(--bg-secondary) group hover:bg-(--bg-primary)`}
               >
                 <td className="w-1/5 px-4 py-3 text-sm truncate opacity-50 group-hover:opacity-100">
                   {expense.description.charAt(0).toUpperCase() +
@@ -254,7 +263,7 @@ export default function Expenses() {
                 <td className="w-1/10 px-4 text-sm">
                   <button
                     onClick={() => handleMenu(expense.id)}
-                    className="opacity-50 group-hover:opacity-100 cursor-pointer p-2 rounded-2xl border border-(--border-primary) hover:border-(--border-secondary) transition duration-200 flex items-center justify-center"
+                    className="opacity-50 group-hover:opacity-100 cursor-pointer p-2 rounded-2xl border border-(--border) hover:border-(--border) transition duration-200 flex items-center justify-center"
                   >
                     <HiMiniEllipsisVertical />
                   </button>
@@ -275,7 +284,7 @@ export default function Expenses() {
 
                             setMenuOpen(null);
                           }}
-                          className="p-2 w-full hover:bg-(--bg-secondary) hover:text-(--foreground) transition duration-200 rounded-2xl text-left cursor-pointer flex gap-2 items-center"
+                          className="p-2 w-full hover:bg-(--bg-tertiary) hover:text-(--foreground) transition duration-200 rounded-2xl text-left cursor-pointer flex gap-2 items-center"
                         >
                           <FaRegEdit /> Edit
                         </button>
@@ -283,7 +292,7 @@ export default function Expenses() {
                           onClick={() => {
                             handleDeleteClick(expense.id!);
                           }}
-                          className="p-2 w-full hover:bg-(--bg-secondary) hover:text-(--foreground) transition duration-200 rounded-2xl text-left cursor-pointer flex gap-2 items-center"
+                          className="p-2 w-full hover:bg-(--bg-tertiary) hover:text-(--foreground) transition duration-200 rounded-2xl text-left cursor-pointer flex gap-2 items-center"
                         >
                           <FaRegTrashCan /> Delete
                         </button>

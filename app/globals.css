@@ -1,14 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  --bg-primary: #181818;
-  --bg-secondary: #212121;
-  --bg-tertiary: #2e2e2e;
-  --foreground: #ffffff;
-  --border-primary: #303030;
-  --border-secondary: #393939;
-  --primary: #3cc087;
-  --negative: #ffc74d;
+  --bg-primary: #f9f9f9;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f5f5f5;
+  --foreground: #000000;
+  --border: #ebeaea;
+  --primary: #0d6efd;
+  --negative: #dc3545;
 }
 
 html {
@@ -17,7 +16,7 @@ html {
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--bg-secondary) transparent;
+  scrollbar-color: var(--border) transparent;
 }
 
 body {
