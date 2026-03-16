@@ -7,6 +7,7 @@ import {
   ExpenseDetail,
   Income,
   IncomeDetail,
+  ProfileDetail,
   Toast,
   UserAuthenticated,
 } from "./AppTypes";
@@ -43,6 +44,8 @@ type AppContextType = {
   setBillingCycle: (cycle: billingCycle) => void;
   trialPeriodAlert?: boolean;
   setTrialPeriodAlert?: (value: boolean) => void;
+  profileDetail: ProfileDetail;
+  setProfileDetail?: (ProfileDetail: ProfileDetail) => void;
 };
 
 const AppContext = createContext<AppContextType>({
@@ -85,6 +88,8 @@ const AppContext = createContext<AppContextType>({
   setRefreshData: () => {},
   billingCycle: "monthly",
   setBillingCycle: () => {},
+  profileDetail: { show: false },
+  setProfileDetail: () => {},
 });
 
 export default AppContext;
@@ -122,6 +127,9 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
   const [refreshData, setRefreshData] = useState<boolean>(false);
   const [billingCycle, setBillingCycle] = useState<billingCycle>("monthly");
   const [trialPeriodAlert, setTrialPeriodAlert] = useState<boolean>(false);
+  const [profileDetail, setProfileDetail] = useState<ProfileDetail>({
+    show: false,
+  });
 
   useEffect(() => {
     setInitialFetching(true);
@@ -221,6 +229,8 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
         setBillingCycle,
         trialPeriodAlert,
         setTrialPeriodAlert,
+        profileDetail,
+        setProfileDetail,
       }}
     >
       {children}

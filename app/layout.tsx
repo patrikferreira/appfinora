@@ -9,6 +9,7 @@ import IncomeDetail from "./components/IncomeDetail";
 import ConfirmModal from "./components/ConfirmModal";
 import ExpenseDetail from "./components/ExpenseDetail";
 import TrialPeriodAlertModal from "./components/TrialPeriodAlertModal";
+import ProfileDetail from "./components/ProfileDetail";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -44,6 +45,7 @@ export default function RootLayout({
           <ExpenseDetail />
           <ConfirmModal />
           <TrialPeriodAlertModal />
+          <ProfileDetail />
         </AppContextProvider>
       </body>
     </html>

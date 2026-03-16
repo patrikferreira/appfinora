@@ -17,7 +17,8 @@ export default function Profile() {
     throw new Error("AppContext is not provided");
   }
 
-  const { user, setToast, setIsSidebarOpen, setUser } = context;
+  const { user, setToast, setIsSidebarOpen, setUser, setProfileDetail } =
+    context;
 
   function handleMenu() {
     setMenuOpen((prev) => !prev);
@@ -73,7 +74,12 @@ export default function Profile() {
 
             <hr className="border-(--border)" />
             <div className="flex flex-col p-1.5">
-              <button className=" p-2 w-full hover:bg-(--bg-tertiary) hover:text-(--foreground) transition duration-200 rounded-2xl text-left cursor-pointer flex gap-2 items-center">
+              <button
+                onClick={() => {
+                  setProfileDetail?.({ show: true });
+                }}
+                className=" p-2 w-full hover:bg-(--bg-tertiary) hover:text-(--foreground) transition duration-200 rounded-2xl text-left cursor-pointer flex gap-2 items-center"
+              >
                 <AiOutlineUser size={14} /> View profile
               </button>
               <button className=" p-2 w-full hover:bg-(--bg-tertiary) hover:text-(--foreground) transition duration-200 rounded-2xl text-left cursor-pointer flex gap-2 items-center">

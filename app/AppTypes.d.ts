@@ -24,6 +24,10 @@ export type ConfirmAction = {
   onConfirm: () => void;
 };
 
+export type ProfileDetail = {
+  show: boolean;
+}
+
 /* USER */
 export type User = {
   id?: string;
