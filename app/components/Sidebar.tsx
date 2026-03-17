@@ -92,9 +92,9 @@ export default function Sidebar() {
                     closeSidebar();
                   }
                 }}
-                className={`flex items-center gap-2 rounded-full hover:bg-(--bg-tertiary) transition duration-200 p-2 cursor-pointer ${
+                className={`flex items-center gap-2 rounded-full hover:bg-(--bg-primary) transition duration-200 p-2 cursor-pointer ${
                   active
-                    ? "bg-(--primary)/20 text-(--primary)"
+                    ? "bg-(--bg-primary) shadow-xl text-(--primary)"
                     : ""
                 }`}
               >

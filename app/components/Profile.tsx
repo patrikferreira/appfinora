@@ -17,8 +17,14 @@ export default function Profile() {
     throw new Error("AppContext is not provided");
   }
 
-  const { user, setToast, setIsSidebarOpen, setUser, setProfileDetail } =
-    context;
+  const {
+    user,
+    setToast,
+    setIsSidebarOpen,
+    setUser,
+    setProfileDetail,
+    setAccountSettingsDetail,
+  } = context;
 
   function handleMenu() {
     setMenuOpen((prev) => !prev);
@@ -82,7 +88,12 @@ export default function Profile() {
               >
                 <AiOutlineUser size={14} /> View profile
               </button>
-              <button className=" p-2 w-full hover:bg-(--bg-tertiary) hover:text-(--foreground) transition duration-200 rounded-2xl text-left cursor-pointer flex gap-2 items-center">
+              <button
+                onClick={() => {
+                  setAccountSettingsDetail?.({ show: true });
+                }}
+                className=" p-2 w-full hover:bg-(--bg-tertiary) hover:text-(--foreground) transition duration-200 rounded-2xl text-left cursor-pointer flex gap-2 items-center"
+              >
                 <IoSettingsOutline size={14} /> Account preferences
               </button>
             </div>

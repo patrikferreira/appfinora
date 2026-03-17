@@ -132,7 +132,7 @@ export default function ExpenseViewTable({ expenses = [], className }: Props) {
 
   return (
     <div
-      className={`flex flex-col justify-between border border-(--border) bg-(--bg-secondary) rounded-2xl ${className}`}
+      className={`flex flex-col justify-between border border-(--border) bg-(--bg-secondary) shadow hover:shadow-xl transition-all duration-200 rounded-2xl ${className}`}
     >
       <div className="flex flex-col gap-4 p-4 flex-1 min-h-0">
         {/* HEADER */}

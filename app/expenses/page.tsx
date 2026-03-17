@@ -168,7 +168,7 @@ export default function Expenses() {
       />
 
       {/* TABLE */}
-      <div className="w-full rounded-2xl border border-(--border) hover:border-(--border) overflow-hidden">
+      <div className="w-full rounded-2xl border border-(--border) shadow hover:border-(--border) overflow-hidden">
         <table className="w-full table-fixed">
           <thead>
             <tr>
@@ -239,7 +239,7 @@ export default function Expenses() {
               <tr
                 key={expense.id}
                 onDoubleClick={() => handleRowDoubleClick(expense)}
-                className={`border-b border-(--border) last:border-0 bg-(--bg-secondary) group hover:bg-(--bg-primary)`}
+                className={`border-b border-(--border) last:border-0 bg-(--bg-secondary) group hover:bg-(--bg-tertiary)`}
               >
                 <td className="w-1/5 px-4 py-3 text-sm truncate opacity-50 group-hover:opacity-100">
                   {expense.description.charAt(0).toUpperCase() +

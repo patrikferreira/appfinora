@@ -84,7 +84,7 @@ export default function ExpenseChart({ data, className }: Props) {
     (cat) => cat.charAt(0).toUpperCase() + cat.slice(1)
   );
 
-  const primaryHex = "#0d6efd";
+  const primaryHex = "#F46847";
   const hexToRgba = (hex: string, alpha = 1) => {
     const cleaned = hex.replace("#", "");
     const bigint = parseInt(
@@ -117,7 +117,7 @@ export default function ExpenseChart({ data, className }: Props) {
         label: "Expenses",
         data: sortedAmounts,
         backgroundColor: backgroundColors,
-        borderRadius: 8,
+        borderRadius: 16,
       },
     ],
   };
@@ -172,7 +172,7 @@ export default function ExpenseChart({ data, className }: Props) {
 
   return (
     <div
-      className={`flex flex-col gap-4 p-4 z-0 border border-(--border) bg-(--bg-secondary) min-h-60 rounded-2xl ${className}`}
+      className={`flex flex-col gap-4 p-4 z-0 border border-(--border) bg-(--bg-secondary) shadow hover:shadow-xl transition-all duration-200 min-h-60 rounded-2xl ${className}`}
     >
       {/* HEADER */}
       <div className="flex items-center justify-between gap-2">

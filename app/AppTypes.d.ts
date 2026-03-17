@@ -28,6 +28,14 @@ export type ProfileDetail = {
   show: boolean;
 }
 
+export type AccountSettingsDetail = {
+  show: boolean;
+}
+
+export type Language = "en" | "es" | "pt";
+
+export type Currency = "USD" | "EUR" | "BRL"
+
 /* USER */
 export type User = {
   id?: string;

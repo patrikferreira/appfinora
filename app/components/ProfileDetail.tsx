@@ -24,10 +24,10 @@ export default function ProfileDetail() {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="flex flex-col justify-between w-full h-full sm:h-auto sm:w-md border border-(--border) sm:rounded-2xl bg-(--bg-primary) animate-modalGrow"
+        className="flex flex-col justify-between w-full h-full sm:h-auto sm:w-sm border border-(--border) sm:rounded-2xl bg-(--bg-primary) animate-modalGrow"
       >
         <div className="flex items-center justify-between px-4 py-3 border-b border-(--border)">
-          <h3 className="text-base">View Profile</h3>
+          <h3 className="text-base">Profile</h3>
           <button
             onClick={onClose}
             className="cursor-pointer opacity-50 hover:opacity-100 transition-all duration-200"
@@ -42,7 +42,7 @@ export default function ProfileDetail() {
                 <label className="block text-sm mb-2" htmlFor="name">
                     Name
                 </label>
-                <p>{user?.name}</p>
+                <p className="opacity-50">{user?.name}</p>
                 </div>
             </div>
     
@@ -51,7 +51,7 @@ export default function ProfileDetail() {
                 <label className="block text-sm mb-2" htmlFor="email">
                     Email
                 </label>
-                <p>{user?.email}</p>
+                <p className="opacity-50">{user?.email}</p>
                 </div>
             </div>
         </div>

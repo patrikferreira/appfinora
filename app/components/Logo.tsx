@@ -17,7 +17,7 @@ export default function Logo({ logoOnly }: Props) {
           y="8"
           width="10"
           height="16"
-          rx="2"
+          rx="4"
           fill="var(--primary)"
         />
         <rect
@@ -25,7 +25,7 @@ export default function Logo({ logoOnly }: Props) {
           y="0"
           width="10"
           height="24"
-          rx="2"
+          rx="4"
           fill="var(--primary)"
         />
       </svg>

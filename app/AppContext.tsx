@@ -1,6 +1,7 @@
 "use client";
 import { createContext, ReactNode, useEffect, useState } from "react";
 import {
+  AccountSettingsDetail,
   billingCycle,
   ConfirmAction,
   Expense,
@@ -46,6 +47,8 @@ type AppContextType = {
   setTrialPeriodAlert?: (value: boolean) => void;
   profileDetail: ProfileDetail;
   setProfileDetail?: (ProfileDetail: ProfileDetail) => void;
+  accountSettingsDetail: AccountSettingsDetail;
+  setAccountSettingsDetail?: (AccountSettingsDetail: ProfileDetail) => void;
 };
 
 const AppContext = createContext<AppContextType>({
@@ -90,6 +93,8 @@ const AppContext = createContext<AppContextType>({
   setBillingCycle: () => {},
   profileDetail: { show: false },
   setProfileDetail: () => {},
+  accountSettingsDetail: { show: false },
+  setAccountSettingsDetail: () => {},
 });
 
 export default AppContext;
@@ -130,6 +135,10 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
   const [profileDetail, setProfileDetail] = useState<ProfileDetail>({
     show: false,
   });
+  const [accountSettingsDetail, setAccountSettingsDetail] =
+    useState<AccountSettingsDetail>({
+      show: false,
+    });
 
   useEffect(() => {
     setInitialFetching(true);
@@ -231,6 +240,8 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
         setTrialPeriodAlert,
         profileDetail,
         setProfileDetail,
+        accountSettingsDetail,
+        setAccountSettingsDetail,
       }}
     >
       {children}

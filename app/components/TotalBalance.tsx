@@ -1,6 +1,17 @@
 import { useContext } from "react";
 import { Expense, Income } from "../AppTypes";
 import AppContext from "../AppContext";
+import { Doughnut } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip,
+  Legend,
+  TooltipItem,
+} from "chart.js";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 type Props = {
   incomes?: Income[];
@@ -49,18 +60,48 @@ export default function TotalBalance({ incomes, expenses, className }: Props) {
         ) || 0;
 
   const balance = totalIncome - totalExpense;
-  const balancePercentage = totalIncome > 0 ? (balance / totalIncome) * 100 : 0;
 
-  const radius = 70;
-  const circumference = 2 * Math.PI * radius;
-  const progressOffset =
-    circumference - (balancePercentage / 100) * circumference;
-  const strokeColor = balance >= 0 ? "var(--primary)" : "var(--negative)";
-  const bgCircleColor = getComputedStyle(document.documentElement).getPropertyValue('--bg-primary').trim();
+  const primaryColor = getComputedStyle(document.documentElement)
+    .getPropertyValue("--primary")
+    .trim();
+  const secondaryColor = getComputedStyle(document.documentElement)
+    .getPropertyValue("--secondary")
+    .trim();
+
+  const chartData = {
+    labels: ["Income", "Expenses"],
+    datasets: [
+      {
+        label: "Amount",
+        data: [totalIncome, totalExpense],
+        backgroundColor: [secondaryColor, primaryColor],
+        borderWidth: 0,
+        spacing: 4,
+        borderRadius: 16,
+      },
+    ],
+  };
+
+  const chartOptions = {
+    responsive: true,
+    maintainAspectRatio: true,
+    cutout: "75%",
+    plugins: {
+      legend: {
+        display: false,
+      },
+      tooltip: {
+        callbacks: {
+          label: (context: TooltipItem<"doughnut">) =>
+            `${context.label}: $${context.parsed.toFixed(2)}`,
+        },
+      },
+    },
+  };
 
   return (
     <div
-      className={`flex flex-col gap-4 p-4 border border-(--border) bg-(--bg-secondary) min-h-60 rounded-2xl ${className}`}
+      className={`flex flex-col gap-4 p-4 border border-(--border) bg-(--bg-secondary) shadow hover:shadow-xl transition-all duration-200 min-h-60 rounded-2xl ${className}`}
     >
       {/* HEADER */}
       <div className="flex items-center justify-between">
@@ -86,94 +127,32 @@ export default function TotalBalance({ incomes, expenses, className }: Props) {
           No data yet
         </div>
       ) : (
-        <div className="flex-1 flex flex-col lg:flex-row items-center justify-center gap-4">
-          <div className="relative flex items-center justify-center flex-1">
-            <svg className="transform -rotate-90" width="180" height="180">
-              <circle
-                cx="90"
-                cy="90"
-                r={radius}
-                stroke={bgCircleColor}
-                strokeWidth="10"
-                fill="none"
-              />
-              <circle
-                cx="90"
-                cy="90"
-                r={radius}
-                stroke={strokeColor}
-                strokeWidth="10"
-                fill="none"
-                strokeDasharray={circumference}
-                strokeDashoffset={progressOffset}
-                strokeLinecap="round"
-                className="transition-all duration-700 ease-in-out"
-              />
-            </svg>
-            <div className="absolute flex flex-col items-center gap-0.5">
-              <p className="text-[10px] uppercase tracking-widest opacity-30">
-                Balance
+        <div className="flex-1 flex gap-2 items-center justify-around">
+          <div className="w-full max-w-[180px] lg:max-w-[180px] relative z-0">
+            <Doughnut data={chartData} options={chartOptions} />
+            <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none -z-10">
+              <p className="text-xs opacity-50">Total balance</p>
+              <p className="text-lg font-bold">
+                {balance < 0 ? "-" : ""}${Math.abs(balance).toFixed(2)}
               </p>
-              <h3
-                className="text-2xl font-bold tabular-nums transition-colors duration-300"
-                style={{ color: balance >= 0 ? "var(--primary)" : "var(--negative)" }}
-              >
-                {balance < 0 ? "- " : ""}${Math.abs(balance).toFixed(2)}
-              </h3>
             </div>
           </div>
 
-          <div className="flex flex-col gap-3 flex-1 w-full">
-            <div className="group flex items-center gap-4 p-4 rounded-2xl border border-(--border) bg-(--bg-primary) hover:bg-(--primary)/5 hover:border-(--primary)/20 transition-all duration-300">
-              <div className="w-9 h-9 flex items-center justify-center rounded-lg bg-(--primary)/10 shrink-0">
-                <svg
-                  className="w-4 h-4 text-(--primary)"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2.5}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M7 11l5-5m0 0l5 5m-5-5v12"
-                  />
-                </svg>
-              </div>
-              <div className="flex flex-col">
-                <p className="text-[11px] uppercase tracking-widest opacity-30">
-                  Income
-                </p>
-                <h4 className="text-lg font-semibold tabular-nums text-(--primary)">
-                  ${totalIncome.toFixed(2)}
-                </h4>
-              </div>
+          <div className="flex items-center flex-col justify-center gap-6">
+            <div className="flex flex-col items-center">
+              <p className="font-semibold ">${totalIncome.toFixed(2)}</p>
+              <span className="text-xs opacity-50">Total incomes</span>
             </div>
-
-            <div className="group flex items-center gap-4 p-4 rounded-2xl border border-(--border) bg-(--bg-primary) hover:bg-[var(--negative)]/5 hover:border-[var(--negative)]/20 transition-all duration-300">
-              <div className="w-9 h-9 flex items-center justify-center rounded-lg bg-[var(--negative)]/10 shrink-0">
-                <svg
-                  className="w-4 h-4 text-[var(--negative)]"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2.5}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M17 13l-5 5m0 0l-5-5m5 5V6"
-                  />
-                </svg>
-              </div>
-              <div className="flex flex-col">
-                <p className="text-[11px] uppercase tracking-widest opacity-30">
-                  Expenses
-                </p>
-                <h4 className="text-lg font-semibold tabular-nums text-[var(--negative)]">
-                  ${totalExpense.toFixed(2)}
-                </h4>
-              </div>
+            <div className="flex items-center">
+              {balance >= 0 ? (
+                <IoIosArrowUp size={24} />
+              ) : (
+                <IoIosArrowDown size={24} style={{ color: primaryColor }} />
+              )}
+            </div>
+            <div className="flex flex-col items-center">
+              <p className="font-semibold">${totalExpense.toFixed(2)}</p>
+              <span className="text-xs opacity-50">Total expenses</span>
             </div>
           </div>
         </div>
