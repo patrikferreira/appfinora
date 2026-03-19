@@ -1,4 +1,11 @@
-import { ApiResponse, Expense, Income, User, UserAuth } from "./AppTypes";
+import {
+  ApiResponse,
+  Expense,
+  Income,
+  User,
+  UserAuth,
+  UserUpdatePayload,
+} from "./AppTypes";
 
 /* USERS */
 export async function createUser(payload: User): Promise<ApiResponse> {
@@ -14,6 +21,31 @@ export async function createUser(payload: User): Promise<ApiResponse> {
     const data = await res.json();
     if (!res.ok) {
       throw new Error(data.error || "Failed to create user");
+    }
+    return data as ApiResponse;
+  } catch (error) {
+    return {
+      error: error instanceof Error ? error.message : "Internal Server Error",
+    };
+  }
+}
+
+export async function updateUser(
+  id: string,
+  payload: Partial<UserUpdatePayload>
+): Promise<ApiResponse> {
+  try {
+    const res = await fetch(`/api/users/${encodeURIComponent(id)}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data.error || "Failed to update user");
     }
     return data as ApiResponse;
   } catch (error) {

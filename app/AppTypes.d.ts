@@ -26,15 +26,15 @@ export type ConfirmAction = {
 
 export type ProfileDetail = {
   show: boolean;
-}
+};
 
 export type AccountSettingsDetail = {
   show: boolean;
-}
+};
 
 export type Language = "en" | "es" | "pt";
 
-export type Currency = "USD" | "EUR" | "BRL"
+export type Currency = "USD" | "EUR" | "BRL";
 
 /* USER */
 export type User = {
@@ -42,6 +42,8 @@ export type User = {
   name: string;
   email: string;
   password: string;
+  currency?: Currency;
+  language?: Language;
 };
 
 export type UserRegisterPayload = {
@@ -50,6 +52,13 @@ export type UserRegisterPayload = {
   password: string;
   confirmPassword: string;
 };
+
+export type UserUpdatePayload = {
+  name?: string;
+  email?: string;
+  currency?: Currency;
+  language?: Language;
+}
 
 export type UserAuth = {
   email: string;
@@ -60,6 +69,8 @@ export type UserAuthenticated = {
   id: string;
   name: string;
   email: string;
+  currency?: Currency;
+  language?: Language;
 };
 
 /* INCOMES */

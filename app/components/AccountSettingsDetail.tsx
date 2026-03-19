@@ -1,18 +1,13 @@
 "use client";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import AppContext from "../AppContext";
 import { IoCloseOutline } from "react-icons/io5";
 import Select from "./Select";
-import { Currency, Language } from "../AppTypes";
+import { Currency, Language, UserUpdatePayload } from "../AppTypes";
 import Spin from "./Spin";
+import { updateUser } from "../AppServices";
 
 export default function AccountSettingsDetail() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    currency: "USD" as Currency,
-    language: "en" as Language,
-  });
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const context = useContext(AppContext);
@@ -20,13 +15,72 @@ export default function AccountSettingsDetail() {
     throw new Error("AppContext is not provided");
   }
 
-  const { user, accountSettingsDetail, setAccountSettingsDetail } = context;
+  const {
+    user,
+    accountSettingsDetail,
+    setAccountSettingsDetail,
+    setToast,
+    setUser,
+  } = context;
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    currency: "USD" as Currency,
+    language: "en" as Language,
+  });
 
   function onClose() {
     setAccountSettingsDetail?.({ show: false });
   }
 
-  function submit() {}
+  async function submit() {
+    setIsLoading(true);
+    try {
+      const payload: UserUpdatePayload = {
+        name: formData.name || "",
+        email: formData.email || "",
+        currency: formData.currency,
+        language: formData.language,
+      };
+
+      const res = await updateUser(user?.id || "", payload);
+
+      if (res.error) {
+        setToast?.({ message: res.error, status: "error", show: true });
+        return;
+      }
+
+      /* TODO: its missing update user local */
+
+      setToast?.({
+        message: res.message || "User updated successfully.",
+        status: "success",
+        show: true,
+      });
+      onClose();
+    } catch (error) {
+      setToast?.({
+        message:
+          error instanceof Error ? error.message : "Failed to save settings",
+        status: "error",
+        show: true,
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    if (user) {
+      setFormData({
+        name: user.name || "",
+        email: user.email || "",
+        currency: user.currency || "USD",
+        language: user.language || "en",
+      });
+    }
+  }, [accountSettingsDetail.show]);
 
   if (!accountSettingsDetail.show) return null;
 

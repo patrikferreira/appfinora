@@ -19,12 +19,16 @@ export async function GET(req: NextRequest) {
         sub: string;
         email: string;
         name: string;
+        currency?: string;
+        language?: string;
       };
 
       const safeUser = {
         id: decoded.sub,
         name: decoded.name,
         email: decoded.email,
+        currency: decoded.currency || "USD",
+        language: decoded.language || "en",
       };
 
       return NextResponse.json({ user: safeUser }, { status: 200 });
@@ -51,7 +55,7 @@ export async function POST(request: NextRequest) {
 
     const { data: user, error } = await supabaseAdmin
       .from("users")
-      .select("id, email, name, password")
+      .select("id, email, name, password, currency, language")
       .eq("email", email)
       .maybeSingle();
 
@@ -83,6 +87,8 @@ export async function POST(request: NextRequest) {
         sub: u.id,
         email: u.email,
         name: u.name,
+        currency: u.currency,
+        language: u.language,
       },
       JWT_SECRET,
       { expiresIn: "2d" }
@@ -92,6 +98,8 @@ export async function POST(request: NextRequest) {
       id: user.id,
       name: user.name,
       email: user.email,
+      currency: user.currency,
+      language: user.language,
     };
 
     const res = NextResponse.json({ user: safeUser }, { status: 200 });
