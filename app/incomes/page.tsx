@@ -55,6 +55,15 @@ export default function Incomes() {
     }
   };
 
+  function formatAmount(amount: number | null | undefined) {
+    const value = amount ?? 0;
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: user?.currency || "USD",
+      minimumFractionDigits: 0,
+    }).format(value);
+  }
+
   async function handleDelete(id: string) {
     const res = await deleteIncome(id);
 
@@ -88,7 +97,7 @@ export default function Incomes() {
     setMenuOpen(null);
   }
 
-  function handleRowDoubleClick(income: typeof localIncomes[0]) {
+  function handleRowDoubleClick(income: (typeof localIncomes)[0]) {
     setIncomeDetail({
       show: true,
       newIncome: false,
@@ -246,7 +255,7 @@ export default function Incomes() {
                     income.description.slice(1)}
                 </td>
                 <td className="w-1/5 px-4 py-3 text-sm opacity-50 group-hover:opacity-100">
-                  €{(income.amount ?? "").toLocaleString()}
+                  {formatAmount(income.amount)}
                 </td>
                 <td className="w-1/5 px-4 py-3 text-sm hidden md:table-cell opacity-50 group-hover:opacity-100">
                   {income?.category

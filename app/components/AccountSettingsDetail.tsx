@@ -3,7 +3,12 @@ import { useContext, useEffect, useState } from "react";
 import AppContext from "../AppContext";
 import { IoCloseOutline } from "react-icons/io5";
 import Select from "./Select";
-import { Currency, Language, UserUpdatePayload } from "../AppTypes";
+import {
+  Currency,
+  Language,
+  UserAuthenticated,
+  UserUpdatePayload,
+} from "../AppTypes";
 import Spin from "./Spin";
 import { updateUser } from "../AppServices";
 
@@ -20,7 +25,7 @@ export default function AccountSettingsDetail() {
     accountSettingsDetail,
     setAccountSettingsDetail,
     setToast,
-    setUser,
+    refreshUser,
   } = context;
 
   const [formData, setFormData] = useState({
@@ -51,13 +56,14 @@ export default function AccountSettingsDetail() {
         return;
       }
 
-      /* TODO: its missing update user local */
-
-      setToast?.({
-        message: res.message || "User updated successfully.",
-        status: "success",
-        show: true,
-      });
+      if (res.user) {
+        refreshUser?.(res.user as UserAuthenticated);
+        setToast?.({
+          message: res.message || "User updated successfully.",
+          status: "success",
+          show: true,
+        });
+      }
       onClose();
     } catch (error) {
       setToast?.({

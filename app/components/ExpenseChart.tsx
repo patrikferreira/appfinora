@@ -33,7 +33,16 @@ export default function ExpenseChart({ data, className }: Props) {
     throw new Error("AppContext is not provided");
   }
 
-  const { billingCycle } = context;
+  const { user, billingCycle } = context;
+
+  function formatAmount(amount: number | null | undefined) {
+    const value = amount ?? 0;
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: user?.currency || "USD",
+      minimumFractionDigits: 0,
+    }).format(value);
+  }
 
   const filteredData =
     billingCycle === "totaly"
@@ -142,7 +151,7 @@ export default function ExpenseChart({ data, className }: Props) {
                   : parsed && typeof parsed === "object"
                   ? parsed.y ?? 0
                   : 0;
-              return `$${value.toFixed(2)}`;
+              return `${value.toFixed(2)}`;
             },
           },
         },
@@ -189,9 +198,7 @@ export default function ExpenseChart({ data, className }: Props) {
         </div>
         {!data || data.length === 0 ? null : (
           <div className="flex flex-col items-end">
-            <h2 className="text-md lg:text-lg">{`$ ${totalExpense.toFixed(
-              2
-            )}`}</h2>
+            <h2 className="text-md lg:text-lg">{`${formatAmount(totalExpense)}`}</h2>
             <p className="text-sm opacity-50">
               Total {billingCycle === "totaly" ? "yearly" : billingCycle}
             </p>

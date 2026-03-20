@@ -93,7 +93,6 @@ export async function POST(req: NextRequest) {
     }
 
     if (existingIncome) {
-      console.log("Duplicate found:", existingIncome, "for userId:", userId);
       return new Response(
         JSON.stringify({ error: "Income with this description already exists" }),
         { status: 409 }

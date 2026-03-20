@@ -49,6 +49,7 @@ type AppContextType = {
   setProfileDetail?: (ProfileDetail: ProfileDetail) => void;
   accountSettingsDetail: AccountSettingsDetail;
   setAccountSettingsDetail?: (AccountSettingsDetail: ProfileDetail) => void;
+  refreshUser?: (user: UserAuthenticated) => void;
 };
 
 const AppContext = createContext<AppContextType>({
@@ -95,6 +96,7 @@ const AppContext = createContext<AppContextType>({
   setProfileDetail: () => {},
   accountSettingsDetail: { show: false },
   setAccountSettingsDetail: () => {},
+  refreshUser: () => {},
 });
 
 export default AppContext;
@@ -139,6 +141,11 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
     useState<AccountSettingsDetail>({
       show: false,
     });
+
+  function refreshUser(user: UserAuthenticated) {
+    setUser(user);
+  }
+
 
   useEffect(() => {
     setInitialFetching(true);
@@ -242,6 +249,7 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
         setProfileDetail,
         accountSettingsDetail,
         setAccountSettingsDetail,
+        refreshUser,
       }}
     >
       {children}

@@ -25,7 +25,16 @@ export default function TotalBalance({ incomes, expenses, className }: Props) {
     throw new Error("AppContext is not provided");
   }
 
-  const { billingCycle } = context;
+  const { user, billingCycle } = context;
+
+  function formatAmount(amount: number | null | undefined) {
+    const value = amount ?? 0;
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: user?.currency || "USD",
+      minimumFractionDigits: 0,
+    }).format(value);
+  }
 
   const filteredIncomes =
     billingCycle === "totaly"
@@ -133,14 +142,14 @@ export default function TotalBalance({ incomes, expenses, className }: Props) {
             <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none -z-10">
               <p className="text-xs opacity-50">Total balance</p>
               <p className="text-lg font-bold">
-                {balance < 0 ? "-" : ""}${Math.abs(balance).toFixed(2)}
+                {balance < 0 ? "-" : ""}{formatAmount(Math.abs(balance))}
               </p>
             </div>
           </div>
 
           <div className="flex items-center flex-col justify-center gap-6">
             <div className="flex flex-col items-center">
-              <p className="font-semibold ">${totalIncome.toFixed(2)}</p>
+              <p className="font-semibold ">{formatAmount(totalIncome)}</p>
               <span className="text-xs opacity-50">Total incomes</span>
             </div>
             <div className="flex items-center">
@@ -151,7 +160,7 @@ export default function TotalBalance({ incomes, expenses, className }: Props) {
               )}
             </div>
             <div className="flex flex-col items-center">
-              <p className="font-semibold">${totalExpense.toFixed(2)}</p>
+              <p className="font-semibold">{formatAmount(totalExpense)}</p>
               <span className="text-xs opacity-50">Total expenses</span>
             </div>
           </div>

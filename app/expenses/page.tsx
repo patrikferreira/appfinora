@@ -55,6 +55,15 @@ export default function Expenses() {
     }
   };
 
+  function formatAmount(amount: number | null | undefined) {
+    const value = amount ?? 0;
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: user?.currency || "USD",
+      minimumFractionDigits: 0,
+    }).format(value);
+  }
+
   async function handleDelete(id: string) {
     const res = await deleteExpense(id);
 
@@ -246,7 +255,7 @@ export default function Expenses() {
                     expense.description.slice(1)}
                 </td>
                 <td className="w-1/5 px-4 py-3 text-sm opacity-50 group-hover:opacity-100">
-                  €{(expense.amount ?? "").toLocaleString()}
+                {formatAmount(expense.amount)}
                 </td>
                 <td className="w-1/5 px-4 py-3 text-sm hidden md:table-cell opacity-50 group-hover:opacity-100">
                   {expense?.category

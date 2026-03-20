@@ -19,7 +19,7 @@ export default function ExpenseViewTable({ expenses = [], className }: Props) {
     throw new Error("AppContext is not provided");
   }
 
-  const { billingCycle } = context;
+  const { user, billingCycle } = context;
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5);
@@ -27,6 +27,15 @@ export default function ExpenseViewTable({ expenses = [], className }: Props) {
   const [sortOrder, setSortOrder] = useState<SortOrder>("asc");
   const contentRef = useRef<HTMLDivElement>(null);
   const tableRef = useRef<HTMLTableElement>(null);
+
+  function formatAmount(amount: number | null | undefined) {
+    const value = amount ?? 0;
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: user?.currency || "USD",
+      minimumFractionDigits: 0,
+    }).format(value);
+  }
 
   const filteredExpenses = useMemo(() => {
     return billingCycle === "totaly"
@@ -232,7 +241,7 @@ export default function ExpenseViewTable({ expenses = [], className }: Props) {
                             expense.description.slice(1)}
                         </td>
                         <td className="w-1/5 px-4 py-3 text-sm opacity-50">
-                          €{(expense.amount ?? 0).toLocaleString()}
+                          {formatAmount(expense.amount)}
                         </td>
                         <td className="w-1/5 px-4 py-3 text-sm hidden md:table-cell opacity-50">
                           {expense?.category

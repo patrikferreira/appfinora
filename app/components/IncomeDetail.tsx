@@ -1,5 +1,5 @@
 "use client";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import AppContext from "../AppContext";
 import { IoCloseOutline } from "react-icons/io5";
 import { Cycle, Income, IncomeCategory } from "../AppTypes";
@@ -31,6 +31,16 @@ export default function IncomeDetail() {
     user,
     setRefreshData,
   } = context;
+
+  const currencySymbols: Record<string, string> = {
+    USD: "$",
+    EUR: "€",
+    BRL: "R$",
+  };
+
+  const currencySymbol = useMemo(() => {
+    return user?.currency ? currencySymbols[user.currency] || "$" : "$";
+  }, [user?.currency]);
 
   function resetData() {
     setFormData({
@@ -255,7 +265,7 @@ export default function IncomeDetail() {
               type="number"
               id="amount"
               name="amount"
-              placeholder="$ 0.00"
+              placeholder={`${currencySymbol} 0.00`}
               value={formData.amount ?? ""}
               onChange={handleChange}
               className="w-full bg-(--bg-secondary) border border-(--border) rounded-2xl px-4 py-2.5 outline-none appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
