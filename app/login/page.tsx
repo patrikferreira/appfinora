@@ -9,9 +9,10 @@ import { UserAuthenticated } from "../AppTypes";
 import { authUser } from "../AppServices";
 import Spin from "../components/Spin";
 import BuiltInfo from "../components/BuiltInfo";
+import Button from "../components/Button";
 
 export default function Login() {
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
   const [form, setForm] = useState({
     email: "",
@@ -114,15 +115,12 @@ export default function Login() {
             </button>
           </label>
 
-          <button
+          <Button
             type="submit"
-            disabled={isLoading}
-            className={`h-10 text-sm bg-(--primary) text-white flex items-center justify-center shadow-lg transition duration-200 hover:brightness-115 rounded-full font-semibold ${
-              isLoading ? "cursor-default" : "cursor-pointer"
-            }`}
-          >
-            {isLoading ? <Spin /> : "Login"}
-          </button>
+            isLoading={isLoading}
+            text="Login"
+            className="bg-(--primary) h-10 rounded-full font-semibold"
+          />
         </form>
 
         <p className="text-center text-(--foreground) text-sm flex items-center gap-2 justify-center">

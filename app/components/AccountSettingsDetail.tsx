@@ -12,6 +12,7 @@ import {
 import Spin from "./Spin";
 import { updateUser } from "../AppServices";
 import { useTranslation } from "react-i18next";
+import Button from "./Button";
 
 export default function AccountSettingsDetail() {
   const { t } = useTranslation();
@@ -170,21 +171,17 @@ export default function AccountSettingsDetail() {
 
         <div className="flex items-center justify-end border-t border-(--border) px-4 py-3">
           <div className="flex items-center gap-2">
-            <button
-              onClick={submit}
-              disabled={isLoading}
-              className={`h-9 px-3 w-15 text-sm rounded-2xl flex items-center justify-center bg-(--primary) text-white transition duration-200 hover:brightness-115 ${
-                isLoading ? "cursor-default" : "cursor-pointer"
-              }`}
-            >
-              {isLoading ? <Spin /> : t("Save")}
-            </button>
-            <button
-              onClick={onClose}
-              className="text-sm h-9 px-3 2-15 rounded-2xl bg-(--bg-tertiary) cursor-pointer transition duration-200 hover:brightness-115"
-            >
-              {t("Cancel")}
-            </button>
+            <Button
+              action={submit}
+              isLoading={isLoading}
+              text="Save"
+              className="bg-(--primary)"
+            />
+            <Button
+              action={onClose}
+              text="Cancel"
+              className="bg-(--bg-tertiary)"
+            />
           </div>
         </div>
       </div>

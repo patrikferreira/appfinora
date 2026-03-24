@@ -2,9 +2,10 @@
 import { useContext } from "react";
 import AppContext from "../AppContext";
 import { useTranslation } from "react-i18next";
+import Button from "./Button";
 
 export default function ConfirmModal() {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const context = useContext(AppContext);
   if (!context) throw new Error("AppContext is not provided");
 
@@ -35,18 +36,16 @@ export default function ConfirmModal() {
         </h2>
         <p className="mb-4">{t(confirmAction.message)}</p>
         <div className="flex justify-end space-x-2">
-          <button
-            onClick={handleCancel}
-            className="px-4 py-2 rounded-2xl bg-(--bg-tertiary) hover:brightness-115  cursor-pointer transition-all duration-200 text-sm"
-          >
-            {t("Cancel")}
-          </button>
-          <button
-            onClick={handleConfirm}
-            className="px-4 py-2 rounded-2xl bg-red-500 text-white hover:brightness-90 cursor-pointer transition-all duration-200 text-sm"
-          >
-            {t("Confirm")}
-          </button>
+          <Button
+            action={handleCancel}
+            text="Cancel"
+            className="bg-(--bg-tertiary)"
+          />
+          <Button
+            action={handleConfirm}
+            text="Confirm"
+            className="bg-red-500"
+          />
         </div>
       </div>
     </div>

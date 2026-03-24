@@ -9,6 +9,7 @@ import { createUser } from "../AppServices";
 import bcrypt from "bcryptjs";
 import Spin from "../components/Spin";
 import BuiltInfo from "../components/BuiltInfo";
+import Button from "../components/Button";
 
 export default function Signup() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -165,15 +166,12 @@ export default function Signup() {
             </button>
           </label>
 
-          <button
+          <Button
             type="submit"
-            disabled={isLoading}
-            className={`h-10 text-sm bg-(--primary) text-white flex items-center justify-center shadow-lg transition duration-200 hover:brightness-115 rounded-full font-semibold ${
-              isLoading ? "cursor-default" : "cursor-pointer"
-            }`}
-          >
-            {isLoading ? <Spin /> : "Sign up"}
-          </button>
+            isLoading={isLoading}
+            text="Login"
+            className="bg-(--primary) h-10 rounded-full font-semibold"
+          />
         </form>
 
         <p className="text-center text-(--foreground) text-sm flex items-center gap-2 justify-center">

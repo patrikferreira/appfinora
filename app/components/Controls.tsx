@@ -7,6 +7,7 @@ import { useContext } from "react";
 import AppContext from "../AppContext";
 import Export from "./Export";
 import { useTranslation } from "react-i18next";
+import Button from "./Button";
 
 interface ControlsProps {
   currentPage?: number;
@@ -60,13 +61,12 @@ export default function Controls({
           onPageChange={onPageChange}
         />
         <RefreshData view={view} />
-        <button
-          className="px-3 h-10 text-sm text-white bg-(--primary) cursor-pointer flex items-center gap-2 justify-center shadow-lg transition duration-200 hover:brightness-115 rounded-full"
-          onClick={handleAdd}
-        >
-          <IoAddOutline />
-          <span className="hidden md:flex">{t("Add")}</span>
-        </button>
+        <Button
+          action={handleAdd}
+          text="Add"
+          icon={<IoAddOutline />}
+          className="bg-(--primary) h-10 rounded-full"
+        />
       </div>
     </div>
   );

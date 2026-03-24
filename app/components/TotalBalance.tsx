@@ -87,8 +87,8 @@ export default function TotalBalance({ incomes, expenses, className }: Props) {
         data: [totalIncome, totalExpense],
         backgroundColor: [secondaryColor, primaryColor],
         borderWidth: 0,
-        spacing: 4,
-        borderRadius: 16,
+        spacing: 0,
+        borderRadius: 0,
       },
     ],
   };

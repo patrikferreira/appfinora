@@ -128,7 +128,7 @@ export default function ExpenseChart({ data, className }: Props) {
         label: "Expenses",
         data: sortedAmounts,
         backgroundColor: backgroundColors,
-        borderRadius: 16,
+        borderRadius: 8,
       },
     ],
   };

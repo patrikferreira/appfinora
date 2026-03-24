@@ -3,6 +3,7 @@ import { useContext } from "react";
 import AppContext from "../AppContext";
 import { IoCloseOutline } from "react-icons/io5";
 import { useTranslation } from "react-i18next";
+import Button from "./Button";
 
 export default function ProfileDetail() {
   const { t } = useTranslation();
@@ -59,12 +60,11 @@ export default function ProfileDetail() {
         </div>
 
         <div className="flex items-center justify-end px-4 py-3 border-t border-(--border)">
-          <button
-            onClick={onClose}
-            className="px-4 py-2 text-sm bg-(--bg-tertiary)  rounded-2xl hover:brightness-115 cursor-pointer transition duration-200"
-          >
-            {t("Close")}
-          </button>
+          <Button
+            action={onClose}
+            text="Close"
+            className="bg-(--bg-tertiary)"
+          />
         </div>
       </div>
     </div>
