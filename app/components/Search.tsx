@@ -1,8 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { IoIosClose } from "react-icons/io";
 import { LuSearch } from "react-icons/lu";
 import AppContext from "../AppContext";
 import { useTranslation } from "react-i18next";
+import { useRouter } from "next/navigation";
 
 type Props = {
   placeholder?: string;
@@ -10,6 +11,7 @@ type Props = {
 
 export default function Search({ placeholder }: Props) {
   const { t } = useTranslation();
+  const router = useRouter();
   const context = useContext(AppContext);
   if (!context) {
     throw new Error("AppContext is not provided");
@@ -21,6 +23,10 @@ export default function Search({ placeholder }: Props) {
     const value = e.target.value;
     setSearchQuery(value);
   }
+
+  useEffect(() => {
+    setSearchQuery("");
+  }, [router])
 
   const hasQuery = searchQuery.trim().length > 0;
 
