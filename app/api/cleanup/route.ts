@@ -4,11 +4,14 @@ import { supabaseAdmin } from "../users/route";
 async function cleanupUsers() {
   const authorizedEmail = process.env.AUTHORIZED_EMAIL;
 
-  if (!authorizedEmail) {
-    return {
-      error: "Authorized email not configured",
-      status: 500,
-    };
+  const { data: authorizedUser } = await supabaseAdmin
+    .from("users")
+    .select("id")
+    .eq("email", authorizedEmail)
+    .single();
+
+  if (!authorizedUser) {
+    throw new Error("Authorized user not found");
   }
 
   const { data: usersToDelete, error: usersError } = await supabaseAdmin
